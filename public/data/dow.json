@@ -1,0 +1,4797 @@
+[
+  {
+    "year_month": "2015-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.88,
+    "plays": 50
+  },
+  {
+    "year_month": "2015-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.58,
+    "plays": 12
+  },
+  {
+    "year_month": "2015-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.37,
+    "plays": 23
+  },
+  {
+    "year_month": "2015-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.01,
+    "plays": 1
+  },
+  {
+    "year_month": "2015-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.93,
+    "plays": 55
+  },
+  {
+    "year_month": "2015-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.0,
+    "plays": 1
+  },
+  {
+    "year_month": "2015-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.0,
+    "plays": 1
+  },
+  {
+    "year_month": "2016-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.0,
+    "plays": 1
+  },
+  {
+    "year_month": "2016-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.01,
+    "plays": 18
+  },
+  {
+    "year_month": "2016-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.08,
+    "plays": 104
+  },
+  {
+    "year_month": "2016-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.02,
+    "plays": 10
+  },
+  {
+    "year_month": "2016-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.86,
+    "plays": 53
+  },
+  {
+    "year_month": "2016-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.13,
+    "plays": 24
+  },
+  {
+    "year_month": "2016-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.2,
+    "plays": 26
+  },
+  {
+    "year_month": "2016-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.95,
+    "plays": 22
+  },
+  {
+    "year_month": "2016-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.85,
+    "plays": 15
+  },
+  {
+    "year_month": "2016-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.37,
+    "plays": 11
+  },
+  {
+    "year_month": "2016-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.0,
+    "plays": 25
+  },
+  {
+    "year_month": "2016-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.29,
+    "plays": 44
+  },
+  {
+    "year_month": "2016-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.72,
+    "plays": 32
+  },
+  {
+    "year_month": "2016-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.44,
+    "plays": 24
+  },
+  {
+    "year_month": "2016-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.05,
+    "plays": 46
+  },
+  {
+    "year_month": "2016-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.13,
+    "plays": 4
+  },
+  {
+    "year_month": "2016-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.7,
+    "plays": 23
+  },
+  {
+    "year_month": "2016-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.78,
+    "plays": 12
+  },
+  {
+    "year_month": "2016-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.68,
+    "plays": 63
+  },
+  {
+    "year_month": "2016-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 2.05,
+    "plays": 43
+  },
+  {
+    "year_month": "2016-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.86,
+    "plays": 36
+  },
+  {
+    "year_month": "2016-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.7,
+    "plays": 16
+  },
+  {
+    "year_month": "2016-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.79,
+    "plays": 39
+  },
+  {
+    "year_month": "2016-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.98,
+    "plays": 27
+  },
+  {
+    "year_month": "2016-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.04,
+    "plays": 24
+  },
+  {
+    "year_month": "2016-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.46,
+    "plays": 11
+  },
+  {
+    "year_month": "2016-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.41,
+    "plays": 36
+  },
+  {
+    "year_month": "2016-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.54,
+    "plays": 78
+  },
+  {
+    "year_month": "2016-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.07,
+    "plays": 61
+  },
+  {
+    "year_month": "2017-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.7,
+    "plays": 55
+  },
+  {
+    "year_month": "2017-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.96,
+    "plays": 44
+  },
+  {
+    "year_month": "2017-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.3,
+    "plays": 67
+  },
+  {
+    "year_month": "2017-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.2,
+    "plays": 43
+  },
+  {
+    "year_month": "2017-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.04,
+    "plays": 1
+  },
+  {
+    "year_month": "2017-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.64,
+    "plays": 27
+  },
+  {
+    "year_month": "2017-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.7,
+    "plays": 45
+  },
+  {
+    "year_month": "2017-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.06,
+    "plays": 1
+  },
+  {
+    "year_month": "2017-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.55,
+    "plays": 11
+  },
+  {
+    "year_month": "2017-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.57,
+    "plays": 12
+  },
+  {
+    "year_month": "2017-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.29,
+    "plays": 47
+  },
+  {
+    "year_month": "2017-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.99,
+    "plays": 16
+  },
+  {
+    "year_month": "2017-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.83,
+    "plays": 16
+  },
+  {
+    "year_month": "2017-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.67,
+    "plays": 20
+  },
+  {
+    "year_month": "2017-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.64,
+    "plays": 54
+  },
+  {
+    "year_month": "2017-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.21,
+    "plays": 67
+  },
+  {
+    "year_month": "2017-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.38,
+    "plays": 53
+  },
+  {
+    "year_month": "2017-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.44,
+    "plays": 32
+  },
+  {
+    "year_month": "2017-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.86,
+    "plays": 69
+  },
+  {
+    "year_month": "2017-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.58,
+    "plays": 79
+  },
+  {
+    "year_month": "2017-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.86,
+    "plays": 50
+  },
+  {
+    "year_month": "2017-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.37,
+    "plays": 7
+  },
+  {
+    "year_month": "2017-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.73,
+    "plays": 12
+  },
+  {
+    "year_month": "2017-04",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.33,
+    "plays": 39
+  },
+  {
+    "year_month": "2017-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.74,
+    "plays": 63
+  },
+  {
+    "year_month": "2017-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.64,
+    "plays": 13
+  },
+  {
+    "year_month": "2017-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.64,
+    "plays": 56
+  },
+  {
+    "year_month": "2017-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.56,
+    "plays": 66
+  },
+  {
+    "year_month": "2017-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.04,
+    "plays": 1
+  },
+  {
+    "year_month": "2017-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.95,
+    "plays": 61
+  },
+  {
+    "year_month": "2017-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.73,
+    "plays": 58
+  },
+  {
+    "year_month": "2017-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.76,
+    "plays": 29
+  },
+  {
+    "year_month": "2017-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.42,
+    "plays": 11
+  },
+  {
+    "year_month": "2017-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.97,
+    "plays": 32
+  },
+  {
+    "year_month": "2017-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.89,
+    "plays": 71
+  },
+  {
+    "year_month": "2017-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.43,
+    "plays": 36
+  },
+  {
+    "year_month": "2017-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.45,
+    "plays": 23
+  },
+  {
+    "year_month": "2017-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.86,
+    "plays": 59
+  },
+  {
+    "year_month": "2017-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 9.66,
+    "plays": 161
+  },
+  {
+    "year_month": "2017-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.92,
+    "plays": 41
+  },
+  {
+    "year_month": "2017-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.46,
+    "plays": 21
+  },
+  {
+    "year_month": "2017-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 8.12,
+    "plays": 131
+  },
+  {
+    "year_month": "2017-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.17,
+    "plays": 32
+  },
+  {
+    "year_month": "2017-07",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.64,
+    "plays": 41
+  },
+  {
+    "year_month": "2017-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.02,
+    "plays": 1
+  },
+  {
+    "year_month": "2017-07",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 6.16,
+    "plays": 104
+  },
+  {
+    "year_month": "2017-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.21,
+    "plays": 28
+  },
+  {
+    "year_month": "2017-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.16,
+    "plays": 5
+  },
+  {
+    "year_month": "2017-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.03,
+    "plays": 1
+  },
+  {
+    "year_month": "2017-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.82,
+    "plays": 53
+  },
+  {
+    "year_month": "2017-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.02,
+    "plays": 7
+  },
+  {
+    "year_month": "2017-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.24,
+    "plays": 18
+  },
+  {
+    "year_month": "2017-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.68,
+    "plays": 56
+  },
+  {
+    "year_month": "2017-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 9.2,
+    "plays": 189
+  },
+  {
+    "year_month": "2017-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.56,
+    "plays": 80
+  },
+  {
+    "year_month": "2017-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.32,
+    "plays": 51
+  },
+  {
+    "year_month": "2017-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.35,
+    "plays": 52
+  },
+  {
+    "year_month": "2017-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.52,
+    "plays": 30
+  },
+  {
+    "year_month": "2017-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.87,
+    "plays": 76
+  },
+  {
+    "year_month": "2017-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 4.66,
+    "plays": 110
+  },
+  {
+    "year_month": "2017-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.99,
+    "plays": 160
+  },
+  {
+    "year_month": "2017-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.6,
+    "plays": 173
+  },
+  {
+    "year_month": "2017-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.34,
+    "plays": 78
+  },
+  {
+    "year_month": "2017-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.64,
+    "plays": 86
+  },
+  {
+    "year_month": "2017-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.47,
+    "plays": 42
+  },
+  {
+    "year_month": "2017-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.8,
+    "plays": 83
+  },
+  {
+    "year_month": "2017-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.45,
+    "plays": 32
+  },
+  {
+    "year_month": "2017-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.02,
+    "plays": 207
+  },
+  {
+    "year_month": "2017-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.95,
+    "plays": 94
+  },
+  {
+    "year_month": "2017-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.99,
+    "plays": 112
+  },
+  {
+    "year_month": "2017-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.47,
+    "plays": 182
+  },
+  {
+    "year_month": "2017-11",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.04,
+    "plays": 90
+  },
+  {
+    "year_month": "2017-11",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 4.88,
+    "plays": 131
+  },
+  {
+    "year_month": "2017-11",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 9.35,
+    "plays": 455
+  },
+  {
+    "year_month": "2017-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.68,
+    "plays": 103
+  },
+  {
+    "year_month": "2017-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.5,
+    "plays": 139
+  },
+  {
+    "year_month": "2017-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.55,
+    "plays": 86
+  },
+  {
+    "year_month": "2017-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.04,
+    "plays": 102
+  },
+  {
+    "year_month": "2017-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 8.65,
+    "plays": 170
+  },
+  {
+    "year_month": "2017-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.51,
+    "plays": 75
+  },
+  {
+    "year_month": "2017-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.87,
+    "plays": 122
+  },
+  {
+    "year_month": "2018-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.34,
+    "plays": 80
+  },
+  {
+    "year_month": "2018-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.64,
+    "plays": 93
+  },
+  {
+    "year_month": "2018-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.41,
+    "plays": 100
+  },
+  {
+    "year_month": "2018-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.99,
+    "plays": 45
+  },
+  {
+    "year_month": "2018-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.1,
+    "plays": 6
+  },
+  {
+    "year_month": "2018-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.01,
+    "plays": 1
+  },
+  {
+    "year_month": "2018-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.06,
+    "plays": 66
+  },
+  {
+    "year_month": "2018-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.95,
+    "plays": 100
+  },
+  {
+    "year_month": "2018-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.67,
+    "plays": 75
+  },
+  {
+    "year_month": "2018-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.22,
+    "plays": 110
+  },
+  {
+    "year_month": "2018-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.79,
+    "plays": 66
+  },
+  {
+    "year_month": "2018-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.46,
+    "plays": 121
+  },
+  {
+    "year_month": "2018-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.78,
+    "plays": 60
+  },
+  {
+    "year_month": "2018-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.2,
+    "plays": 29
+  },
+  {
+    "year_month": "2018-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.54,
+    "plays": 31
+  },
+  {
+    "year_month": "2018-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.32,
+    "plays": 36
+  },
+  {
+    "year_month": "2018-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 6.4,
+    "plays": 225
+  },
+  {
+    "year_month": "2018-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 4.41,
+    "plays": 114
+  },
+  {
+    "year_month": "2018-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.87,
+    "plays": 76
+  },
+  {
+    "year_month": "2018-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.46,
+    "plays": 71
+  },
+  {
+    "year_month": "2018-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 4.08,
+    "plays": 111
+  },
+  {
+    "year_month": "2018-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.39,
+    "plays": 41
+  },
+  {
+    "year_month": "2018-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 2.01,
+    "plays": 42
+  },
+  {
+    "year_month": "2018-04",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.43,
+    "plays": 110
+  },
+  {
+    "year_month": "2018-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.47,
+    "plays": 52
+  },
+  {
+    "year_month": "2018-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.12,
+    "plays": 44
+  },
+  {
+    "year_month": "2018-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 8.98,
+    "plays": 171
+  },
+  {
+    "year_month": "2018-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.35,
+    "plays": 41
+  },
+  {
+    "year_month": "2018-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.44,
+    "plays": 9
+  },
+  {
+    "year_month": "2018-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.58,
+    "plays": 36
+  },
+  {
+    "year_month": "2018-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.29,
+    "plays": 49
+  },
+  {
+    "year_month": "2018-05",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.92,
+    "plays": 93
+  },
+  {
+    "year_month": "2018-05",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.47,
+    "plays": 65
+  },
+  {
+    "year_month": "2018-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.71,
+    "plays": 71
+  },
+  {
+    "year_month": "2018-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.54,
+    "plays": 32
+  },
+  {
+    "year_month": "2018-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.32,
+    "plays": 87
+  },
+  {
+    "year_month": "2018-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.6,
+    "plays": 59
+  },
+  {
+    "year_month": "2018-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.43,
+    "plays": 35
+  },
+  {
+    "year_month": "2018-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.06,
+    "plays": 43
+  },
+  {
+    "year_month": "2018-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.88,
+    "plays": 41
+  },
+  {
+    "year_month": "2018-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.71,
+    "plays": 44
+  },
+  {
+    "year_month": "2018-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.44,
+    "plays": 24
+  },
+  {
+    "year_month": "2018-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.52,
+    "plays": 40
+  },
+  {
+    "year_month": "2018-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 11.6,
+    "plays": 247
+  },
+  {
+    "year_month": "2018-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.54,
+    "plays": 41
+  },
+  {
+    "year_month": "2018-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.08,
+    "plays": 35
+  },
+  {
+    "year_month": "2018-07",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.44,
+    "plays": 11
+  },
+  {
+    "year_month": "2018-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.67,
+    "plays": 62
+  },
+  {
+    "year_month": "2018-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.62,
+    "plays": 15
+  },
+  {
+    "year_month": "2018-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.34,
+    "plays": 11
+  },
+  {
+    "year_month": "2018-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 6.28,
+    "plays": 129
+  },
+  {
+    "year_month": "2018-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.66,
+    "plays": 58
+  },
+  {
+    "year_month": "2018-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.0,
+    "plays": 68
+  },
+  {
+    "year_month": "2018-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.18,
+    "plays": 34
+  },
+  {
+    "year_month": "2018-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.53,
+    "plays": 111
+  },
+  {
+    "year_month": "2018-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.82,
+    "plays": 39
+  },
+  {
+    "year_month": "2018-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.63,
+    "plays": 45
+  },
+  {
+    "year_month": "2018-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.53,
+    "plays": 84
+  },
+  {
+    "year_month": "2018-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.72,
+    "plays": 20
+  },
+  {
+    "year_month": "2018-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.06,
+    "plays": 67
+  },
+  {
+    "year_month": "2018-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 8.48,
+    "plays": 221
+  },
+  {
+    "year_month": "2018-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.71,
+    "plays": 109
+  },
+  {
+    "year_month": "2018-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.54,
+    "plays": 40
+  },
+  {
+    "year_month": "2018-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.37,
+    "plays": 121
+  },
+  {
+    "year_month": "2018-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.94,
+    "plays": 23
+  },
+  {
+    "year_month": "2018-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.4,
+    "plays": 72
+  },
+  {
+    "year_month": "2018-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.56,
+    "plays": 84
+  },
+  {
+    "year_month": "2018-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.8,
+    "plays": 35
+  },
+  {
+    "year_month": "2018-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.28,
+    "plays": 14
+  },
+  {
+    "year_month": "2018-11",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.95,
+    "plays": 20
+  },
+  {
+    "year_month": "2018-11",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 4.38,
+    "plays": 162
+  },
+  {
+    "year_month": "2018-11",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 8.61,
+    "plays": 138
+  },
+  {
+    "year_month": "2018-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.57,
+    "plays": 43
+  },
+  {
+    "year_month": "2018-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.0,
+    "plays": 73
+  },
+  {
+    "year_month": "2018-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 5.89,
+    "plays": 98
+  },
+  {
+    "year_month": "2018-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.61,
+    "plays": 43
+  },
+  {
+    "year_month": "2018-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 6.32,
+    "plays": 129
+  },
+  {
+    "year_month": "2018-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 8.32,
+    "plays": 167
+  },
+  {
+    "year_month": "2018-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.2,
+    "plays": 100
+  },
+  {
+    "year_month": "2019-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.81,
+    "plays": 113
+  },
+  {
+    "year_month": "2019-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.63,
+    "plays": 43
+  },
+  {
+    "year_month": "2019-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.96,
+    "plays": 76
+  },
+  {
+    "year_month": "2019-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 7.46,
+    "plays": 141
+  },
+  {
+    "year_month": "2019-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 8.85,
+    "plays": 241
+  },
+  {
+    "year_month": "2019-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 6.69,
+    "plays": 166
+  },
+  {
+    "year_month": "2019-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.48,
+    "plays": 148
+  },
+  {
+    "year_month": "2019-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 7.83,
+    "plays": 216
+  },
+  {
+    "year_month": "2019-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.46,
+    "plays": 162
+  },
+  {
+    "year_month": "2019-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.38,
+    "plays": 94
+  },
+  {
+    "year_month": "2019-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.83,
+    "plays": 37
+  },
+  {
+    "year_month": "2019-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 5.72,
+    "plays": 145
+  },
+  {
+    "year_month": "2019-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.51,
+    "plays": 204
+  },
+  {
+    "year_month": "2019-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.97,
+    "plays": 35
+  },
+  {
+    "year_month": "2019-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.8,
+    "plays": 80
+  },
+  {
+    "year_month": "2019-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.19,
+    "plays": 32
+  },
+  {
+    "year_month": "2019-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.32,
+    "plays": 93
+  },
+  {
+    "year_month": "2019-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.87,
+    "plays": 57
+  },
+  {
+    "year_month": "2019-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.69,
+    "plays": 69
+  },
+  {
+    "year_month": "2019-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 4.39,
+    "plays": 159
+  },
+  {
+    "year_month": "2019-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.46,
+    "plays": 33
+  },
+  {
+    "year_month": "2019-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.06,
+    "plays": 104
+  },
+  {
+    "year_month": "2019-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 11.54,
+    "plays": 248
+  },
+  {
+    "year_month": "2019-04",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 5.6,
+    "plays": 141
+  },
+  {
+    "year_month": "2019-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 11.43,
+    "plays": 239
+  },
+  {
+    "year_month": "2019-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.53,
+    "plays": 64
+  },
+  {
+    "year_month": "2019-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.96,
+    "plays": 85
+  },
+  {
+    "year_month": "2019-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.01,
+    "plays": 75
+  },
+  {
+    "year_month": "2019-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.05,
+    "plays": 6
+  },
+  {
+    "year_month": "2019-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 8.83,
+    "plays": 158
+  },
+  {
+    "year_month": "2019-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.21,
+    "plays": 55
+  },
+  {
+    "year_month": "2019-05",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.76,
+    "plays": 62
+  },
+  {
+    "year_month": "2019-05",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.82,
+    "plays": 53
+  },
+  {
+    "year_month": "2019-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 4.71,
+    "plays": 85
+  },
+  {
+    "year_month": "2019-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.21,
+    "plays": 53
+  },
+  {
+    "year_month": "2019-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.17,
+    "plays": 64
+  },
+  {
+    "year_month": "2019-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 23.44,
+    "plays": 311
+  },
+  {
+    "year_month": "2019-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 7.88,
+    "plays": 126
+  },
+  {
+    "year_month": "2019-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.0,
+    "plays": 5
+  },
+  {
+    "year_month": "2019-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.79,
+    "plays": 60
+  },
+  {
+    "year_month": "2019-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.62,
+    "plays": 44
+  },
+  {
+    "year_month": "2019-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.81,
+    "plays": 52
+  },
+  {
+    "year_month": "2019-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.98,
+    "plays": 92
+  },
+  {
+    "year_month": "2019-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.27,
+    "plays": 112
+  },
+  {
+    "year_month": "2019-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.58,
+    "plays": 82
+  },
+  {
+    "year_month": "2019-07",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.42,
+    "plays": 80
+  },
+  {
+    "year_month": "2019-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.2,
+    "plays": 66
+  },
+  {
+    "year_month": "2019-07",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 7.06,
+    "plays": 135
+  },
+  {
+    "year_month": "2019-07",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.02,
+    "plays": 28
+  },
+  {
+    "year_month": "2019-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.3,
+    "plays": 46
+  },
+  {
+    "year_month": "2019-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.69,
+    "plays": 52
+  },
+  {
+    "year_month": "2019-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.8,
+    "plays": 116
+  },
+  {
+    "year_month": "2019-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.69,
+    "plays": 125
+  },
+  {
+    "year_month": "2019-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 5.68,
+    "plays": 107
+  },
+  {
+    "year_month": "2019-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.13,
+    "plays": 120
+  },
+  {
+    "year_month": "2019-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 6.13,
+    "plays": 131
+  },
+  {
+    "year_month": "2019-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.2,
+    "plays": 35
+  },
+  {
+    "year_month": "2019-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.12,
+    "plays": 106
+  },
+  {
+    "year_month": "2019-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.8,
+    "plays": 116
+  },
+  {
+    "year_month": "2019-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 11.7,
+    "plays": 201
+  },
+  {
+    "year_month": "2019-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.72,
+    "plays": 101
+  },
+  {
+    "year_month": "2019-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.88,
+    "plays": 37
+  },
+  {
+    "year_month": "2019-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.07,
+    "plays": 80
+  },
+  {
+    "year_month": "2019-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.63,
+    "plays": 15
+  },
+  {
+    "year_month": "2019-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.24,
+    "plays": 88
+  },
+  {
+    "year_month": "2019-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 7.43,
+    "plays": 147
+  },
+  {
+    "year_month": "2019-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 4.5,
+    "plays": 102
+  },
+  {
+    "year_month": "2019-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 4.86,
+    "plays": 105
+  },
+  {
+    "year_month": "2019-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.56,
+    "plays": 42
+  },
+  {
+    "year_month": "2019-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.36,
+    "plays": 89
+  },
+  {
+    "year_month": "2019-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.59,
+    "plays": 64
+  },
+  {
+    "year_month": "2019-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.28,
+    "plays": 137
+  },
+  {
+    "year_month": "2019-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.15,
+    "plays": 74
+  },
+  {
+    "year_month": "2019-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.77,
+    "plays": 67
+  },
+  {
+    "year_month": "2019-11",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.95,
+    "plays": 63
+  },
+  {
+    "year_month": "2019-11",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 15.48,
+    "plays": 310
+  },
+  {
+    "year_month": "2019-11",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.08,
+    "plays": 23
+  },
+  {
+    "year_month": "2019-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.5,
+    "plays": 115
+  },
+  {
+    "year_month": "2019-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.09,
+    "plays": 146
+  },
+  {
+    "year_month": "2019-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 11.24,
+    "plays": 183
+  },
+  {
+    "year_month": "2019-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 9.03,
+    "plays": 165
+  },
+  {
+    "year_month": "2019-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 6.9,
+    "plays": 125
+  },
+  {
+    "year_month": "2019-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.96,
+    "plays": 203
+  },
+  {
+    "year_month": "2019-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.79,
+    "plays": 141
+  },
+  {
+    "year_month": "2020-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.4,
+    "plays": 68
+  },
+  {
+    "year_month": "2020-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.35,
+    "plays": 131
+  },
+  {
+    "year_month": "2020-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 8.78,
+    "plays": 186
+  },
+  {
+    "year_month": "2020-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.56,
+    "plays": 144
+  },
+  {
+    "year_month": "2020-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 10.61,
+    "plays": 179
+  },
+  {
+    "year_month": "2020-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.68,
+    "plays": 200
+  },
+  {
+    "year_month": "2020-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 6.25,
+    "plays": 120
+  },
+  {
+    "year_month": "2020-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.13,
+    "plays": 9
+  },
+  {
+    "year_month": "2020-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 2.03,
+    "plays": 61
+  },
+  {
+    "year_month": "2020-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 9.49,
+    "plays": 173
+  },
+  {
+    "year_month": "2020-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 4.09,
+    "plays": 123
+  },
+  {
+    "year_month": "2020-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 8.73,
+    "plays": 149
+  },
+  {
+    "year_month": "2020-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.43,
+    "plays": 115
+  },
+  {
+    "year_month": "2020-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.18,
+    "plays": 52
+  },
+  {
+    "year_month": "2020-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.65,
+    "plays": 94
+  },
+  {
+    "year_month": "2020-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.82,
+    "plays": 166
+  },
+  {
+    "year_month": "2020-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 8.82,
+    "plays": 158
+  },
+  {
+    "year_month": "2020-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.59,
+    "plays": 62
+  },
+  {
+    "year_month": "2020-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.42,
+    "plays": 46
+  },
+  {
+    "year_month": "2020-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.39,
+    "plays": 98
+  },
+  {
+    "year_month": "2020-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.05,
+    "plays": 7
+  },
+  {
+    "year_month": "2020-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.03,
+    "plays": 140
+  },
+  {
+    "year_month": "2020-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.32,
+    "plays": 113
+  },
+  {
+    "year_month": "2020-04",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 8.73,
+    "plays": 165
+  },
+  {
+    "year_month": "2020-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.65,
+    "plays": 30
+  },
+  {
+    "year_month": "2020-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.77,
+    "plays": 99
+  },
+  {
+    "year_month": "2020-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 4.32,
+    "plays": 94
+  },
+  {
+    "year_month": "2020-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.35,
+    "plays": 33
+  },
+  {
+    "year_month": "2020-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 9.92,
+    "plays": 183
+  },
+  {
+    "year_month": "2020-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.17,
+    "plays": 118
+  },
+  {
+    "year_month": "2020-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.84,
+    "plays": 25
+  },
+  {
+    "year_month": "2020-05",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.14,
+    "plays": 97
+  },
+  {
+    "year_month": "2020-05",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.96,
+    "plays": 54
+  },
+  {
+    "year_month": "2020-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.77,
+    "plays": 116
+  },
+  {
+    "year_month": "2020-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 10.14,
+    "plays": 187
+  },
+  {
+    "year_month": "2020-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.47,
+    "plays": 60
+  },
+  {
+    "year_month": "2020-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.97,
+    "plays": 131
+  },
+  {
+    "year_month": "2020-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.98,
+    "plays": 98
+  },
+  {
+    "year_month": "2020-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.37,
+    "plays": 90
+  },
+  {
+    "year_month": "2020-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 4.55,
+    "plays": 120
+  },
+  {
+    "year_month": "2020-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.0,
+    "plays": 48
+  },
+  {
+    "year_month": "2020-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.76,
+    "plays": 23
+  },
+  {
+    "year_month": "2020-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 8.61,
+    "plays": 159
+  },
+  {
+    "year_month": "2020-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.6,
+    "plays": 157
+  },
+  {
+    "year_month": "2020-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.57,
+    "plays": 36
+  },
+  {
+    "year_month": "2020-07",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 4.17,
+    "plays": 120
+  },
+  {
+    "year_month": "2020-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 4.7,
+    "plays": 116
+  },
+  {
+    "year_month": "2020-07",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.03,
+    "plays": 107
+  },
+  {
+    "year_month": "2020-07",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 6.27,
+    "plays": 126
+  },
+  {
+    "year_month": "2020-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.09,
+    "plays": 211
+  },
+  {
+    "year_month": "2020-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 11.51,
+    "plays": 232
+  },
+  {
+    "year_month": "2020-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.04,
+    "plays": 90
+  },
+  {
+    "year_month": "2020-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.14,
+    "plays": 113
+  },
+  {
+    "year_month": "2020-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.06,
+    "plays": 54
+  },
+  {
+    "year_month": "2020-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.71,
+    "plays": 48
+  },
+  {
+    "year_month": "2020-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.47,
+    "plays": 200
+  },
+  {
+    "year_month": "2020-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.51,
+    "plays": 126
+  },
+  {
+    "year_month": "2020-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.61,
+    "plays": 98
+  },
+  {
+    "year_month": "2020-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.68,
+    "plays": 82
+  },
+  {
+    "year_month": "2020-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.6,
+    "plays": 33
+  },
+  {
+    "year_month": "2020-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.02,
+    "plays": 43
+  },
+  {
+    "year_month": "2020-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.45,
+    "plays": 15
+  },
+  {
+    "year_month": "2020-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.05,
+    "plays": 26
+  },
+  {
+    "year_month": "2020-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.62,
+    "plays": 129
+  },
+  {
+    "year_month": "2020-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.15,
+    "plays": 93
+  },
+  {
+    "year_month": "2020-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 5.83,
+    "plays": 114
+  },
+  {
+    "year_month": "2020-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.53,
+    "plays": 119
+  },
+  {
+    "year_month": "2020-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 13.09,
+    "plays": 259
+  },
+  {
+    "year_month": "2020-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 6.19,
+    "plays": 142
+  },
+  {
+    "year_month": "2020-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.51,
+    "plays": 147
+  },
+  {
+    "year_month": "2020-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.05,
+    "plays": 70
+  },
+  {
+    "year_month": "2020-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 10.13,
+    "plays": 181
+  },
+  {
+    "year_month": "2020-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 9.36,
+    "plays": 169
+  },
+  {
+    "year_month": "2020-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.71,
+    "plays": 51
+  },
+  {
+    "year_month": "2020-11",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 6.18,
+    "plays": 310
+  },
+  {
+    "year_month": "2020-11",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 9.26,
+    "plays": 182
+  },
+  {
+    "year_month": "2020-11",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 4.93,
+    "plays": 98
+  },
+  {
+    "year_month": "2020-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.91,
+    "plays": 22
+  },
+  {
+    "year_month": "2020-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.46,
+    "plays": 13
+  },
+  {
+    "year_month": "2020-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.39,
+    "plays": 8
+  },
+  {
+    "year_month": "2020-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.7,
+    "plays": 47
+  },
+  {
+    "year_month": "2020-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.65,
+    "plays": 16
+  },
+  {
+    "year_month": "2020-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.43,
+    "plays": 9
+  },
+  {
+    "year_month": "2020-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.87,
+    "plays": 21
+  },
+  {
+    "year_month": "2021-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.75,
+    "plays": 43
+  },
+  {
+    "year_month": "2021-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.75,
+    "plays": 141
+  },
+  {
+    "year_month": "2021-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.55,
+    "plays": 22
+  },
+  {
+    "year_month": "2021-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.74,
+    "plays": 134
+  },
+  {
+    "year_month": "2021-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.26,
+    "plays": 45
+  },
+  {
+    "year_month": "2021-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.14,
+    "plays": 74
+  },
+  {
+    "year_month": "2021-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.24,
+    "plays": 36
+  },
+  {
+    "year_month": "2021-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.37,
+    "plays": 40
+  },
+  {
+    "year_month": "2021-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.55,
+    "plays": 94
+  },
+  {
+    "year_month": "2021-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 2.71,
+    "plays": 60
+  },
+  {
+    "year_month": "2021-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 7.92,
+    "plays": 290
+  },
+  {
+    "year_month": "2021-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 4.46,
+    "plays": 167
+  },
+  {
+    "year_month": "2021-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.86,
+    "plays": 27
+  },
+  {
+    "year_month": "2021-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 1.35,
+    "plays": 38
+  },
+  {
+    "year_month": "2021-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.28,
+    "plays": 15
+  },
+  {
+    "year_month": "2021-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 13.83,
+    "plays": 437
+  },
+  {
+    "year_month": "2021-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.23,
+    "plays": 23
+  },
+  {
+    "year_month": "2021-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.27,
+    "plays": 7
+  },
+  {
+    "year_month": "2021-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 0.11,
+    "plays": 6
+  },
+  {
+    "year_month": "2021-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.07,
+    "plays": 10
+  },
+  {
+    "year_month": "2021-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 7.9,
+    "plays": 142
+  },
+  {
+    "year_month": "2021-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.38,
+    "plays": 28
+  },
+  {
+    "year_month": "2021-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 2.23,
+    "plays": 49
+  },
+  {
+    "year_month": "2021-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.21,
+    "plays": 75
+  },
+  {
+    "year_month": "2021-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.58,
+    "plays": 172
+  },
+  {
+    "year_month": "2021-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 4.67,
+    "plays": 94
+  },
+  {
+    "year_month": "2021-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 4.93,
+    "plays": 97
+  },
+  {
+    "year_month": "2021-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.21,
+    "plays": 126
+  },
+  {
+    "year_month": "2021-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.34,
+    "plays": 108
+  },
+  {
+    "year_month": "2021-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.18,
+    "plays": 86
+  },
+  {
+    "year_month": "2021-05",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.49,
+    "plays": 110
+  },
+  {
+    "year_month": "2021-05",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.99,
+    "plays": 96
+  },
+  {
+    "year_month": "2021-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.28,
+    "plays": 110
+  },
+  {
+    "year_month": "2021-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.58,
+    "plays": 192
+  },
+  {
+    "year_month": "2021-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.66,
+    "plays": 79
+  },
+  {
+    "year_month": "2021-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.76,
+    "plays": 24
+  },
+  {
+    "year_month": "2021-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.43,
+    "plays": 30
+  },
+  {
+    "year_month": "2021-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 3.01,
+    "plays": 61
+  },
+  {
+    "year_month": "2021-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.23,
+    "plays": 24
+  },
+  {
+    "year_month": "2021-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.87,
+    "plays": 40
+  },
+  {
+    "year_month": "2021-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.4,
+    "plays": 59
+  },
+  {
+    "year_month": "2021-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.64,
+    "plays": 255
+  },
+  {
+    "year_month": "2021-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.51,
+    "plays": 10
+  },
+  {
+    "year_month": "2021-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.7,
+    "plays": 17
+  },
+  {
+    "year_month": "2021-07",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 1.31,
+    "plays": 45
+  },
+  {
+    "year_month": "2021-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.04,
+    "plays": 22
+  },
+  {
+    "year_month": "2021-07",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.44,
+    "plays": 71
+  },
+  {
+    "year_month": "2021-07",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.4,
+    "plays": 224
+  },
+  {
+    "year_month": "2021-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.68,
+    "plays": 134
+  },
+  {
+    "year_month": "2021-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.48,
+    "plays": 62
+  },
+  {
+    "year_month": "2021-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.12,
+    "plays": 106
+  },
+  {
+    "year_month": "2021-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.57,
+    "plays": 53
+  },
+  {
+    "year_month": "2021-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.08,
+    "plays": 215
+  },
+  {
+    "year_month": "2021-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.32,
+    "plays": 26
+  },
+  {
+    "year_month": "2021-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.22,
+    "plays": 53
+  },
+  {
+    "year_month": "2021-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 7.94,
+    "plays": 153
+  },
+  {
+    "year_month": "2021-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.44,
+    "plays": 15
+  },
+  {
+    "year_month": "2021-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 1.53,
+    "plays": 132
+  },
+  {
+    "year_month": "2021-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 10.72,
+    "plays": 212
+  },
+  {
+    "year_month": "2021-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 11.21,
+    "plays": 230
+  },
+  {
+    "year_month": "2021-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 0.79,
+    "plays": 17
+  },
+  {
+    "year_month": "2021-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.35,
+    "plays": 68
+  },
+  {
+    "year_month": "2021-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.08,
+    "plays": 41
+  },
+  {
+    "year_month": "2021-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.39,
+    "plays": 70
+  },
+  {
+    "year_month": "2021-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.45,
+    "plays": 97
+  },
+  {
+    "year_month": "2021-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 4.49,
+    "plays": 138
+  },
+  {
+    "year_month": "2021-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.41,
+    "plays": 152
+  },
+  {
+    "year_month": "2021-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.68,
+    "plays": 143
+  },
+  {
+    "year_month": "2021-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 4.65,
+    "plays": 367
+  },
+  {
+    "year_month": "2021-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.26,
+    "plays": 115
+  },
+  {
+    "year_month": "2021-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.75,
+    "plays": 83
+  },
+  {
+    "year_month": "2021-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 12.62,
+    "plays": 596
+  },
+  {
+    "year_month": "2021-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.89,
+    "plays": 123
+  },
+  {
+    "year_month": "2021-11",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 4.67,
+    "plays": 113
+  },
+  {
+    "year_month": "2021-11",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 8.56,
+    "plays": 236
+  },
+  {
+    "year_month": "2021-11",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 4.21,
+    "plays": 84
+  },
+  {
+    "year_month": "2021-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.62,
+    "plays": 142
+  },
+  {
+    "year_month": "2021-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.73,
+    "plays": 177
+  },
+  {
+    "year_month": "2021-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.92,
+    "plays": 97
+  },
+  {
+    "year_month": "2021-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.61,
+    "plays": 51
+  },
+  {
+    "year_month": "2021-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.62,
+    "plays": 93
+  },
+  {
+    "year_month": "2021-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.39,
+    "plays": 102
+  },
+  {
+    "year_month": "2021-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.96,
+    "plays": 432
+  },
+  {
+    "year_month": "2022-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.9,
+    "plays": 87
+  },
+  {
+    "year_month": "2022-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 0.65,
+    "plays": 29
+  },
+  {
+    "year_month": "2022-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 0.16,
+    "plays": 10
+  },
+  {
+    "year_month": "2022-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 0.1,
+    "plays": 6
+  },
+  {
+    "year_month": "2022-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.22,
+    "plays": 27
+  },
+  {
+    "year_month": "2022-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.04,
+    "plays": 69
+  },
+  {
+    "year_month": "2022-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.55,
+    "plays": 50
+  },
+  {
+    "year_month": "2022-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 7.68,
+    "plays": 164
+  },
+  {
+    "year_month": "2022-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 1.16,
+    "plays": 26
+  },
+  {
+    "year_month": "2022-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.13,
+    "plays": 141
+  },
+  {
+    "year_month": "2022-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 9.72,
+    "plays": 254
+  },
+  {
+    "year_month": "2022-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.68,
+    "plays": 62
+  },
+  {
+    "year_month": "2022-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.63,
+    "plays": 135
+  },
+  {
+    "year_month": "2022-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.04,
+    "plays": 68
+  },
+  {
+    "year_month": "2022-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.73,
+    "plays": 93
+  },
+  {
+    "year_month": "2022-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 13.94,
+    "plays": 250
+  },
+  {
+    "year_month": "2022-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 16.21,
+    "plays": 334
+  },
+  {
+    "year_month": "2022-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 15.89,
+    "plays": 308
+  },
+  {
+    "year_month": "2022-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 10.83,
+    "plays": 184
+  },
+  {
+    "year_month": "2022-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.9,
+    "plays": 102
+  },
+  {
+    "year_month": "2022-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 8.76,
+    "plays": 227
+  },
+  {
+    "year_month": "2022-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.15,
+    "plays": 93
+  },
+  {
+    "year_month": "2022-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 2.85,
+    "plays": 57
+  },
+  {
+    "year_month": "2022-04",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.58,
+    "plays": 76
+  },
+  {
+    "year_month": "2022-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.04,
+    "plays": 100
+  },
+  {
+    "year_month": "2022-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 1.85,
+    "plays": 32
+  },
+  {
+    "year_month": "2022-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 1.99,
+    "plays": 62
+  },
+  {
+    "year_month": "2022-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.19,
+    "plays": 56
+  },
+  {
+    "year_month": "2022-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.55,
+    "plays": 39
+  },
+  {
+    "year_month": "2022-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.7,
+    "plays": 110
+  },
+  {
+    "year_month": "2022-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 10.53,
+    "plays": 202
+  },
+  {
+    "year_month": "2022-05",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 16.37,
+    "plays": 303
+  },
+  {
+    "year_month": "2022-05",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 6.15,
+    "plays": 169
+  },
+  {
+    "year_month": "2022-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 7.77,
+    "plays": 178
+  },
+  {
+    "year_month": "2022-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.52,
+    "plays": 79
+  },
+  {
+    "year_month": "2022-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.59,
+    "plays": 109
+  },
+  {
+    "year_month": "2022-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 10.24,
+    "plays": 184
+  },
+  {
+    "year_month": "2022-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 11.78,
+    "plays": 275
+  },
+  {
+    "year_month": "2022-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 14.9,
+    "plays": 253
+  },
+  {
+    "year_month": "2022-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 21.32,
+    "plays": 444
+  },
+  {
+    "year_month": "2022-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 8.81,
+    "plays": 325
+  },
+  {
+    "year_month": "2022-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 7.64,
+    "plays": 213
+  },
+  {
+    "year_month": "2022-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 0.89,
+    "plays": 29
+  },
+  {
+    "year_month": "2022-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.39,
+    "plays": 324
+  },
+  {
+    "year_month": "2022-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 9.04,
+    "plays": 282
+  },
+  {
+    "year_month": "2022-07",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 14.12,
+    "plays": 314
+  },
+  {
+    "year_month": "2022-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 10.66,
+    "plays": 330
+  },
+  {
+    "year_month": "2022-07",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 14.89,
+    "plays": 620
+  },
+  {
+    "year_month": "2022-07",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 14.72,
+    "plays": 348
+  },
+  {
+    "year_month": "2022-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.8,
+    "plays": 44
+  },
+  {
+    "year_month": "2022-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 12.63,
+    "plays": 219
+  },
+  {
+    "year_month": "2022-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 9.1,
+    "plays": 182
+  },
+  {
+    "year_month": "2022-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 14.25,
+    "plays": 292
+  },
+  {
+    "year_month": "2022-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 9.76,
+    "plays": 324
+  },
+  {
+    "year_month": "2022-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 8.2,
+    "plays": 150
+  },
+  {
+    "year_month": "2022-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.74,
+    "plays": 127
+  },
+  {
+    "year_month": "2022-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 11.16,
+    "plays": 280
+  },
+  {
+    "year_month": "2022-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 8.47,
+    "plays": 210
+  },
+  {
+    "year_month": "2022-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 11.22,
+    "plays": 252
+  },
+  {
+    "year_month": "2022-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 12.9,
+    "plays": 308
+  },
+  {
+    "year_month": "2022-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 11.34,
+    "plays": 297
+  },
+  {
+    "year_month": "2022-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 14.31,
+    "plays": 436
+  },
+  {
+    "year_month": "2022-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.3,
+    "plays": 242
+  },
+  {
+    "year_month": "2022-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.2,
+    "plays": 91
+  },
+  {
+    "year_month": "2022-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 9.42,
+    "plays": 286
+  },
+  {
+    "year_month": "2022-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 12.05,
+    "plays": 361
+  },
+  {
+    "year_month": "2022-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 11.53,
+    "plays": 322
+  },
+  {
+    "year_month": "2022-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 8.0,
+    "plays": 237
+  },
+  {
+    "year_month": "2022-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.99,
+    "plays": 277
+  },
+  {
+    "year_month": "2022-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 6.4,
+    "plays": 161
+  },
+  {
+    "year_month": "2022-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.03,
+    "plays": 220
+  },
+  {
+    "year_month": "2022-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.87,
+    "plays": 191
+  },
+  {
+    "year_month": "2022-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 9.49,
+    "plays": 199
+  },
+  {
+    "year_month": "2022-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 10.36,
+    "plays": 285
+  },
+  {
+    "year_month": "2022-11",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 10.75,
+    "plays": 381
+  },
+  {
+    "year_month": "2022-11",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 6.01,
+    "plays": 155
+  },
+  {
+    "year_month": "2022-11",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 8.34,
+    "plays": 276
+  },
+  {
+    "year_month": "2022-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.51,
+    "plays": 160
+  },
+  {
+    "year_month": "2022-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 8.76,
+    "plays": 234
+  },
+  {
+    "year_month": "2022-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 7.81,
+    "plays": 297
+  },
+  {
+    "year_month": "2022-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 11.9,
+    "plays": 335
+  },
+  {
+    "year_month": "2022-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 8.79,
+    "plays": 416
+  },
+  {
+    "year_month": "2022-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 5.22,
+    "plays": 230
+  },
+  {
+    "year_month": "2022-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 6.7,
+    "plays": 179
+  },
+  {
+    "year_month": "2023-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.82,
+    "plays": 162
+  },
+  {
+    "year_month": "2023-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.32,
+    "plays": 129
+  },
+  {
+    "year_month": "2023-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.06,
+    "plays": 102
+  },
+  {
+    "year_month": "2023-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.7,
+    "plays": 105
+  },
+  {
+    "year_month": "2023-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 4.97,
+    "plays": 142
+  },
+  {
+    "year_month": "2023-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 2.52,
+    "plays": 93
+  },
+  {
+    "year_month": "2023-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 7.08,
+    "plays": 189
+  },
+  {
+    "year_month": "2023-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.52,
+    "plays": 171
+  },
+  {
+    "year_month": "2023-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 8.1,
+    "plays": 172
+  },
+  {
+    "year_month": "2023-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 14.34,
+    "plays": 342
+  },
+  {
+    "year_month": "2023-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 5.37,
+    "plays": 135
+  },
+  {
+    "year_month": "2023-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 7.97,
+    "plays": 293
+  },
+  {
+    "year_month": "2023-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 8.35,
+    "plays": 197
+  },
+  {
+    "year_month": "2023-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 8.06,
+    "plays": 174
+  },
+  {
+    "year_month": "2023-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 19.58,
+    "plays": 383
+  },
+  {
+    "year_month": "2023-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.21,
+    "plays": 209
+  },
+  {
+    "year_month": "2023-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 12.42,
+    "plays": 267
+  },
+  {
+    "year_month": "2023-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 23.52,
+    "plays": 433
+  },
+  {
+    "year_month": "2023-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 10.52,
+    "plays": 299
+  },
+  {
+    "year_month": "2023-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 15.12,
+    "plays": 328
+  },
+  {
+    "year_month": "2023-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 8.58,
+    "plays": 158
+  },
+  {
+    "year_month": "2023-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 9.88,
+    "plays": 205
+  },
+  {
+    "year_month": "2023-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 16.44,
+    "plays": 315
+  },
+  {
+    "year_month": "2023-04",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 12.52,
+    "plays": 265
+  },
+  {
+    "year_month": "2023-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 18.09,
+    "plays": 386
+  },
+  {
+    "year_month": "2023-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 10.42,
+    "plays": 193
+  },
+  {
+    "year_month": "2023-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 14.13,
+    "plays": 287
+  },
+  {
+    "year_month": "2023-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 14.12,
+    "plays": 293
+  },
+  {
+    "year_month": "2023-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.33,
+    "plays": 154
+  },
+  {
+    "year_month": "2023-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.39,
+    "plays": 142
+  },
+  {
+    "year_month": "2023-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 22.32,
+    "plays": 491
+  },
+  {
+    "year_month": "2023-05",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 18.78,
+    "plays": 378
+  },
+  {
+    "year_month": "2023-05",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 8.93,
+    "plays": 234
+  },
+  {
+    "year_month": "2023-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 17.12,
+    "plays": 358
+  },
+  {
+    "year_month": "2023-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 10.09,
+    "plays": 188
+  },
+  {
+    "year_month": "2023-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.74,
+    "plays": 120
+  },
+  {
+    "year_month": "2023-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.96,
+    "plays": 144
+  },
+  {
+    "year_month": "2023-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 6.11,
+    "plays": 190
+  },
+  {
+    "year_month": "2023-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 4.97,
+    "plays": 153
+  },
+  {
+    "year_month": "2023-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 11.4,
+    "plays": 243
+  },
+  {
+    "year_month": "2023-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 12.83,
+    "plays": 299
+  },
+  {
+    "year_month": "2023-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 10.89,
+    "plays": 195
+  },
+  {
+    "year_month": "2023-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.57,
+    "plays": 83
+  },
+  {
+    "year_month": "2023-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 8.46,
+    "plays": 178
+  },
+  {
+    "year_month": "2023-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 6.79,
+    "plays": 256
+  },
+  {
+    "year_month": "2023-07",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 16.73,
+    "plays": 361
+  },
+  {
+    "year_month": "2023-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 10.88,
+    "plays": 261
+  },
+  {
+    "year_month": "2023-07",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 6.44,
+    "plays": 149
+  },
+  {
+    "year_month": "2023-07",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 10.98,
+    "plays": 225
+  },
+  {
+    "year_month": "2023-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 9.15,
+    "plays": 194
+  },
+  {
+    "year_month": "2023-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.37,
+    "plays": 162
+  },
+  {
+    "year_month": "2023-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 12.09,
+    "plays": 246
+  },
+  {
+    "year_month": "2023-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 9.55,
+    "plays": 259
+  },
+  {
+    "year_month": "2023-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 11.18,
+    "plays": 227
+  },
+  {
+    "year_month": "2023-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.83,
+    "plays": 244
+  },
+  {
+    "year_month": "2023-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 2.57,
+    "plays": 57
+  },
+  {
+    "year_month": "2023-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.06,
+    "plays": 138
+  },
+  {
+    "year_month": "2023-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 3.66,
+    "plays": 98
+  },
+  {
+    "year_month": "2023-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 5.93,
+    "plays": 151
+  },
+  {
+    "year_month": "2023-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 7.71,
+    "plays": 172
+  },
+  {
+    "year_month": "2023-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.62,
+    "plays": 81
+  },
+  {
+    "year_month": "2023-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.99,
+    "plays": 220
+  },
+  {
+    "year_month": "2023-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 12.46,
+    "plays": 269
+  },
+  {
+    "year_month": "2023-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 12.3,
+    "plays": 242
+  },
+  {
+    "year_month": "2023-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 15.78,
+    "plays": 364
+  },
+  {
+    "year_month": "2023-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 12.68,
+    "plays": 279
+  },
+  {
+    "year_month": "2023-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 13.64,
+    "plays": 272
+  },
+  {
+    "year_month": "2023-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 13.5,
+    "plays": 312
+  },
+  {
+    "year_month": "2023-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 20.78,
+    "plays": 442
+  },
+  {
+    "year_month": "2023-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 9.18,
+    "plays": 202
+  },
+  {
+    "year_month": "2023-11",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 9.19,
+    "plays": 200
+  },
+  {
+    "year_month": "2023-11",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 16.23,
+    "plays": 326
+  },
+  {
+    "year_month": "2023-11",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 13.2,
+    "plays": 242
+  },
+  {
+    "year_month": "2023-11",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 19.58,
+    "plays": 524
+  },
+  {
+    "year_month": "2023-11",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 16.93,
+    "plays": 307
+  },
+  {
+    "year_month": "2023-11",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 14.73,
+    "plays": 313
+  },
+  {
+    "year_month": "2023-11",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 12.77,
+    "plays": 235
+  },
+  {
+    "year_month": "2023-12",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 18.49,
+    "plays": 409
+  },
+  {
+    "year_month": "2023-12",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 17.28,
+    "plays": 399
+  },
+  {
+    "year_month": "2023-12",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 16.05,
+    "plays": 429
+  },
+  {
+    "year_month": "2023-12",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 24.52,
+    "plays": 544
+  },
+  {
+    "year_month": "2023-12",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 15.69,
+    "plays": 355
+  },
+  {
+    "year_month": "2023-12",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 18.07,
+    "plays": 372
+  },
+  {
+    "year_month": "2023-12",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 14.16,
+    "plays": 290
+  },
+  {
+    "year_month": "2024-01",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.67,
+    "plays": 203
+  },
+  {
+    "year_month": "2024-01",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 15.87,
+    "plays": 375
+  },
+  {
+    "year_month": "2024-01",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 26.49,
+    "plays": 537
+  },
+  {
+    "year_month": "2024-01",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 29.11,
+    "plays": 574
+  },
+  {
+    "year_month": "2024-01",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 22.78,
+    "plays": 410
+  },
+  {
+    "year_month": "2024-01",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 17.91,
+    "plays": 312
+  },
+  {
+    "year_month": "2024-01",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 8.59,
+    "plays": 180
+  },
+  {
+    "year_month": "2024-02",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 6.78,
+    "plays": 149
+  },
+  {
+    "year_month": "2024-02",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.94,
+    "plays": 151
+  },
+  {
+    "year_month": "2024-02",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 11.0,
+    "plays": 240
+  },
+  {
+    "year_month": "2024-02",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.69,
+    "plays": 64
+  },
+  {
+    "year_month": "2024-02",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 11.52,
+    "plays": 342
+  },
+  {
+    "year_month": "2024-02",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 7.71,
+    "plays": 186
+  },
+  {
+    "year_month": "2024-02",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 7.14,
+    "plays": 162
+  },
+  {
+    "year_month": "2024-03",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 9.38,
+    "plays": 209
+  },
+  {
+    "year_month": "2024-03",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.02,
+    "plays": 100
+  },
+  {
+    "year_month": "2024-03",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 4.71,
+    "plays": 113
+  },
+  {
+    "year_month": "2024-03",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 2.54,
+    "plays": 76
+  },
+  {
+    "year_month": "2024-03",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.58,
+    "plays": 78
+  },
+  {
+    "year_month": "2024-03",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.77,
+    "plays": 88
+  },
+  {
+    "year_month": "2024-03",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 13.16,
+    "plays": 266
+  },
+  {
+    "year_month": "2024-04",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 1.38,
+    "plays": 33
+  },
+  {
+    "year_month": "2024-04",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 7.72,
+    "plays": 147
+  },
+  {
+    "year_month": "2024-04",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 10.77,
+    "plays": 229
+  },
+  {
+    "year_month": "2024-04",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 8.86,
+    "plays": 186
+  },
+  {
+    "year_month": "2024-04",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 5.0,
+    "plays": 103
+  },
+  {
+    "year_month": "2024-04",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.89,
+    "plays": 73
+  },
+  {
+    "year_month": "2024-04",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 10.65,
+    "plays": 208
+  },
+  {
+    "year_month": "2024-05",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 5.17,
+    "plays": 105
+  },
+  {
+    "year_month": "2024-05",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 5.05,
+    "plays": 111
+  },
+  {
+    "year_month": "2024-05",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 11.58,
+    "plays": 210
+  },
+  {
+    "year_month": "2024-05",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 10.93,
+    "plays": 225
+  },
+  {
+    "year_month": "2024-05",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 5.05,
+    "plays": 113
+  },
+  {
+    "year_month": "2024-05",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 11.13,
+    "plays": 253
+  },
+  {
+    "year_month": "2024-05",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 4.98,
+    "plays": 101
+  },
+  {
+    "year_month": "2024-06",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 12.47,
+    "plays": 219
+  },
+  {
+    "year_month": "2024-06",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.35,
+    "plays": 135
+  },
+  {
+    "year_month": "2024-06",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 6.34,
+    "plays": 116
+  },
+  {
+    "year_month": "2024-06",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 8.41,
+    "plays": 153
+  },
+  {
+    "year_month": "2024-06",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.86,
+    "plays": 55
+  },
+  {
+    "year_month": "2024-06",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.98,
+    "plays": 221
+  },
+  {
+    "year_month": "2024-06",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 9.73,
+    "plays": 175
+  },
+  {
+    "year_month": "2024-07",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 3.46,
+    "plays": 68
+  },
+  {
+    "year_month": "2024-07",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 9.24,
+    "plays": 186
+  },
+  {
+    "year_month": "2024-07",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 11.94,
+    "plays": 221
+  },
+  {
+    "year_month": "2024-07",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.89,
+    "plays": 154
+  },
+  {
+    "year_month": "2024-07",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 3.7,
+    "plays": 87
+  },
+  {
+    "year_month": "2024-07",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 4.41,
+    "plays": 92
+  },
+  {
+    "year_month": "2024-07",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 3.63,
+    "plays": 85
+  },
+  {
+    "year_month": "2024-08",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 4.99,
+    "plays": 101
+  },
+  {
+    "year_month": "2024-08",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 6.57,
+    "plays": 142
+  },
+  {
+    "year_month": "2024-08",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 3.76,
+    "plays": 77
+  },
+  {
+    "year_month": "2024-08",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 10.1,
+    "plays": 189
+  },
+  {
+    "year_month": "2024-08",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 6.52,
+    "plays": 153
+  },
+  {
+    "year_month": "2024-08",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 7.15,
+    "plays": 171
+  },
+  {
+    "year_month": "2024-08",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.23,
+    "plays": 117
+  },
+  {
+    "year_month": "2024-09",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 8.31,
+    "plays": 179
+  },
+  {
+    "year_month": "2024-09",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.58,
+    "plays": 98
+  },
+  {
+    "year_month": "2024-09",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 10.14,
+    "plays": 188
+  },
+  {
+    "year_month": "2024-09",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 10.81,
+    "plays": 255
+  },
+  {
+    "year_month": "2024-09",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 6.15,
+    "plays": 115
+  },
+  {
+    "year_month": "2024-09",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 10.88,
+    "plays": 231
+  },
+  {
+    "year_month": "2024-09",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 5.05,
+    "plays": 85
+  },
+  {
+    "year_month": "2024-10",
+    "dow": 0,
+    "dow_name": "Sunday",
+    "hours": 2.06,
+    "plays": 39
+  },
+  {
+    "year_month": "2024-10",
+    "dow": 1,
+    "dow_name": "Monday",
+    "hours": 4.11,
+    "plays": 87
+  },
+  {
+    "year_month": "2024-10",
+    "dow": 2,
+    "dow_name": "Tuesday",
+    "hours": 8.95,
+    "plays": 201
+  },
+  {
+    "year_month": "2024-10",
+    "dow": 3,
+    "dow_name": "Wednesday",
+    "hours": 6.13,
+    "plays": 118
+  },
+  {
+    "year_month": "2024-10",
+    "dow": 4,
+    "dow_name": "Thursday",
+    "hours": 2.92,
+    "plays": 66
+  },
+  {
+    "year_month": "2024-10",
+    "dow": 5,
+    "dow_name": "Friday",
+    "hours": 3.88,
+    "plays": 80
+  },
+  {
+    "year_month": "2024-10",
+    "dow": 6,
+    "dow_name": "Saturday",
+    "hours": 0.51,
+    "plays": 12
+  }
+]

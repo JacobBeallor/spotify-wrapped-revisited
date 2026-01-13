@@ -1,6 +1,6 @@
 # Data
 data_raw/
-data/
+/data/
 *.duckdb
 *.duckdb.wal
 *.zip

@@ -24,6 +24,11 @@
   - Bump chart or streamgraph (research Nivo?)
 - [ ] **Discovery trends** — Track new tracks/artists per month
   - "First listen" detection and visualization
+- [ ] **Release year analysis** — Analyze listening by song release date
+  - Distribution: 60s, 70s, 80s, 90s, 2000s, 2010s, 2020s
+  - "Musical era preference" visualization
+  - Nostalgia score: % of music older than 10 years
+  - Track if taste skews vintage, modern, or balanced
 - [ ] **Move to server-side queries** — Replace static JSON with dynamic API
   - Consider tRPC or Next.js API routes
   - Keep DuckDB for fast queries

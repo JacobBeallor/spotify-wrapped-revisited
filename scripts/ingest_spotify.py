@@ -10,11 +10,16 @@ import json
 import duckdb
 from pathlib import Path
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 # Paths
 DATA_RAW_DIR = Path(__file__).parent.parent / "data_raw"
 DATA_DIR = Path(__file__).parent.parent / "data"
 DB_PATH = DATA_DIR / "spotify.duckdb"
+
+# Timezone configuration
+# Spotify timestamps are in UTC, convert to local timezone
+LOCAL_TIMEZONE = ZoneInfo('America/Toronto')  # EST/EDT (automatically handles DST)
 
 def main():
     # Ensure data directory exists
@@ -72,8 +77,17 @@ def main():
             if not item.get('ts') or not item.get('master_metadata_track_name'):
                 continue
             
-            # Parse timestamp
-            played_at = item['ts']  # ISO 8601 format
+            # Parse timestamp (Spotify provides UTC)
+            ts_string = item['ts']
+            # Handle both 'Z' and '+00:00' UTC indicators
+            ts_string = ts_string.replace('Z', '+00:00')
+            played_at_utc = datetime.fromisoformat(ts_string)
+            
+            # Convert to local timezone (Toronto)
+            played_at_local = played_at_utc.astimezone(LOCAL_TIMEZONE)
+            
+            # Store as ISO format string (without timezone suffix for DuckDB)
+            played_at = played_at_local.replace(tzinfo=None).isoformat()
             
             records.append({
                 'played_at': played_at,
@@ -136,6 +150,9 @@ def main():
     # Print summary
     print("\n" + "="*60)
     print("INGESTION COMPLETE")
+    print("="*60)
+    print(f"Timezone: {LOCAL_TIMEZONE} (EST/EDT)")
+    print("All timestamps converted from UTC to local time")
     print("="*60)
     
     summary = con.execute("""

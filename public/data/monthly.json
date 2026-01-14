@@ -851,7 +851,7 @@
     "month": 11,
     "hours": 102.63,
     "plays": 2147,
-    "unique_tracks": 1431,
+    "unique_tracks": 1430,
     "unique_artists": 515
   },
   {
@@ -948,9 +948,144 @@
     "year_month": "2024-10",
     "year": 2024,
     "month": 10,
-    "hours": 28.56,
-    "plays": 603,
-    "unique_tracks": 454,
-    "unique_artists": 197
+    "hours": 51.75,
+    "plays": 1111,
+    "unique_tracks": 750,
+    "unique_artists": 285
+  },
+  {
+    "year_month": "2024-11",
+    "year": 2024,
+    "month": 11,
+    "hours": 36.7,
+    "plays": 790,
+    "unique_tracks": 563,
+    "unique_artists": 218
+  },
+  {
+    "year_month": "2024-12",
+    "year": 2024,
+    "month": 12,
+    "hours": 32.24,
+    "plays": 736,
+    "unique_tracks": 576,
+    "unique_artists": 251
+  },
+  {
+    "year_month": "2025-01",
+    "year": 2025,
+    "month": 1,
+    "hours": 47.84,
+    "plays": 1013,
+    "unique_tracks": 754,
+    "unique_artists": 268
+  },
+  {
+    "year_month": "2025-02",
+    "year": 2025,
+    "month": 2,
+    "hours": 33.4,
+    "plays": 724,
+    "unique_tracks": 585,
+    "unique_artists": 254
+  },
+  {
+    "year_month": "2025-03",
+    "year": 2025,
+    "month": 3,
+    "hours": 33.06,
+    "plays": 745,
+    "unique_tracks": 571,
+    "unique_artists": 253
+  },
+  {
+    "year_month": "2025-04",
+    "year": 2025,
+    "month": 4,
+    "hours": 47.19,
+    "plays": 796,
+    "unique_tracks": 590,
+    "unique_artists": 259
+  },
+  {
+    "year_month": "2025-05",
+    "year": 2025,
+    "month": 5,
+    "hours": 52.04,
+    "plays": 1398,
+    "unique_tracks": 865,
+    "unique_artists": 367
+  },
+  {
+    "year_month": "2025-06",
+    "year": 2025,
+    "month": 6,
+    "hours": 45.03,
+    "plays": 897,
+    "unique_tracks": 616,
+    "unique_artists": 287
+  },
+  {
+    "year_month": "2025-07",
+    "year": 2025,
+    "month": 7,
+    "hours": 47.07,
+    "plays": 1103,
+    "unique_tracks": 899,
+    "unique_artists": 305
+  },
+  {
+    "year_month": "2025-08",
+    "year": 2025,
+    "month": 8,
+    "hours": 48.35,
+    "plays": 1116,
+    "unique_tracks": 745,
+    "unique_artists": 347
+  },
+  {
+    "year_month": "2025-09",
+    "year": 2025,
+    "month": 9,
+    "hours": 37.44,
+    "plays": 908,
+    "unique_tracks": 734,
+    "unique_artists": 318
+  },
+  {
+    "year_month": "2025-10",
+    "year": 2025,
+    "month": 10,
+    "hours": 22.32,
+    "plays": 552,
+    "unique_tracks": 452,
+    "unique_artists": 222
+  },
+  {
+    "year_month": "2025-11",
+    "year": 2025,
+    "month": 11,
+    "hours": 27.9,
+    "plays": 687,
+    "unique_tracks": 588,
+    "unique_artists": 332
+  },
+  {
+    "year_month": "2025-12",
+    "year": 2025,
+    "month": 12,
+    "hours": 16.07,
+    "plays": 364,
+    "unique_tracks": 288,
+    "unique_artists": 183
+  },
+  {
+    "year_month": "2026-01",
+    "year": 2026,
+    "month": 1,
+    "hours": 8.18,
+    "plays": 175,
+    "unique_tracks": 157,
+    "unique_artists": 101
   }
 ]

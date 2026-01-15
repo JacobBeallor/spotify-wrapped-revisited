@@ -48,3 +48,10 @@ export interface TopTrack {
   plays: number
 }
 
+export interface ArtistEvolution {
+  year_quarter: string
+  artist_name: string
+  rank: number
+  hours: number
+}
+

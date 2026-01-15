@@ -8,9 +8,10 @@ import DayOfWeekChart from '@/components/DayOfWeekChart'
 import HourChart from '@/components/HourChart'
 import TopArtists from '@/components/TopArtists'
 import TopTracks from '@/components/TopTracks'
+import ArtistEvolutionChart from '@/components/ArtistEvolutionChart'
 import Footer from '@/components/Footer'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack } from '@/types'
+import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
 
 export default function Home() {
   const [summary, setSummary] = useState<SummaryData | null>(null)
@@ -19,6 +20,7 @@ export default function Home() {
   const [hour, setHour] = useState<HourData[]>([])
   const [topArtists, setTopArtists] = useState<TopArtist[]>([])
   const [topTracks, setTopTracks] = useState<TopTrack[]>([])
+  const [artistEvolution, setArtistEvolution] = useState<ArtistEvolution[]>([])
   
   const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
@@ -56,14 +58,19 @@ export default function Home() {
         if (!r.ok) throw new Error('Failed to load tracks data')
         return r.json()
       }),
+      fetch('/data/artist_evolution.json').then(r => {
+        if (!r.ok) throw new Error('Failed to load artist evolution data')
+        return r.json()
+      }),
     ])
-      .then(([summaryData, monthlyData, dowData, hourData, artistData, trackData]) => {
+      .then(([summaryData, monthlyData, dowData, hourData, artistData, trackData, evolutionData]) => {
         setSummary(summaryData)
         setMonthly(monthlyData)
         setDow(dowData)
         setHour(hourData)
         setTopArtists(artistData)
         setTopTracks(trackData)
+        setArtistEvolution(evolutionData)
         
         // Extract unique months
         const months = monthlyData.map((m: MonthlyData) => m.year_month).sort()
@@ -165,11 +172,15 @@ export default function Home() {
             </div>
           </div>
           
+          <div className="animate-fade-in animation-delay-400">
+            <ArtistEvolutionChart data={artistEvolution} topN={3} />
+          </div>
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="animate-fade-in animation-delay-400">
+            <div className="animate-fade-in animation-delay-500">
               <TopArtists data={filteredArtists} metric={metric} limit={10} />
             </div>
-            <div className="animate-fade-in animation-delay-500">
+            <div className="animate-fade-in animation-delay-600">
               <TopTracks data={filteredTracks} metric={metric} limit={10} />
             </div>
           </div>

@@ -1,8 +1,8 @@
 {
-  "total_hours": 4305.4,
-  "total_plays": 100575,
-  "unique_tracks": 19204,
-  "unique_artists": 6995,
-  "first_played_at": "2015-08-30 17:34:16",
-  "last_played_at": "2026-01-12 16:31:48"
+  "total_hours": 4250.64,
+  "total_plays": 77800,
+  "unique_tracks": 16230,
+  "unique_artists": 5776,
+  "first_played_at": "2015-08-30 13:34:16",
+  "last_played_at": "2026-01-12 11:31:48"
 }

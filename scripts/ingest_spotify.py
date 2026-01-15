@@ -87,7 +87,7 @@ def main():
 
             # Get play duration
             ms_played = item.get("ms_played", 0)
-            
+
             # Skip plays shorter than minimum duration (filter out skips/accidents)
             if ms_played < MIN_PLAY_DURATION_MS:
                 filtered_records += 1

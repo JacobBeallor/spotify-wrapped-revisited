@@ -65,8 +65,8 @@ export default function KPICards({ summary, selectedPeriod, monthly }: KPICardsP
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-gray-400 text-xs uppercase tracking-wider font-medium mb-2">{card.label}</p>
-              <p className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">{card.value}</p>
+              <p className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-2">{card.value}</p>
+              <p className="text-gray-400 text-xs uppercase tracking-wider font-medium">{card.label}</p>
             </div>
             <div className="text-3xl ml-3 transition-transform duration-300 hover:scale-110">{card.icon}</div>
           </div>

@@ -1,15 +1,4 @@
-import { Database } from 'duckdb-async'
-import path from 'path'
-
-let dbInstance: Database | null = null
-
-export async function getDb(): Promise<Database> {
-  if (!dbInstance) {
-    const dbPath = path.join(process.cwd(), 'data', 'spotify.duckdb')
-    dbInstance = await Database.create(dbPath)
-  }
-  return dbInstance
-}
+import { sql } from '@vercel/postgres'
 
 // Helper function to convert BigInt to Number for JSON serialization
 function convertBigIntsToNumbers(obj: any): any {
@@ -35,18 +24,17 @@ function convertBigIntsToNumbers(obj: any): any {
 }
 
 export async function executeQuery<T = any>(
-  sql: string,
+  query: string,
   params?: any[]
 ): Promise<T[]> {
-  const db = await getDb()
-  const conn = await db.connect()
-  
   try {
-    const result = await conn.all(sql, ...(params || []))
+    // Use Vercel Postgres (works in serverless)
+    const { rows } = await sql.query(query, params || [])
     // Convert BigInt values to Numbers for JSON serialization
-    return convertBigIntsToNumbers(result) as T[]
-  } finally {
-    await conn.close()
+    return convertBigIntsToNumbers(rows) as T[]
+  } catch (error: any) {
+    console.error('Database query error:', error)
+    throw error
   }
 }
 

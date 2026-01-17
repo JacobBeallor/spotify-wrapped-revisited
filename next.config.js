@@ -1,8 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
     unoptimized: true
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Exclude duckdb from bundling - it's a native module
+      config.externals.push({
+        'duckdb-async': 'commonjs duckdb-async',
+        'duckdb': 'commonjs duckdb'
+      })
+    }
+    return config
   }
 }
 

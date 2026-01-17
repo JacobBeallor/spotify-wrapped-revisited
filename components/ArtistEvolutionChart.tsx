@@ -64,14 +64,14 @@ export default function ArtistEvolutionChart({
           return { x: quarter, y: record.rank }
         }
         
-        // If artist hasn't appeared yet, don't show them (null)
+        // If artist hasn't appeared yet, don't show them (return null and filter later)
         // If they've appeared before and dropped out, show "..." rank
         if (!hasAppearedInTopN) {
-          return { x: quarter, y: null }
+          return null
         }
         
         return { x: quarter, y: DROPPED_OUT_RANK }
-      })
+      }).filter((point): point is { x: string; y: number } => point !== null)
       
       artistMap.set(artist, artistData)
     })
@@ -116,31 +116,13 @@ export default function ArtistEvolutionChart({
         <ResponsiveBump
           data={bumpData}
           colors={{ scheme: 'category10' }}
-          lineWidth={(serie) => {
-            // Check if last point is in "..." row
-            const lastPoint = serie.data[serie.data.length - 1]
-            return lastPoint && lastPoint.y === topN + 1 ? 1 : 3
-          }}
+          lineWidth={3}
           activeLineWidth={6}
           inactiveLineWidth={1}
           inactiveOpacity={0.1}
           pointSize={10}
           activePointSize={16}
           inactivePointSize={0}
-          pointComponent={({ node }) => {
-            // Don't show points on the "..." row
-            if (!node || node.data?.y === topN + 1) return null
-            return (
-              <circle
-                cx={node.x}
-                cy={node.y}
-                r={node.size / 2}
-                fill={node.style?.fill}
-                stroke={node.style?.borderColor}
-                strokeWidth={node.style?.borderWidth}
-              />
-            )
-          }}
           pointColor={{ theme: 'background' }}
           pointBorderWidth={3}
           activePointBorderWidth={3}
@@ -168,7 +150,6 @@ export default function ArtistEvolutionChart({
           margin={{ top: 40, right: 120, bottom: 60, left: 60 }}
           enableGridX={false}
           enableGridY={true}
-          gridYValues={[1, 2, 3, 4]}
           theme={{
             background: 'transparent',
             text: {

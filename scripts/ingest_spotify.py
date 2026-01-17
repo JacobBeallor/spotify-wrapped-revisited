@@ -59,6 +59,60 @@ def main():
     """
     )
 
+    # Create enrichment tables for Spotify API metadata
+    print("Creating enrichment tables...")
+    
+    con.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tracks (
+            spotify_track_uri TEXT PRIMARY KEY,
+            track_name TEXT NOT NULL,
+            primary_artist_name TEXT NOT NULL,
+            album_name TEXT,
+            release_date TEXT,
+            release_year INTEGER,
+            release_decade TEXT,
+            popularity INTEGER,
+            duration_ms INTEGER,
+            explicit BOOLEAN,
+            enriched_at TIMESTAMP
+        )
+        """
+    )
+    
+    con.execute(
+        """
+        CREATE TABLE IF NOT EXISTS artists (
+            artist_name TEXT PRIMARY KEY,
+            genres TEXT,
+            popularity INTEGER,
+            followers INTEGER,
+            spotify_artist_id TEXT,
+            enriched_at TIMESTAMP
+        )
+        """
+    )
+    
+    con.execute(
+        """
+        CREATE TABLE IF NOT EXISTS audio_features (
+            spotify_track_uri TEXT PRIMARY KEY,
+            danceability FLOAT,
+            energy FLOAT,
+            valence FLOAT,
+            tempo FLOAT,
+            acousticness FLOAT,
+            instrumentalness FLOAT,
+            speechiness FLOAT,
+            loudness FLOAT,
+            key INTEGER,
+            mode INTEGER,
+            time_signature INTEGER,
+            enriched_at TIMESTAMP
+        )
+        """
+    )
+
     # Find all streaming history files
     json_files = sorted(DATA_RAW_DIR.glob("Streaming_History_Audio_*.json"))
 
@@ -171,6 +225,11 @@ def main():
     # Create index for performance
     con.execute("CREATE INDEX idx_plays_year_month ON plays(year_month)")
     con.execute("CREATE INDEX idx_plays_date ON plays(date)")
+    
+    # Create indexes for enrichment tables
+    con.execute("CREATE INDEX IF NOT EXISTS idx_tracks_release_year ON tracks(release_year)")
+    con.execute("CREATE INDEX IF NOT EXISTS idx_tracks_release_decade ON tracks(release_decade)")
+    con.execute("CREATE INDEX IF NOT EXISTS idx_artists_genres ON artists(genres)")
 
     # Print summary
     print("\n" + "=" * 60)

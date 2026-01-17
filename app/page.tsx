@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useApiData } from './hooks/useSpotifyData'
 import Header from '@/components/Header'
 import KPICards from '@/components/KPICards'
 import MonthlyChart from '@/components/MonthlyChart'
@@ -14,75 +15,41 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
 
 export default function Home() {
-  const [summary, setSummary] = useState<SummaryData | null>(null)
-  const [monthly, setMonthly] = useState<MonthlyData[]>([])
-  const [dow, setDow] = useState<DowData[]>([])
-  const [hour, setHour] = useState<HourData[]>([])
-  const [topArtists, setTopArtists] = useState<TopArtist[]>([])
-  const [topTracks, setTopTracks] = useState<TopTrack[]>([])
-  const [artistEvolution, setArtistEvolution] = useState<ArtistEvolution[]>([])
-  
   const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
   const [availableMonths, setAvailableMonths] = useState<string[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
-  // Load all data
+  // Fetch data using API
+  const { data: summaryResponse, loading: summaryLoading, error: summaryError } = useApiData<SummaryData>('summary')
+  const { data: trendsResponse, loading: trendsLoading } = useApiData<{ data: MonthlyData[], granularity: string }>('trends', {
+    granularity: 'monthly'
+  })
+  const { data: dowResponse, loading: dowLoading } = useApiData<{ data: DowData[] }>('dow')
+  const { data: hourResponse, loading: hourLoading } = useApiData<{ data: HourData[] }>('hour')
+  const { data: artistsResponse, loading: artistsLoading } = useApiData<{ data: TopArtist[] }>('top-artists')
+  const { data: tracksResponse, loading: tracksLoading } = useApiData<{ data: TopTrack[] }>('top-tracks')
+  const { data: evolutionResponse, loading: evolutionLoading } = useApiData<{ data: ArtistEvolution[] }>('artist-evolution', {
+    topN: 3
+  })
+
+  const summary = summaryResponse
+  const monthly = trendsResponse?.data || []
+  const dow = dowResponse?.data || []
+  const hour = hourResponse?.data || []
+  const topArtists = artistsResponse?.data || []
+  const topTracks = tracksResponse?.data || []
+  const artistEvolution = evolutionResponse?.data || []
+
+  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || artistsLoading || tracksLoading || evolutionLoading
+  const error = summaryError
+
+  // Extract unique months when monthly data is loaded
   useEffect(() => {
-    setLoading(true)
-    setError(null)
-    
-    Promise.all([
-      fetch('/data/summary.json').then(r => {
-        if (!r.ok) throw new Error('Failed to load summary data')
-        return r.json()
-      }),
-      fetch('/data/monthly.json').then(r => {
-        if (!r.ok) throw new Error('Failed to load monthly data')
-        return r.json()
-      }),
-      fetch('/data/dow.json').then(r => {
-        if (!r.ok) throw new Error('Failed to load day-of-week data')
-        return r.json()
-      }),
-      fetch('/data/hour.json').then(r => {
-        if (!r.ok) throw new Error('Failed to load hour data')
-        return r.json()
-      }),
-      fetch('/data/top_artists.json').then(r => {
-        if (!r.ok) throw new Error('Failed to load artists data')
-        return r.json()
-      }),
-      fetch('/data/top_tracks.json').then(r => {
-        if (!r.ok) throw new Error('Failed to load tracks data')
-        return r.json()
-      }),
-      fetch('/data/artist_evolution.json').then(r => {
-        if (!r.ok) throw new Error('Failed to load artist evolution data')
-        return r.json()
-      }),
-    ])
-      .then(([summaryData, monthlyData, dowData, hourData, artistData, trackData, evolutionData]) => {
-        setSummary(summaryData)
-        setMonthly(monthlyData)
-        setDow(dowData)
-        setHour(hourData)
-        setTopArtists(artistData)
-        setTopTracks(trackData)
-        setArtistEvolution(evolutionData)
-        
-        // Extract unique months
-        const months = monthlyData.map((m: MonthlyData) => m.year_month).sort()
-        setAvailableMonths(months)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.error('Error loading data:', err)
-        setError('Failed to load data. Please ensure the data pipeline has been run.')
-        setLoading(false)
-      })
-  }, [])
+    if (monthly.length > 0) {
+      const months = monthly.map((m: MonthlyData) => m.year_month).sort()
+      setAvailableMonths(months)
+    }
+  }, [monthly])
 
   // Filter data based on selected period
   const filterByPeriod = <T extends { year_month: string }>(data: T[]): T[] => {

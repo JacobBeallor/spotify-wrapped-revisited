@@ -24,10 +24,13 @@ echo "Step 1: Ingesting data..."
 python3 scripts/ingest_spotify.py
 
 echo ""
-echo "Step 2: Exporting aggregates..."
-python3 scripts/export_aggregates.py
+# Optional: Enrich with Spotify API metadata
+if [ "$ENRICH" = "true" ]; then
+  echo "Step 2: Enriching metadata from Spotify API..."
+  python3 scripts/enrich_metadata.py
+  echo ""
+fi
 
-echo ""
 echo "=========================================="
 echo "Pipeline complete!"
 echo "=========================================="
@@ -35,5 +38,10 @@ echo ""
 echo "Next steps:"
 echo "1. Install Node.js dependencies: npm install"
 echo "2. Run dev server: npm run dev"
+echo ""
+echo "Optional: To enrich with Spotify API metadata:"
+echo "  export SPOTIFY_CLIENT_ID=your_id"
+echo "  export SPOTIFY_CLIENT_SECRET=your_secret"
+echo "  ENRICH=true ./scripts/run_pipeline.sh"
 echo ""
 

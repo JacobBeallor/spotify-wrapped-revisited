@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@nivo/bump": "^0.99.0",
+    "@vercel/postgres": "^0.10.0",
     "duckdb-async": "^1.4.2",
     "echarts": "^5.4.3",
     "echarts-for-react": "^3.0.2",
     "next": "^15",
+    "pg": "^8.17.1",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^4.3.5"

@@ -8,6 +8,8 @@ import os
 import sys
 import duckdb
 import psycopg2
+import psycopg2.extras
+from io import StringIO
 from pathlib import Path
 from datetime import datetime
 
@@ -118,8 +120,8 @@ def create_postgres_schema(pg_cur):
     log("✓ Schema created successfully")
 
 
-def sync_table(duck_con, pg_cur, table_name, batch_size=5000):
-    """Sync a table from DuckDB to Postgres."""
+def sync_table(duck_con, pg_cur, table_name):
+    """Sync a table from DuckDB to Postgres using COPY (bulk load)."""
     log(f"\n{'='*60}")
     log(f"Syncing table: {table_name}")
     log(f"{'='*60}")
@@ -139,31 +141,38 @@ def sync_table(duck_con, pg_cur, table_name, batch_size=5000):
     # Get all data from DuckDB
     log(f"  Fetching data from DuckDB...")
     result = duck_con.execute(f"SELECT * FROM {table_name}").fetchall()
-    log(f"  ✓ Data fetched")
+    log(f"  ✓ Data fetched ({len(result):,} rows)")
     
     # Get column names
     columns = [desc[0] for desc in duck_con.execute(f"SELECT * FROM {table_name} LIMIT 0").description]
     
-    # Build insert query
-    placeholders = ','.join(['%s'] * len(columns))
-    insert_query = f"INSERT INTO {table_name} ({','.join(columns)}) VALUES ({placeholders})"
+    # Use COPY for bulk loading (much faster!)
+    log(f"  Bulk loading into Postgres using COPY...")
     
-    # Insert in batches
-    log(f"  Inserting into Postgres (batch size: {batch_size:,})...")
-    for i in range(0, total_rows, batch_size):
-        batch = result[i:i+batch_size]
-        pg_cur.executemany(insert_query, batch)
-        
-        rows_done = min(i+batch_size, total_rows)
-        percent = (rows_done / total_rows) * 100
-        elapsed = (datetime.now() - start_time).total_seconds()
-        rate = rows_done / elapsed if elapsed > 0 else 0
-        eta = (total_rows - rows_done) / rate if rate > 0 else 0
-        
-        log(f"    Progress: {rows_done:,}/{total_rows:,} ({percent:.1f}%) | {rate:.0f} rows/sec | ETA: {eta:.0f}s")
+    # Create a StringIO buffer with CSV data
+    buffer = StringIO()
+    for row in result:
+        # Convert row to tab-separated values, handling NULL
+        csv_row = '\t'.join([
+            '\\N' if val is None else str(val).replace('\t', ' ').replace('\n', ' ').replace('\r', ' ')
+            for val in row
+        ])
+        buffer.write(csv_row + '\n')
+    
+    buffer.seek(0)
+    
+    # Use COPY to bulk load
+    pg_cur.copy_from(
+        buffer,
+        table_name,
+        columns=columns,
+        sep='\t',
+        null='\\N'
+    )
     
     elapsed_total = (datetime.now() - start_time).total_seconds()
-    log(f"✓ {table_name} synced: {total_rows:,} rows in {elapsed_total:.1f}s")
+    rate = total_rows / elapsed_total if elapsed_total > 0 else 0
+    log(f"✓ {table_name} synced: {total_rows:,} rows in {elapsed_total:.1f}s ({rate:.0f} rows/sec)")
 
 
 def main():

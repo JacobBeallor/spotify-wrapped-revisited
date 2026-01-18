@@ -28,13 +28,13 @@ This provides flexibility without overwhelming users with preset options.
 
 ## Acceptance Criteria
 
-- [ ] Keep "All Time" option as default
-- [ ] Add custom date range option with start date and end date inputs
-- [ ] Clearly show which mode is active (All Time vs Custom Range)
-- [ ] Update all charts when date range changes
-- [ ] Validate that end date is not before start date
-- [ ] Handle edge cases gracefully (invalid dates, future dates)
-- [ ] Works on mobile and desktop
+- [x] Keep "All Time" option as default
+- [x] Add custom date range option with start date and end date inputs
+- [x] Clearly show which mode is active (All Time vs Custom Range)
+- [x] Update all charts when date range changes
+- [x] Validate that end date is not before start date
+- [x] Handle edge cases gracefully (invalid dates, future dates)
+- [x] Works on mobile and desktop
 
 ## Implementation Notes
 
@@ -67,13 +67,13 @@ This provides flexibility without overwhelming users with preset options.
 
 ## Test Plan
 
-- [ ] Test "All Time" shows all data
-- [ ] Test custom date range filters correctly
-- [ ] Verify validation: end date must be after start date
-- [ ] Test that all charts update when range changes
-- [ ] Test edge cases: same start/end date, invalid dates
-- [ ] Test mobile date picker usability
-- [ ] Verify no data is shown for ranges with no records
+- [x] Test "All Time" shows all data
+- [x] Test custom date range filters correctly
+- [x] Verify validation: end date must be after start date
+- [x] Test that all charts update when range changes
+- [x] Test edge cases: same start/end date, invalid dates
+- [x] Test mobile date picker usability
+- [x] Verify no data is shown for ranges with no records
 
 ## Status History
 

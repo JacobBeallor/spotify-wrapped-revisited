@@ -57,3 +57,4 @@ yarn-error.log*
 *.swp
 *.swo
 
+scripts/spotify_env.sh

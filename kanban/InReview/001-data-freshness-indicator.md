@@ -62,4 +62,5 @@ This is a quick, high-visibility improvement that adds transparency.
 
 - 2026-01-18: Created → Ready
 - 2026-01-18: Ready → InProgress
+- 2026-01-18: InProgress → InReview
 

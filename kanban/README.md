@@ -91,6 +91,7 @@ Work should be pulled from `Ready/` in priority order (P0 → P1 → P2).
 - **`README.md`** (this file) — Board documentation
 - **`AGENT.md`** — Operating instructions for AI agent
 - **`BOARD.md`** — Current board snapshot (derived, can be regenerated)
+- **`GIT_WORKFLOW.md`** — Git and branching guidelines
 - **`_templates/ticket.md`** — Template for new tickets
 
 ## Principles
@@ -104,26 +105,32 @@ Work should be pulled from `Ready/` in priority order (P0 → P1 → P2).
 ## Example Workflow
 
 ```bash
-# See current board
-cat kanban/BOARD.md
-
 # Start work on ticket 001
+git checkout -b 001-data-freshness
 git mv kanban/Ready/001-data-freshness.md kanban/InProgress/
 # Update status history in ticket
 git commit -m "[#001] Move to InProgress"
+git push origin 001-data-freshness
 
 # Implement the feature
 git commit -m "[#001] Add data freshness to API"
 git commit -m "[#001] Display in dashboard header"
+git push origin 001-data-freshness
 
-# Move to review
-git mv kanban/InProgress/001-data-freshness.md kanban/InReview/
-git commit -m "[#001] Move to InReview"
+# Open PR
+gh pr create --title "[#001] Add data freshness" --body "Implements #001"
 
-# After approval, complete
-git mv kanban/InReview/001-data-freshness.md kanban/Done/
+# After approval, squash merge
+gh pr merge --squash --delete-branch
+
+# Update local and complete ticket
+git checkout main && git pull
+git mv kanban/InProgress/001-data-freshness.md kanban/Done/
 git commit -m "[#001] Move to Done"
+git push origin main
 ```
+
+**See [GIT_WORKFLOW.md](./GIT_WORKFLOW.md) for complete git guidelines.**
 
 ## Quick Commands
 

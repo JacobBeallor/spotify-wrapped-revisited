@@ -55,11 +55,11 @@ export default function Header({
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-            {/* Period selector */}
+            {/* Period selector - Glass style */}
             <select
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value)}
-              className="bg-gray-800 text-white px-4 py-2.5 rounded-lg border border-gray-700 focus:border-spotify-green focus:outline-none focus:ring-2 focus:ring-spotify-green focus:ring-opacity-50 transition-all cursor-pointer hover:border-gray-600"
+              className="glass-select"
             >
               <option value="all">All Time</option>
               {availableMonths.map(month => {
@@ -106,6 +106,49 @@ export default function Header({
             </div>
 
             <style jsx>{`
+              .glass-select {
+                background-color: rgba(255, 255, 255, 0.06);
+                backdrop-filter: blur(20px);
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 14px;
+                font-weight: 600;
+                letter-spacing: 0.3px;
+                padding: 0 2.5rem 0 1.2rem;
+                height: 40px;
+                border-radius: 25px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                box-shadow:
+                  0 8px 32px rgba(0, 0, 0, 0.15),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 1rem center;
+                min-width: 180px;
+              }
+
+              .glass-select:hover {
+                color: white;
+                background-color: rgba(255, 255, 255, 0.08);
+                background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.9)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+              }
+
+              .glass-select:focus {
+                outline: none;
+                box-shadow:
+                  0 8px 32px rgba(0, 0, 0, 0.15),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                  0 0 0 2px rgba(30, 215, 96, 0.4);
+              }
+
+              .glass-select option {
+                background: #1a1a1a;
+                color: #e5e5e5;
+                padding: 0.5rem;
+              }
+
               .radio-group {
                 display: flex;
                 gap: 0;

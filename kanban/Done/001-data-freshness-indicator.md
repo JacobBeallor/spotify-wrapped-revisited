@@ -61,7 +61,7 @@ This is a quick, high-visibility improvement that adds transparency.
 ## Status History
 
 - 2026-01-18: Created → Ready
-- 2026-01-18: Ready → InProgress (branch: 001-data-freshness)
-- 2026-01-18: InProgress → InReview (PR prepared)
-- 2026-01-18: InReview → Done (PR merged to main)
+- 2026-01-18: Ready → InProgress
+- 2026-01-18: InProgress → InReview
+- 2026-01-18: InReview → Done (ready for PR merge)
 

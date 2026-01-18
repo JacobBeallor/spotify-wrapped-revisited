@@ -61,14 +61,64 @@ parallel_with: [003]
 
 ## Workflow
 
-### Starting New Work
+### The Three-Command Workflow
 
-1. Pick the highest priority unblocked ticket from `Ready/`
-2. Move it to `InProgress/`
-3. Implement according to acceptance criteria
-4. Commit with ticket ID: `[#ID] Description`
-5. Move to `InReview/` when ready for review
-6. Move to `Done/` when merged
+This project uses a simple, collaborative workflow driven by three user commands:
+
+#### 1. **"Pick up ticket #XXX"** 
+User tells agent to implement a ticket.
+
+**Agent does:**
+- Creates feature branch
+- Moves ticket to InProgress
+- Implements feature according to acceptance criteria
+- Commits and pushes code
+- Notifies: "✅ Ticket #XXX is ready for testing"
+
+**User does:**
+- Tests the implementation
+- Requests fixes if needed
+
+#### 2. **"Prepare PR #XXX"**
+User tells agent to prepare for PR after testing passes.
+
+**Agent does:**
+- Moves ticket to InReview
+- Provides PR title and description template
+- Includes branch name for reference
+
+**User does:**
+- Manually creates PR on GitHub with provided title/description
+- Reviews and merges PR on GitHub when ready
+
+#### 3. **"Close ticket #XXX"**
+User tells agent PR has been merged.
+
+**Agent does:**
+- Pulls latest main
+- Moves ticket to Done
+- Updates blocked tickets (removes dependencies)
+- Commits ticket move to main
+- Notifies of any newly unblocked tickets
+
+**User does:**
+- Nothing! On to the next ticket.
+
+### Responsibility Split
+
+**Agent handles:**
+- Code implementation
+- Git commits and pushes to feature branches
+- Ticket state management
+- Providing PR templates
+
+**User handles:**
+- Testing the implementation
+- Creating PRs on GitHub
+- Merging PRs on GitHub
+- Triggering ticket closure
+
+**Key principle:** Agent never uses GitHub CLI (`gh`) commands or creates PRs. All GitHub interactions are manual.
 
 ### Creating New Tickets
 
@@ -105,32 +155,50 @@ Work should be pulled from `Ready/` in priority order (P0 → P1 → P2).
 ## Example Workflow
 
 ```bash
-# Start work on ticket 001
+# ============================================================
+# PHASE 1: User says "Pick up ticket #001"
+# ============================================================
+# Agent creates branch and moves ticket
 git checkout -b 001-data-freshness
 git mv kanban/Ready/001-data-freshness.md kanban/InProgress/
-# Update status history in ticket
 git commit -m "[#001] Move to InProgress"
 git push origin 001-data-freshness
 
-# Implement the feature
+# Agent implements the feature
 git commit -m "[#001] Add data freshness to API"
 git commit -m "[#001] Display in dashboard header"
 git push origin 001-data-freshness
 
-# Open PR
-gh pr create --title "[#001] Add data freshness" --body "Implements #001"
+# Agent notifies: "✅ Ticket #001 is ready for testing"
 
-# After approval, squash merge
-gh pr merge --squash --delete-branch
+# ============================================================
+# PHASE 2: User tests, then says "Prepare PR #001"
+# ============================================================
+# Agent moves ticket and provides PR template
+git mv kanban/InProgress/001-data-freshness.md kanban/InReview/
+git commit -m "[#001] Move to InReview"
+git push origin 001-data-freshness
 
-# Update local and complete ticket
+# Agent provides:
+# - PR Title: [#001] Add data freshness indicator
+# - PR Description: (formatted with changes and testing)
+# - Branch: 001-data-freshness
+
+# User manually creates and merges PR on GitHub
+
+# ============================================================
+# PHASE 3: User says "Close ticket #001"
+# ============================================================
+# Agent updates ticket and board
 git checkout main && git pull
-git mv kanban/InProgress/001-data-freshness.md kanban/Done/
+git mv kanban/InReview/001-data-freshness.md kanban/Done/
 git commit -m "[#001] Move to Done"
 git push origin main
+
+# Agent notifies of any newly unblocked tickets
 ```
 
-**See [GIT_WORKFLOW.md](./GIT_WORKFLOW.md) for complete git guidelines.**
+**See [GIT_WORKFLOW.md](./GIT_WORKFLOW.md) for complete git guidelines and detailed workflow steps.**
 
 ## Quick Commands
 

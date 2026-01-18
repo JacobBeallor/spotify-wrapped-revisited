@@ -109,27 +109,112 @@ Use checkboxes:
 
 For detailed git workflow, branch management, and complete command reference, see **[GIT_WORKFLOW.md](./GIT_WORKFLOW.md)**.
 
-### Quick Reference
+### User-Agent Workflow
 
-**Starting a ticket:**
+The workflow is a collaboration between the user and agent:
+
+**Agent Responsibilities:**
+- Code implementation
+- Git commits and pushes to feature branches
+- Ticket state management (moving tickets between folders)
+- Providing PR title/description templates
+
+**User Responsibilities:**
+- Testing the implementation
+- Creating PRs manually on GitHub
+- Merging PRs manually on GitHub
+- Triggering ticket closure
+
+### Command Reference
+
+**When user says: "Pick up ticket #XXX" or "Implement ticket #XXX"**
+
+Agent should:
 1. Create feature branch: `git checkout -b {id}-{slug}`
-2. Move ticket file: `kanban/Ready/{ticket}.md` → `kanban/InProgress/`
+2. Move ticket: `kanban/Ready/{ticket}.md` → `kanban/InProgress/`
 3. Update ticket's status history
 4. Commit: `[#ID] Move to InProgress`
+5. Push feature branch
+6. Implement the feature according to acceptance criteria
+7. Commit frequently with `[#ID] Description` format
+8. Push final changes
+9. Notify user: "✅ Ticket #XXX is ready for testing"
 
-**During work:**
-- Commit frequently with `[#ID] Description` format
-- Push often to feature branch
+**When user says: "Prepare a PR for ticket #XXX" or "Prepare PR #XXX"**
 
-**Opening PR:**
-- Use ticket title: `[#ID] Ticket title`
-- Reference in body: `Implements #ID`
-- Move ticket to InReview
+Agent should:
+1. Review git commits on the branch using `git log main..HEAD --oneline`
+2. Examine actual file changes to understand what was implemented
+3. Move ticket: `kanban/InProgress/{ticket}.md` → `kanban/InReview/`
+4. Update ticket's status history
+5. Commit: `[#ID] Move to InReview`
+6. Push feature branch
+7. Provide PR template with:
+   - **Title:** `[ID] Ticket title` (no `#` to avoid GitHub auto-linking to PRs)
+   - **Description:** Based on actual commits and changes made. Use "ticket ID" not "#ID" to avoid auto-linking
+   - **Changes:** Accurate list from git diff/commits
+   - **Testing:** From ticket acceptance criteria (checked items)
+   - **Branch name** for reference
 
-**After merge:**
-- Move ticket to Done: `kanban/InReview/{ticket}.md` → `kanban/Done/`
-- Update dependencies in blocked tickets
-- Commit: `[#ID] Move to Done`
+Example PR template output:
+
+```markdown
+**PR Title:**
+[001] Add data freshness indicator
+
+**PR Description:**
+Implements ticket 001 (see kanban/InReview/001-data-freshness-indicator.md)
+
+Adds a data freshness indicator to the dashboard header showing when listening data was last updated, along with fixes for timezone issues in date formatting throughout the dashboard.
+
+**Changes:**
+- Added `last_played_at` field to `/api/summary` endpoint with ISO string formatting
+- Display formatted date in Header component subtitle ("Data through [date]")
+- Fixed timezone bug causing month labels to display one month earlier
+  - Updated Header month selector dropdown to use UTC date parsing
+  - Updated MonthlyChart x-axis labels to use UTC date parsing
+- Added date validation to prevent "Invalid Date" errors
+- Subtle gray styling (text-gray-500) for non-intrusive display
+
+**Technical Details:**
+- Timezone fix: Parse `YYYY-MM` dates using `Date.UTC()` and format with `timeZone: 'UTC'` to avoid local timezone shifting
+- API enhancement: Convert DuckDB timestamps to ISO strings for consistent frontend parsing
+- Responsive design works on both mobile and desktop
+
+**Testing:**
+- ✅ Verified "Data through January 12, 2026" displays correctly in header
+- ✅ Confirmed date matches MAX(played_at) from database
+- ✅ Month selector dropdown shows correct labels (e.g., "January 2026" not "December 2025")
+- ✅ Monthly chart x-axis labels display correct months
+- ✅ Tested on mobile and desktop layouts
+- ✅ Handles undefined/null dates gracefully
+
+**Branch:** 001-data-freshness-indicator
+
+**Commits on this branch:**
+- [#001] Move to InProgress
+- [#001] Add last_played_at field to summary API
+- [#001] Display data freshness in header
+- [#001] Fix timezone issues in date formatting
+- [#001] Fix month labels in MonthlyChart
+- [#001] Clean up debug logging
+- [#001] Move to InReview
+```
+
+**Note:** In the commits list, escape the `#` symbol as `\#` to prevent auto-linking (e.g., `[\#001]`)
+
+Then user creates PR manually on GitHub.
+
+**When user says: "Close ticket #XXX" (after PR is merged)**
+
+Agent should:
+1. Pull latest main: `git checkout main && git pull`
+2. Move ticket: `kanban/InReview/{ticket}.md` → `kanban/Done/`
+3. Update ticket's status history with merge date
+4. Update dependencies in blocked tickets (remove from `blocked_by`)
+5. Commit directly on main: `[#ID] Move to Done`
+6. Push to main
+7. Notify user of any newly unblocked tickets
 
 **Creating new tickets:**
 - Copy template: `kanban/_templates/ticket.md`
@@ -141,7 +226,6 @@ See [GIT_WORKFLOW.md](./GIT_WORKFLOW.md) for:
 - Branch naming conventions
 - PR templates
 - Conflict resolution
-- Special cases (quick fixes, dependent tickets)
 - Full command reference
 
 ## Status Transitions
@@ -190,6 +274,8 @@ When reporting status or making recommendations:
 - **Be specific** — Use ticket IDs and file paths
 - **Show reasoning** — Explain priority/dependency logic
 - **Suggest, don't dictate** — User makes final call
+- **Signal completion** — Always end implementation with "✅ Ticket #XXX is ready for testing"
+- **Provide PR templates** — When user requests PR preparation, provide complete title and description
 
 Example:
 
@@ -207,6 +293,26 @@ Recommended next work:
 Blocked:
 - #006 — Genre analysis (P1, M)
   - Blocked by #005 (enrichment testing)
+```
+
+Example completion message:
+
+```
+✅ Ticket #001 is ready for testing
+
+**What was implemented:**
+- Added last_played_at to /api/summary endpoint
+- Display formatted date in Header component  
+- Subtle gray styling that doesn't distract
+- Responsive on mobile and desktop
+
+**To test:**
+1. Run `npm run dev`
+2. Check header for "Last updated: [date]" indicator
+3. Verify date matches your most recent listening data
+4. Test on mobile viewport
+
+Let me know if any adjustments are needed!
 ```
 
 ## Board Snapshot Generation
@@ -262,6 +368,8 @@ When converting an existing TODO list:
 3. **Unblocked over blocked** — Highlight what's ready
 4. **Visible over hidden** — Everything on the board
 5. **Pragmatic over perfect** — Ship incremental value
+6. **Agent owns code, user owns GitHub** — Agent never uses `gh` commands or creates PRs
+7. **Only main commits are ticket moves** — Feature work always on branches
 
 ## End State
 

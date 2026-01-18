@@ -10,11 +10,33 @@ export async function GET() {
         COUNT(DISTINCT track_name) AS unique_tracks,
         COUNT(DISTINCT artist_name) AS unique_artists,
         MIN(played_at) AS first_played_at,
-        MAX(played_at) AS last_played_at
+        MAX(played_at) AS last_played_at,
+        CAST(MAX(played_at) AS VARCHAR) AS last_played_at_str
       FROM plays
     `)
     
-    return NextResponse.json(result[0])
+    const data = result[0]
+    
+    // Use the string version if available
+    if (data.last_played_at_str) {
+      data.last_played_at = data.last_played_at_str
+      delete data.last_played_at_str
+    } else if (data.last_played_at) {
+      // Try to convert if it's not a string
+      const lastDate = new Date(data.last_played_at)
+      if (!isNaN(lastDate.getTime())) {
+        data.last_played_at = lastDate.toISOString()
+      }
+    }
+    
+    if (data.first_played_at) {
+      const firstDate = new Date(data.first_played_at)
+      if (!isNaN(firstDate.getTime())) {
+        data.first_played_at = firstDate.toISOString()
+      }
+    }
+    
+    return NextResponse.json(data)
   } catch (error: any) {
     console.error('Summary API error:', error)
     return NextResponse.json(

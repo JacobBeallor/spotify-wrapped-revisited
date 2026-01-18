@@ -1,14 +1,40 @@
 'use client'
 
 import ReactECharts from 'echarts-for-react'
-import type { MonthlyData } from '@/types'
+import type { MonthlyData, DailyData } from '@/types'
 
 interface MonthlyChartProps {
-  data: MonthlyData[]
+  data: MonthlyData[] | DailyData[]
   metric: 'hours' | 'plays'
+  granularity: 'monthly' | 'daily'
 }
 
-export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
+export default function MonthlyChart({ data, metric, granularity }: MonthlyChartProps) {
+  // Format x-axis labels based on granularity
+  const formatXAxisLabel = (item: MonthlyData | DailyData) => {
+    if (granularity === 'daily') {
+      const dailyItem = item as DailyData
+      const date = new Date(dailyItem.date + 'T00:00:00Z')
+      return date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric',
+        timeZone: 'UTC'
+      })
+    } else {
+      const monthlyItem = item as MonthlyData
+      const [year, month] = monthlyItem.year_month.split('-').map(Number)
+      const date = new Date(Date.UTC(year, month - 1, 1))
+      return date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        year: '2-digit',
+        timeZone: 'UTC'
+      })
+    }
+  }
+
+  // Get chart title based on granularity
+  const chartTitle = granularity === 'daily' ? 'Daily Listening Trend' : 'Monthly Listening Trend'
+
   const option = {
     backgroundColor: 'transparent',
     tooltip: {
@@ -36,22 +62,13 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
     },
     xAxis: {
       type: 'category',
-      data: data.map(d => {
-        // Parse YYYY-MM and use UTC to avoid timezone offset issues
-        const [year, month] = d.year_month.split('-').map(Number)
-        const date = new Date(Date.UTC(year, month - 1, 1))
-        return date.toLocaleDateString('en-US', { 
-          month: 'short', 
-          year: '2-digit',
-          timeZone: 'UTC'
-        })
-      }),
+      data: data.map(d => formatXAxisLabel(d)),
       axisLine: {
         lineStyle: { color: '#535353' }
       },
       axisLabel: {
         color: '#B3B3B3',
-        rotate: data.length > 12 ? 45 : 0
+        rotate: granularity === 'daily' || data.length > 12 ? 45 : 0
       }
     },
     yAxis: {
@@ -103,7 +120,7 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
   return (
     <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700">
       <h2 className="text-xl font-bold mb-4">
-        Monthly Listening Trend
+        {chartTitle}
       </h2>
       <ReactECharts 
         option={option} 
@@ -113,4 +130,3 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
     </div>
   )
 }
-

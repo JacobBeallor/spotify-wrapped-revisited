@@ -1,9 +1,9 @@
-# Improve date range filter UI
+# Simplify date range filter UI
 
 ---
 **id:** 002  
 **priority:** P1  
-**size:** M  
+**size:** S  
 **epic:** UI/UX Improvements  
 **created:** 2026-01-18  
 **tags:** enhancement, ux
@@ -12,7 +12,7 @@
 
 ## Title
 
-Improve date range filter UI with presets and custom picker
+Simplify date range filter UI with all-time and custom date range options
 
 ## Dependencies
 
@@ -22,58 +22,58 @@ Improve date range filter UI with presets and custom picker
 
 ## Context
 
-The current date filter is basic and not intuitive. Users would benefit from preset options (All Time, Last Year, Last 3 Months) as well as a custom date range picker.
+The current month-by-month filter is basic. Simplify to a clean two-option approach: view all-time data or specify a custom date range with start and end dates.
 
-This is a high-impact UX improvement that makes the dashboard much more explorable and useful for analyzing specific time periods.
+This provides flexibility without overwhelming users with preset options.
 
 ## Acceptance Criteria
 
-- [ ] Add preset buttons: "All Time", "Last Year", "Last 3 Months", "Last Month"
-- [ ] Add custom date range picker (start date and end date inputs)
-- [ ] Highlight active preset or custom range
-- [ ] Persist selection in URL query params (shareable links)
-- [ ] Update all charts when range changes (trends, top artists, top tracks, DOW, hour)
-- [ ] Show selected range clearly in header or filter area
-- [ ] Handle edge cases (invalid ranges, future dates, etc.)
+- [ ] Keep "All Time" option as default
+- [ ] Add custom date range option with start date and end date inputs
+- [ ] Clearly show which mode is active (All Time vs Custom Range)
+- [ ] Update all charts when date range changes
+- [ ] Validate that end date is not before start date
+- [ ] Handle edge cases gracefully (invalid dates, future dates)
+- [ ] Works on mobile and desktop
 
 ## Implementation Notes
 
 **Approach:**
-- Add FilterControls component with preset buttons
-- Use native HTML date inputs (or react-day-picker if needed)
-- Store active range in React state
-- Sync with URL query params using Next.js router
-- Pass date range to all `useApiData` hooks
+- Replace the current month dropdown with a simpler filter control
+- Two modes: "All Time" (button) and "Custom Range" (date inputs)
+- Use native HTML date inputs for simplicity
+- Filter data client-side based on selected range
+- No need for URL params initially (can add later if needed)
 
 **Key files:**
-- `components/FilterControls.tsx` (new) — Preset buttons + date picker
-- `app/page.tsx` — State management and passing to child components
-- `app/hooks/useSpotifyData.ts` — May need to handle date params
+- `components/Header.tsx` — Update filter controls
+- `app/page.tsx` — Add date range state and filtering logic
 
-**Design mockup:**
+**UI mockup:**
 ```
-┌─────────────────────────────────────────────────┐
-│ [All Time] [2024] [Last 3M] [Last Month]       │
-│ or Custom: [📅 Jan 2024] to [📅 Dec 2024] [Go] │
-└─────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│ ( • All Time )  ( ○ Custom Range )              │
+│                                                   │
+│ When Custom selected:                            │
+│ From: [📅 2024-01-01] To: [📅 2024-12-31]       │
+└──────────────────────────────────────────────────┘
 ```
 
 **Considerations:**
-- URL structure: `?start=2024-01&end=2024-12`
-- Preset calculation (e.g., "Last 3 Months" from today)
-- Date validation and error handling
-- Mobile-friendly date pickers
-- Loading states while refetching data
+- Date format: YYYY-MM-DD (native input format)
+- Client-side filtering vs API changes
+- Mobile date picker UX
+- Clear visual distinction between modes
 
 ## Test Plan
 
-- [ ] Test all preset buttons update date range correctly
-- [ ] Test custom date picker with various ranges
-- [ ] Verify URL query params update and are shareable
+- [ ] Test "All Time" shows all data
+- [ ] Test custom date range filters correctly
+- [ ] Verify validation: end date must be after start date
 - [ ] Test that all charts update when range changes
-- [ ] Test edge cases: invalid dates, end before start, future dates
-- [ ] Test mobile responsiveness
-- [ ] Test browser back/forward button with URL params
+- [ ] Test edge cases: same start/end date, invalid dates
+- [ ] Test mobile date picker usability
+- [ ] Verify no data is shown for ranges with no records
 
 ## Status History
 

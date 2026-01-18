@@ -144,6 +144,8 @@ Adds data freshness indicator to dashboard header showing when listening data wa
 - [#001] Move to InReview
 ```
 
+**Note:** In the commits list, escape the `#` symbol as `\#` to prevent auto-linking (e.g., `[\#001]`)
+
 **User then:**
 - Manually creates PR on GitHub with provided title/description
 - Adds labels (enhancement, bug, etc.)

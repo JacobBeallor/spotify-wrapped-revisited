@@ -201,6 +201,8 @@ Adds a data freshness indicator to the dashboard header showing when listening d
 - [#001] Move to InReview
 ```
 
+**Note:** In the commits list, escape the `#` symbol as `\#` to prevent auto-linking (e.g., `[\#001]`)
+
 Then user creates PR manually on GitHub.
 
 **When user says: "Close ticket #XXX" (after PR is merged)**

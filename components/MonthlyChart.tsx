@@ -37,8 +37,14 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
     xAxis: {
       type: 'category',
       data: data.map(d => {
-        const date = new Date(d.year_month + '-01')
-        return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+        // Parse YYYY-MM and use UTC to avoid timezone offset issues
+        const [year, month] = d.year_month.split('-').map(Number)
+        const date = new Date(Date.UTC(year, month - 1, 1))
+        return date.toLocaleDateString('en-US', { 
+          month: 'short', 
+          year: '2-digit',
+          timeZone: 'UTC'
+        })
       }),
       axisLine: {
         lineStyle: { color: '#535353' }

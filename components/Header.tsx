@@ -7,10 +7,10 @@ interface HeaderProps {
   lastUpdated?: string
 }
 
-export default function Header({ 
-  selectedPeriod, 
-  setSelectedPeriod, 
-  metric, 
+export default function Header({
+  selectedPeriod,
+  setSelectedPeriod,
+  metric,
   setMetric,
   availableMonths,
   lastUpdated
@@ -18,9 +18,12 @@ export default function Header({
   // Format last updated date
   const formatLastUpdated = (dateString?: string) => {
     if (!dateString) return null
-    
+
     try {
       const date = new Date(dateString)
+      // Check if date is valid
+      if (isNaN(date.getTime())) return null
+
       return date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
@@ -50,7 +53,7 @@ export default function Header({
               )}
             </p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
             {/* Period selector */}
             <select
@@ -59,35 +62,41 @@ export default function Header({
               className="bg-gray-800 text-white px-4 py-2.5 rounded-lg border border-gray-700 focus:border-spotify-green focus:outline-none focus:ring-2 focus:ring-spotify-green focus:ring-opacity-50 transition-all cursor-pointer hover:border-gray-600"
             >
               <option value="all">All Time</option>
-              {availableMonths.map(month => (
-                <option key={month} value={month}>
-                  {new Date(month + '-01').toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long' 
-                  })}
-                </option>
-              ))}
+              {availableMonths.map(month => {
+                // Parse YYYY-MM format and create date in UTC to avoid timezone issues
+                const [year, monthNum] = month.split('-').map(Number)
+                const date = new Date(Date.UTC(year, monthNum - 1, 1))
+                const formattedMonth = date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  timeZone: 'UTC'
+                })
+
+                return (
+                  <option key={month} value={month}>
+                    {formattedMonth}
+                  </option>
+                )
+              })}
             </select>
-            
+
             {/* Metric toggle */}
             <div className="flex bg-gray-800 rounded-lg p-1 border border-gray-700 flex-shrink-0">
               <button
                 onClick={() => setMetric('hours')}
-                className={`px-5 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
-                  metric === 'hours'
-                    ? 'bg-spotify-green text-black shadow-lg'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
-                }`}
+                className={`px-5 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${metric === 'hours'
+                  ? 'bg-spotify-green text-black shadow-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                  }`}
               >
                 Hours
               </button>
               <button
                 onClick={() => setMetric('plays')}
-                className={`px-5 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
-                  metric === 'plays'
-                    ? 'bg-spotify-green text-black shadow-lg'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
-                }`}
+                className={`px-5 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${metric === 'plays'
+                  ? 'bg-spotify-green text-black shadow-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                  }`}
               >
                 Plays
               </button>

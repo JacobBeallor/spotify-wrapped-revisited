@@ -150,7 +150,7 @@ Agent should:
 5. Commit: `[#ID] Move to InReview`
 6. Push feature branch
 7. Provide PR template with:
-   - **Title:** `[#ID] Ticket title`
+   - **Title:** `[ID] Ticket title` (no `#` to avoid GitHub auto-linking to PRs)
    - **Description:** Based on actual commits and changes made, not just ticket description
    - **Changes:** Accurate list from git diff/commits
    - **Testing:** From ticket acceptance criteria (checked items)
@@ -160,10 +160,10 @@ Example PR template output:
 
 ```markdown
 **PR Title:**
-[#001] Add data freshness indicator
+[001] Add data freshness indicator
 
 **PR Description:**
-Implements #001
+Implements ticket #001 (kanban/Done/001-data-freshness-indicator.md)
 
 Adds a data freshness indicator to the dashboard header showing when listening data was last updated, along with fixes for timezone issues in date formatting throughout the dashboard.
 

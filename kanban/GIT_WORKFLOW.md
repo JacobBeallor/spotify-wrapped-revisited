@@ -114,10 +114,10 @@ git push origin 001-data-freshness
 
 ```markdown
 **PR Title:**
-[#001] Add data freshness indicator
+[001] Add data freshness indicator
 
 **PR Description:**
-Implements #001
+Implements ticket #001 (kanban/InReview/001-data-freshness-indicator.md)
 
 Adds data freshness indicator to dashboard header showing when listening data was last updated, along with fixes for timezone issues in date formatting.
 
@@ -213,15 +213,15 @@ If a commit touches multiple tickets:
 
 ### PR Title
 
-Use ticket title:
+Use ticket title with ticket ID (no `#` symbol to avoid GitHub auto-linking):
 ```
-[#001] Add data freshness indicator
+[001] Add data freshness indicator
 ```
 
 ### PR Description Template
 
 ```markdown
-Implements #001
+Implements ticket #ID (kanban/InReview/ID-slug.md)
 
 Brief description of what this PR does.
 
@@ -275,6 +275,8 @@ Apply appropriate labels:
 
 Co-authored-by: AI Agent <cursor@ai.local>
 ```
+
+**Note:** Use `[#ID]` format in squashed commit messages (this goes into main branch history). Use `[ID]` format (no `#`) in PR titles to avoid GitHub auto-linking issues.
 
 ---
 
@@ -449,9 +451,9 @@ git add . && git commit -m "[#001] Move to InReview"
 git push origin 001-data-freshness
 
 # Agent provides PR template:
-# - Title: [#001] Add data freshness indicator
-# - Description: (based on actual commits and changes, with technical details)
-# - Changes: Accurate list from git diff/log
+# - Title: [001] Add data freshness indicator (no # to avoid auto-link)
+# - Description: (based on actual commits and git diff)
+# - Changes: Accurate list from branch commits
 # - Testing: Based on checked acceptance criteria
 # - Commits list from branch
 # - Branch: 001-data-freshness

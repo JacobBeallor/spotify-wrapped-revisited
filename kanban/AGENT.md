@@ -107,43 +107,42 @@ Use checkboxes:
 
 ## Workflow Commands
 
-### Creating a Ticket
+For detailed git workflow, branch management, and complete command reference, see **[GIT_WORKFLOW.md](./GIT_WORKFLOW.md)**.
 
-```bash
-# 1. Copy template
-cp kanban/_templates/ticket.md kanban/Backlog/NNN-title-slug.md
+### Quick Reference
 
-# 2. Fill in all sections
+**Starting a ticket:**
+1. Create feature branch: `git checkout -b {id}-{slug}`
+2. Move ticket file: `kanban/Ready/{ticket}.md` → `kanban/InProgress/`
+3. Update ticket's status history
+4. Commit: `[#ID] Move to InProgress`
 
-# 3. Commit
-git add kanban/Backlog/NNN-title-slug.md
-git commit -m "Add ticket #NNN: Title"
-```
+**During work:**
+- Commit frequently with `[#ID] Description` format
+- Push often to feature branch
 
-### Moving a Ticket
+**Opening PR:**
+- Use ticket title: `[#ID] Ticket title`
+- Reference in body: `Implements #ID`
+- Move ticket to InReview
 
-```bash
-# Move file
-git mv kanban/Ready/001-example.md kanban/InProgress/
+**After merge:**
+- Move ticket to Done: `kanban/InReview/{ticket}.md` → `kanban/Done/`
+- Update dependencies in blocked tickets
+- Commit: `[#ID] Move to Done`
 
-# Update status history in the ticket file
+**Creating new tickets:**
+- Copy template: `kanban/_templates/ticket.md`
+- Place in Backlog or Ready based on readiness
+- Commit: `Add ticket #ID: Title`
 
-# Commit
-git add kanban/InProgress/001-example.md
-git commit -m "[#001] Move to InProgress"
-```
-
-### Completing a Ticket
-
-```bash
-# Move to Done
-git mv kanban/InProgress/001-example.md kanban/Done/
-
-# Update dependencies (remove from blocked_by in other tickets)
-
-# Commit
-git commit -m "[#001] Move to Done"
-```
+See [GIT_WORKFLOW.md](./GIT_WORKFLOW.md) for:
+- Complete workflow examples
+- Branch naming conventions
+- PR templates
+- Conflict resolution
+- Special cases (quick fixes, dependent tickets)
+- Full command reference
 
 ## Status Transitions
 

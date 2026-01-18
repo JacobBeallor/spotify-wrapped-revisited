@@ -44,22 +44,25 @@ export default function Header({
 
   const formattedDate = formatLastUpdated(lastUpdated)
 
-  // Format month for display
-  const formatMonth = (yearMonth: string) => {
-    const [year, monthNum] = yearMonth.split('-').map(Number)
-    const date = new Date(Date.UTC(year, monthNum - 1, 1))
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      timeZone: 'UTC'
-    })
+  // Get min and max dates from available months
+  const getDateBounds = () => {
+    if (availableMonths.length === 0) return { min: '', max: '' }
+    
+    const minMonth = availableMonths[0] // First month (earliest)
+    const maxMonth = availableMonths[availableMonths.length - 1] // Last month (latest)
+    
+    // Min date: first day of earliest month
+    const min = `${minMonth}-01`
+    
+    // Max date: last day of latest month
+    const [year, month] = maxMonth.split('-').map(Number)
+    const lastDay = new Date(year, month, 0).getDate() // 0 gets last day of previous month
+    const max = `${maxMonth}-${String(lastDay).padStart(2, '0')}`
+    
+    return { min, max }
   }
 
-  // Get valid "to" months based on selected "from" month
-  const getValidToMonths = () => {
-    if (!startDate) return availableMonths
-    return availableMonths.filter(month => month >= startDate)
-  }
+  const { min: minDate, max: maxDate } = getDateBounds()
 
   // Handle start date change with validation
   const handleStartDateChange = (newStartDate: string) => {
@@ -145,45 +148,37 @@ export default function Header({
               </button>
             </div>
 
-            {/* Custom date range dropdowns */}
-            {filterMode === 'custom' && availableMonths.length > 0 && (
+            {/* Custom date range inputs */}
+            {filterMode === 'custom' && (
               <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center animate-fade-in">
                 <div className="flex items-center gap-2">
                   <label htmlFor="start-date" className="text-gray-400 text-sm font-medium whitespace-nowrap">
                     From:
                   </label>
-                  <select
+                  <input
                     id="start-date"
+                    type="date"
                     value={startDate}
                     onChange={(e) => handleStartDateChange(e.target.value)}
-                    className="bg-gray-800 text-white px-4 py-2 rounded-lg border border-gray-700 focus:border-spotify-green focus:outline-none focus:ring-2 focus:ring-spotify-green focus:ring-opacity-50 transition-all cursor-pointer hover:border-gray-600 min-w-[180px]"
-                  >
-                    <option value="">Select start month</option>
-                    {availableMonths.map(month => (
-                      <option key={month} value={month}>
-                        {formatMonth(month)}
-                      </option>
-                    ))}
-                  </select>
+                    min={minDate}
+                    max={maxDate}
+                    className="bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-spotify-green focus:outline-none focus:ring-2 focus:ring-spotify-green focus:ring-opacity-50 transition-all cursor-pointer hover:border-gray-600"
+                  />
                 </div>
                 <div className="flex items-center gap-2">
                   <label htmlFor="end-date" className="text-gray-400 text-sm font-medium whitespace-nowrap">
                     To:
                   </label>
-                  <select
+                  <input
                     id="end-date"
+                    type="date"
                     value={endDate}
                     onChange={(e) => handleEndDateChange(e.target.value)}
+                    min={startDate || minDate}
+                    max={maxDate}
                     disabled={!startDate}
-                    className="bg-gray-800 text-white px-4 py-2 rounded-lg border border-gray-700 focus:border-spotify-green focus:outline-none focus:ring-2 focus:ring-spotify-green focus:ring-opacity-50 transition-all cursor-pointer hover:border-gray-600 min-w-[180px] disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <option value="">Select end month</option>
-                    {getValidToMonths().map(month => (
-                      <option key={month} value={month}>
-                        {formatMonth(month)}
-                      </option>
-                    ))}
-                  </select>
+                    className="bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-spotify-green focus:outline-none focus:ring-2 focus:ring-spotify-green focus:ring-opacity-50 transition-all cursor-pointer hover:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
                 </div>
               </div>
             )}

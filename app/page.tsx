@@ -58,9 +58,13 @@ export default function Home() {
     if (filterMode === 'all') return true
     if (!startDate || !endDate) return true
 
-    // Extract YYYY-MM from year_month format
-    const itemDate = dateStr.substring(0, 7) // Get YYYY-MM from YYYY-MM-DD or year_month
-    return itemDate >= startDate.substring(0, 7) && itemDate <= endDate.substring(0, 7)
+    // For year_month data (YYYY-MM format), compare by month
+    // We'll include the entire month if any part of it is in range
+    const itemYearMonth = dateStr.substring(0, 7) // Get YYYY-MM
+    const startYearMonth = startDate.substring(0, 7) // Get YYYY-MM from YYYY-MM-DD
+    const endYearMonth = endDate.substring(0, 7) // Get YYYY-MM from YYYY-MM-DD
+    
+    return itemYearMonth >= startYearMonth && itemYearMonth <= endYearMonth
   }
 
   const filterByDateRange = <T extends { year_month: string }>(data: T[]): T[] => {

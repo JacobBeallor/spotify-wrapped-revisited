@@ -18,6 +18,14 @@ export interface MonthlyData {
   unique_artists: number
 }
 
+export interface DailyData {
+  date: string
+  hours: number
+  plays: number
+  unique_tracks: number
+  unique_artists: number
+}
+
 export interface DowData {
   year_month: string
   dow: number

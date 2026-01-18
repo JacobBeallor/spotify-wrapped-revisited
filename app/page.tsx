@@ -12,18 +12,41 @@ import TopTracks from '@/components/TopTracks'
 import ArtistEvolutionChart from '@/components/ArtistEvolutionChart'
 import Footer from '@/components/Footer'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
+import type { SummaryData, MonthlyData, DailyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
 
 export default function Home() {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
   const [availableMonths, setAvailableMonths] = useState<string[]>([])
 
+  // Determine granularity and date range based on selected period
+  const isMonthSelected = selectedPeriod !== 'all'
+  const granularity = isMonthSelected ? 'daily' : 'monthly'
+  
+  // Calculate date range for daily view
+  const getDateRange = (yearMonth: string) => {
+    const [year, month] = yearMonth.split('-').map(Number)
+    const startDate = new Date(year, month - 1, 1)
+    const endDate = new Date(year, month, 0) // Last day of month
+    
+    return {
+      start: startDate.toISOString().split('T')[0],
+      end: endDate.toISOString().split('T')[0]
+    }
+  }
+
+  const trendsParams = isMonthSelected 
+    ? { granularity: 'daily', ...getDateRange(selectedPeriod) }
+    : { granularity: 'monthly' }
+
   // Fetch data using API
   const { data: summaryResponse, loading: summaryLoading, error: summaryError } = useApiData<SummaryData>('summary')
-  const { data: trendsResponse, loading: trendsLoading } = useApiData<{ data: MonthlyData[], granularity: string }>('trends', {
-    granularity: 'monthly'
-  })
+  
+  // Always fetch monthly data for the dropdown
+  const { data: monthlyResponse, loading: monthlyLoading } = useApiData<{ data: MonthlyData[], granularity: string }>('trends', { granularity: 'monthly' })
+  
+  // Fetch trends data based on selected period (daily or monthly)
+  const { data: trendsResponse, loading: trendsLoading } = useApiData<{ data: (MonthlyData | DailyData)[], granularity: string }>('trends', trendsParams)
   const { data: dowResponse, loading: dowLoading } = useApiData<{ data: DowData[] }>('dow')
   const { data: hourResponse, loading: hourLoading } = useApiData<{ data: HourData[] }>('hour')
 
@@ -38,14 +61,103 @@ export default function Home() {
   })
 
   const summary = summaryResponse
-  const monthly = trendsResponse?.data || []
+  const monthly = monthlyResponse?.data || []
+  const trendsData = trendsResponse?.data || []
+  
+  // Debug: Check if we're getting the right data
+  useEffect(() => {
+    if (trendsData.length > 0) {
+      console.log('🔄 trendsData updated:', {
+        length: trendsData.length,
+        granularity,
+        firstItem: trendsData[0],
+        hasDateField: 'date' in trendsData[0],
+        hasYearMonthField: 'year_month' in trendsData[0]
+      })
+    }
+  }, [trendsData, granularity])
+  
   const dow = dowResponse?.data || []
   const hour = hourResponse?.data || []
   const topArtists = artistsResponse?.data || []
   const topTracks = tracksResponse?.data || []
   const artistEvolution = evolutionResponse?.data || []
 
-  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || artistsLoading || tracksLoading || evolutionLoading
+  // Fill gaps in daily data to ensure all days are shown
+  const fillDailyGaps = (data: (MonthlyData | DailyData)[], yearMonth: string): DailyData[] => {
+    // If no data or data is monthly format, return empty array to wait for daily data
+    if (data.length === 0 || !('date' in data[0])) {
+      console.log('⚠️ fillDailyGaps: No data or wrong format', { length: data.length, hasData: data.length > 0, firstItem: data[0] })
+      return []
+    }
+    
+    const [year, month] = yearMonth.split('-').map(Number)
+    const daysInMonth = new Date(year, month, 0).getDate()
+    
+    console.log(`📅 fillDailyGaps: Processing ${data.length} daily records for ${yearMonth} (${daysInMonth} days)`)
+    
+    const dataMap = new Map<string, DailyData>()
+    data.forEach((item, index) => {
+      const dailyItem = item as DailyData
+      if (dailyItem.date) {
+        if (index < 3) {
+          console.log(`  Sample ${index}: date="${dailyItem.date}" hours=${dailyItem.hours}`)
+        }
+        dataMap.set(dailyItem.date, dailyItem)
+      }
+    })
+    
+    console.log(`📊 fillDailyGaps: Built map with ${dataMap.size} entries`)
+    
+    const filledData: DailyData[] = []
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+      const existingData = dataMap.get(date)
+      if (day <= 3) {
+        console.log(`  Day ${day}: Looking for "${date}", found:`, existingData ? `YES (${existingData.hours}h)` : 'NO')
+      }
+      filledData.push(
+        existingData || {
+          date,
+          hours: 0,
+          plays: 0,
+          unique_tracks: 0,
+          unique_artists: 0
+        }
+      )
+    }
+    
+    const totalHours = filledData.reduce((sum, d) => sum + d.hours, 0)
+    console.log(`✅ fillDailyGaps: Returning ${filledData.length} days, total ${totalHours} hours`)
+    
+    return filledData
+  }
+
+  const trendsChartData = isMonthSelected 
+    ? fillDailyGaps(trendsData, selectedPeriod)
+    : trendsData
+
+  // Check if chart data matches expected granularity
+  const isChartDataValid = trendsChartData.length === 0 || 
+    (isMonthSelected ? ('date' in trendsChartData[0]) : ('year_month' in trendsChartData[0]))
+
+  // Debug: Log what we're sending to the chart
+  useEffect(() => {
+    if (trendsChartData.length > 0) {
+      console.log('📊 Chart data:', {
+        count: trendsChartData.length,
+        granularity,
+        isValid: isChartDataValid,
+        sample: trendsChartData[0],
+        totalHours: trendsChartData.reduce((sum, d) => sum + (d.hours || 0), 0)
+      })
+    }
+  }, [trendsChartData, granularity, isChartDataValid])
+
+  // For backwards compatibility, keep monthly variable for other components
+  // (monthly is now always fetched separately for the dropdown)
+
+  const loading = summaryLoading || monthlyLoading || trendsLoading || dowLoading || hourLoading || artistsLoading || tracksLoading || evolutionLoading
   const error = summaryError
 
   // Distinguish between initial load and filter changes
@@ -71,7 +183,7 @@ export default function Home() {
     return data.filter(item => item.year_month === selectedPeriod)
   }
 
-  const filteredMonthly = selectedPeriod === 'all' ? monthly : monthly.filter(m => m.year_month === selectedPeriod)
+  const filteredMonthly = filterByPeriod(monthly) // Filter monthly data for KPICards
   const filteredDow = filterByPeriod(dow)
   const filteredHour = filterByPeriod(hour)
   // Top Artists and Top Tracks are filtered server-side via API params
@@ -162,7 +274,13 @@ export default function Home() {
 
         <div className="grid grid-cols-1 gap-6 mt-8">
           <div className="animate-fade-in animation-delay-100">
-            <MonthlyChart data={filteredMonthly} metric={metric} />
+            {isChartDataValid && trendsChartData.length > 0 ? (
+              <MonthlyChart data={trendsChartData} metric={metric} granularity={granularity} />
+            ) : (
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700 h-[430px] flex items-center justify-center">
+                <div className="text-gray-400">Loading chart data...</div>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

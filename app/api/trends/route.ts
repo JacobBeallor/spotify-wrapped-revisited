@@ -37,16 +37,16 @@ export async function GET(request: NextRequest) {
     if (granularity === 'daily') {
       sql = `
         SELECT 
-          DATE(played_at) AS date,
+          STRFTIME(CAST(played_at AS DATE), '%Y-%m-%d') AS date,
           ROUND(SUM(ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
           COUNT(*) AS plays,
           COUNT(DISTINCT track_name) AS unique_tracks,
           COUNT(DISTINCT artist_name) AS unique_artists
         FROM plays
         WHERE 1=1
-          ${start ? `AND played_at >= ?` : ''}
-          ${end ? `AND played_at <= ?` : ''}
-        GROUP BY date
+          ${start ? `AND CAST(played_at AS DATE) >= CAST(? AS DATE)` : ''}
+          ${end ? `AND CAST(played_at AS DATE) <= CAST(? AS DATE)` : ''}
+        GROUP BY STRFTIME(CAST(played_at AS DATE), '%Y-%m-%d')
         ORDER BY date
       `
     } else if (granularity === 'weekly') {
@@ -86,6 +86,14 @@ export async function GET(request: NextRequest) {
     
     const paramValues = [start, end].filter(Boolean)
     const results = await executeQuery(sql, paramValues)
+    
+    console.log(`📈 Trends API: granularity=${granularity}, results=${results.length}, start=${start}, end=${end}`)
+    if (results.length > 0 && results.length <= 3) {
+      console.log('Sample results:', results)
+    } else if (results.length > 3) {
+      console.log('First result:', results[0])
+      console.log('Last result:', results[results.length - 1])
+    }
     
     return NextResponse.json({
       data: results,

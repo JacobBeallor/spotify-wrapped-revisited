@@ -15,9 +15,10 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
 
 export default function Home() {
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
+  const [filterMode, setFilterMode] = useState<'all' | 'custom'>('all')
+  const [startDate, setStartDate] = useState<string>('')
+  const [endDate, setEndDate] = useState<string>('')
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
-  const [availableMonths, setAvailableMonths] = useState<string[]>([])
 
   // Fetch data using API
   const { data: summaryResponse, loading: summaryLoading, error: summaryError } = useApiData<SummaryData>('summary')
@@ -43,36 +44,40 @@ export default function Home() {
   const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || artistsLoading || tracksLoading || evolutionLoading
   const error = summaryError
 
-  // Extract unique months when monthly data is loaded
-  useEffect(() => {
-    if (monthly.length > 0) {
-      const months = monthly.map((m: MonthlyData) => m.year_month).sort()
-      setAvailableMonths(months)
-    }
-  }, [monthly])
+  // Filter data based on date range
+  const isDateInRange = (dateStr: string): boolean => {
+    if (filterMode === 'all') return true
+    if (!startDate || !endDate) return true
 
-  // Filter data based on selected period
-  const filterByPeriod = <T extends { year_month: string }>(data: T[]): T[] => {
-    if (selectedPeriod === 'all') return data
-    return data.filter(item => item.year_month === selectedPeriod)
+    // Extract YYYY-MM from year_month format
+    const itemDate = dateStr.substring(0, 7) // Get YYYY-MM from YYYY-MM-DD or year_month
+    return itemDate >= startDate.substring(0, 7) && itemDate <= endDate.substring(0, 7)
   }
 
-  const filteredMonthly = selectedPeriod === 'all' ? monthly : monthly.filter(m => m.year_month === selectedPeriod)
-  const filteredDow = filterByPeriod(dow)
-  const filteredHour = filterByPeriod(hour)
-  const filteredArtists = filterByPeriod(topArtists)
-  const filteredTracks = filterByPeriod(topTracks)
+  const filterByDateRange = <T extends { year_month: string }>(data: T[]): T[] => {
+    if (filterMode === 'all') return data
+    return data.filter(item => isDateInRange(item.year_month))
+  }
+
+  const filteredMonthly = filterByDateRange(monthly)
+  const filteredDow = filterByDateRange(dow)
+  const filteredHour = filterByDateRange(hour)
+  const filteredArtists = filterByDateRange(topArtists)
+  const filteredTracks = filterByDateRange(topTracks)
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-spotify-dark via-gray-900 to-black text-white">
         <Header
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={setSelectedPeriod}
           metric={metric}
           setMetric={setMetric}
-          availableMonths={[]}
           lastUpdated={summary?.last_played_at}
+          filterMode={filterMode}
+          setFilterMode={setFilterMode}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
         />
         <LoadingSpinner />
       </div>
@@ -83,12 +88,15 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-spotify-dark via-gray-900 to-black text-white">
         <Header
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={setSelectedPeriod}
           metric={metric}
           setMetric={setMetric}
-          availableMonths={[]}
           lastUpdated={summary?.last_played_at}
+          filterMode={filterMode}
+          setFilterMode={setFilterMode}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
         />
         <main className="container mx-auto px-4 py-16 max-w-2xl">
           <div className="bg-red-900/20 border border-red-500/50 rounded-xl p-8 text-center">
@@ -109,12 +117,15 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-spotify-dark via-gray-900 to-black text-white">
       <Header
-        selectedPeriod={selectedPeriod}
-        setSelectedPeriod={setSelectedPeriod}
         metric={metric}
         setMetric={setMetric}
-        availableMonths={availableMonths}
         lastUpdated={summary?.last_played_at}
+        filterMode={filterMode}
+        setFilterMode={setFilterMode}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
       />
       
       <main className="container mx-auto px-4 py-8 max-w-7xl">
@@ -122,7 +133,7 @@ export default function Home() {
           <div className="animate-fade-in">
             <KPICards 
               summary={summary}
-              selectedPeriod={selectedPeriod}
+              selectedPeriod={filterMode === 'all' ? 'all' : 'custom'}
               monthly={filteredMonthly}
             />
           </div>

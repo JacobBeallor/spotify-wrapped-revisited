@@ -53,30 +53,24 @@ Add metadata from the Spotify API to unlock additional features like genre analy
 
 ### Set Environment Variables
 
+Create a `.env` file in your project root:
+
 ```bash
-export SPOTIFY_CLIENT_ID=your_client_id_here
-export SPOTIFY_CLIENT_SECRET=your_client_secret_here
+# Copy the example
+cp .env.example .env
+
+# Edit with your credentials
+code .env
 ```
 
-**Or create a file:**
-```bash
-# scripts/spotify_env.sh
-export SPOTIFY_CLIENT_ID=abc123...
-export SPOTIFY_CLIENT_SECRET=xyz789...
+Add your credentials to `.env`:
 
-# Source before running
-source scripts/spotify_env.sh
+```bash
+SPOTIFY_CLIENT_ID=your_client_id_here
+SPOTIFY_CLIENT_SECRET=your_client_secret_here
 ```
 
-**Or add to shell profile:**
-```bash
-# ~/.zshrc or ~/.bashrc
-export SPOTIFY_CLIENT_ID=abc123...
-export SPOTIFY_CLIENT_SECRET=xyz789...
-
-# Reload
-source ~/.zshrc
-```
+**Keep these secret!** The `.env` file is already in `.gitignore`.
 
 ---
 
@@ -88,12 +82,12 @@ source ~/.zshrc
 # Activate Python environment
 source venv/bin/activate
 
-# Set credentials (if not already set)
-export SPOTIFY_CLIENT_ID=...
-export SPOTIFY_CLIENT_SECRET=...
-
+# Make sure .env file exists with credentials
 # Run enrichment
 python scripts/enrich_metadata.py
+
+# Or use the helper script (recommended)
+./scripts/run_enrichment.sh
 ```
 
 ### What It Does
@@ -300,14 +294,16 @@ git push origin main
 ### "Missing Spotify credentials"
 
 ```bash
-# Check if set
-echo $SPOTIFY_CLIENT_ID
-echo $SPOTIFY_CLIENT_SECRET
+# Check if .env exists
+ls -la .env
 
-# Should print your credentials
-# If empty, set them:
-export SPOTIFY_CLIENT_ID=...
-export SPOTIFY_CLIENT_SECRET=...
+# Check if credentials are set
+cat .env | grep SPOTIFY
+
+# Should show your credentials
+# If empty or file missing, create from template:
+cp .env.example .env
+# Then edit .env with your actual credentials
 ```
 
 ### "Rate limit exceeded"

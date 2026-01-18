@@ -11,21 +11,27 @@ echo ""
 # Navigate to project directory
 cd "$(dirname "$0")/.."
 
-# Check if credentials file exists
-if [ ! -f "scripts/spotify_env.sh" ]; then
-    echo "❌ Error: scripts/spotify_env.sh not found!"
-    echo "Please create it with your Spotify API credentials."
+# Check if .env file exists
+if [ ! -f ".env" ]; then
+    echo "❌ Error: .env file not found!"
+    echo ""
+    echo "Create .env file with your Spotify API credentials:"
+    echo ""
+    echo "  SPOTIFY_CLIENT_ID=your_client_id_here"
+    echo "  SPOTIFY_CLIENT_SECRET=your_client_secret_here"
+    echo ""
+    echo "See .env.example for template"
     exit 1
 fi
 
-# Load credentials
-echo "🔐 Loading Spotify credentials..."
-source scripts/spotify_env.sh
+# Load credentials from .env
+echo "🔐 Loading Spotify credentials from .env..."
+export $(grep -v '^#' .env | xargs)
 
 # Verify credentials are set
 if [ -z "$SPOTIFY_CLIENT_ID" ] || [ -z "$SPOTIFY_CLIENT_SECRET" ]; then
-    echo "❌ Error: SPOTIFY_CLIENT_ID or SPOTIFY_CLIENT_SECRET not set!"
-    echo "Please edit scripts/spotify_env.sh with your actual credentials."
+    echo "❌ Error: SPOTIFY_CLIENT_ID or SPOTIFY_CLIENT_SECRET not set in .env!"
+    echo "Please add them to your .env file."
     exit 1
 fi
 

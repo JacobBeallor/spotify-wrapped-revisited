@@ -6,7 +6,7 @@
 - [ ] App created in Spotify Dashboard
 - [ ] Client ID copied
 - [ ] Client Secret copied
-- [ ] Credentials added to `scripts/spotify_env.sh`
+- [ ] Credentials added to `.env` file
 
 ---
 
@@ -25,20 +25,26 @@
 
 ### 2. Add Credentials (2 minutes)
 
-Edit the credentials file:
+Create a `.env` file in the project root:
 
 ```bash
-code scripts/spotify_env.sh
+cp .env.example .env
 ```
 
-Replace the placeholder values with your actual credentials:
+Then edit the `.env` file:
 
 ```bash
-export SPOTIFY_CLIENT_ID="your_actual_client_id_here"
-export SPOTIFY_CLIENT_SECRET="your_actual_client_secret_here"
+code .env
 ```
 
-**IMPORTANT:** Never commit this file! It's already in `.gitignore`.
+Add your actual credentials (lines 23-24):
+
+```bash
+SPOTIFY_CLIENT_ID=your_actual_client_id_here
+SPOTIFY_CLIENT_SECRET=your_actual_client_secret_here
+```
+
+**IMPORTANT:** Never commit the `.env` file! It's already in `.gitignore`.
 
 ### 3. Run Enrichment (~1-2 hours)
 
@@ -164,13 +170,12 @@ git push origin main
 
 ### "Missing Spotify credentials"
 
-Check if credentials are set:
+Check if credentials are set in `.env`:
 ```bash
-source scripts/spotify_env.sh
-echo $SPOTIFY_CLIENT_ID
+cat .env | grep SPOTIFY
 ```
 
-Should print your client ID. If empty, edit `scripts/spotify_env.sh`.
+Should show your client ID and secret. If not found, make sure you've created `.env` from `.env.example`.
 
 ### "Rate limit exceeded"
 

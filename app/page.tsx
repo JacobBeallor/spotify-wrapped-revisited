@@ -19,6 +19,7 @@ export default function Home() {
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
+  const [availableMonths, setAvailableMonths] = useState<string[]>([])
 
   // Fetch data using API
   const { data: summaryResponse, loading: summaryLoading, error: summaryError } = useApiData<SummaryData>('summary')
@@ -43,6 +44,14 @@ export default function Home() {
 
   const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || artistsLoading || tracksLoading || evolutionLoading
   const error = summaryError
+
+  // Extract unique months when monthly data is loaded
+  useEffect(() => {
+    if (monthly.length > 0) {
+      const months = monthly.map((m: MonthlyData) => m.year_month).sort()
+      setAvailableMonths(months)
+    }
+  }, [monthly])
 
   // Filter data based on date range
   const isDateInRange = (dateStr: string): boolean => {
@@ -78,6 +87,7 @@ export default function Home() {
           setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
+          availableMonths={availableMonths}
         />
         <LoadingSpinner />
       </div>
@@ -97,6 +107,7 @@ export default function Home() {
           setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
+          availableMonths={availableMonths}
         />
         <main className="container mx-auto px-4 py-16 max-w-2xl">
           <div className="bg-red-900/20 border border-red-500/50 rounded-xl p-8 text-center">
@@ -126,6 +137,7 @@ export default function Home() {
         setStartDate={setStartDate}
         endDate={endDate}
         setEndDate={setEndDate}
+        availableMonths={availableMonths}
       />
       
       <main className="container mx-auto px-4 py-8 max-w-7xl">

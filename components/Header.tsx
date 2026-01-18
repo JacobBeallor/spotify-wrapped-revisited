@@ -4,6 +4,7 @@ interface HeaderProps {
   metric: 'hours' | 'plays'
   setMetric: (metric: 'hours' | 'plays') => void
   availableMonths: string[]
+  lastUpdated?: string
 }
 
 export default function Header({ 
@@ -11,8 +12,27 @@ export default function Header({
   setSelectedPeriod, 
   metric, 
   setMetric,
-  availableMonths 
+  availableMonths,
+  lastUpdated
 }: HeaderProps) {
+  // Format last updated date
+  const formatLastUpdated = (dateString?: string) => {
+    if (!dateString) return null
+    
+    try {
+      const date = new Date(dateString)
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    } catch {
+      return null
+    }
+  }
+
+  const formattedDate = formatLastUpdated(lastUpdated)
+
   return (
     <header className="bg-spotify-black border-b border-gray-800 sticky top-0 z-50 backdrop-blur-md bg-opacity-95 shadow-lg">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 max-w-7xl">
@@ -23,6 +43,11 @@ export default function Header({
             </h1>
             <p className="text-gray-400 text-xs sm:text-sm mt-1.5">
               Personal streaming history dashboard
+              {formattedDate && (
+                <span className="text-gray-500 ml-2">
+                  • Data through {formattedDate}
+                </span>
+              )}
             </p>
           </div>
           

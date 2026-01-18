@@ -72,6 +72,7 @@ export default function Home() {
           metric={metric}
           setMetric={setMetric}
           availableMonths={[]}
+          lastUpdated={summary?.last_played_at}
         />
         <LoadingSpinner />
       </div>
@@ -87,6 +88,7 @@ export default function Home() {
           metric={metric}
           setMetric={setMetric}
           availableMonths={[]}
+          lastUpdated={summary?.last_played_at}
         />
         <main className="container mx-auto px-4 py-16 max-w-2xl">
           <div className="bg-red-900/20 border border-red-500/50 rounded-xl p-8 text-center">
@@ -112,6 +114,7 @@ export default function Home() {
         metric={metric}
         setMetric={setMetric}
         availableMonths={availableMonths}
+        lastUpdated={summary?.last_played_at}
       />
       
       <main className="container mx-auto px-4 py-8 max-w-7xl">

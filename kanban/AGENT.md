@@ -151,7 +151,7 @@ Agent should:
 6. Push feature branch
 7. Provide PR template with:
    - **Title:** `[ID] Ticket title` (no `#` to avoid GitHub auto-linking to PRs)
-   - **Description:** Based on actual commits and changes made, not just ticket description
+   - **Description:** Based on actual commits and changes made. Use "ticket ID" not "#ID" to avoid auto-linking
    - **Changes:** Accurate list from git diff/commits
    - **Testing:** From ticket acceptance criteria (checked items)
    - **Branch name** for reference
@@ -163,7 +163,7 @@ Example PR template output:
 [001] Add data freshness indicator
 
 **PR Description:**
-Implements ticket #001 (kanban/Done/001-data-freshness-indicator.md)
+Implements ticket 001 (see kanban/InReview/001-data-freshness-indicator.md)
 
 Adds a data freshness indicator to the dashboard header showing when listening data was last updated, along with fixes for timezone issues in date formatting throughout the dashboard.
 

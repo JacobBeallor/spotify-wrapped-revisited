@@ -117,7 +117,7 @@ git push origin 001-data-freshness
 [001] Add data freshness indicator
 
 **PR Description:**
-Implements ticket #001 (kanban/InReview/001-data-freshness-indicator.md)
+Implements ticket 001 (see kanban/InReview/001-data-freshness-indicator.md)
 
 Adds data freshness indicator to dashboard header showing when listening data was last updated, along with fixes for timezone issues in date formatting.
 
@@ -221,7 +221,7 @@ Use ticket title with ticket ID (no `#` symbol to avoid GitHub auto-linking):
 ### PR Description Template
 
 ```markdown
-Implements ticket #ID (kanban/InReview/ID-slug.md)
+Implements ticket ID (see kanban/InReview/ID-slug.md)
 
 Brief description of what this PR does.
 
@@ -238,6 +238,8 @@ Brief description of what this PR does.
 **Screenshots:** (if applicable)
 [Add screenshots]
 ```
+
+**Note:** Avoid using `#ID` anywhere in PR titles or descriptions to prevent GitHub auto-linking to issues/PRs. Use plain ticket numbers like `001` or `ticket 001` instead.
 
 ### PR Labels
 

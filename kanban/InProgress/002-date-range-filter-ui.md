@@ -78,4 +78,5 @@ This is a high-impact UX improvement that makes the dashboard much more explorab
 ## Status History
 
 - 2026-01-18: Created → Ready
+- 2026-01-18: Ready → InProgress (branch: 002-date-range-filter)
 

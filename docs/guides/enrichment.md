@@ -393,6 +393,12 @@ def enrich_audio_features(con, sp):
 ✅ **Run enrichment after ingestion**
 ```bash
 ./scripts/run_pipeline.sh
+./scripts/run_enrichment.sh
+```
+
+✅ **Or run manually:**
+```bash
+source venv/bin/activate
 python scripts/enrich_metadata.py
 ```
 

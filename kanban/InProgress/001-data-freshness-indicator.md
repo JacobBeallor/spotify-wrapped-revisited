@@ -61,4 +61,5 @@ This is a quick, high-visibility improvement that adds transparency.
 ## Status History
 
 - 2026-01-18: Created → Ready
+- 2026-01-18: Ready → InProgress
 

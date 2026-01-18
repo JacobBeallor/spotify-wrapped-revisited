@@ -51,9 +51,11 @@ yarn-error.log*
 .env.local
 .env*.local
 
+# Spotify API cache
+.cache
+
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-

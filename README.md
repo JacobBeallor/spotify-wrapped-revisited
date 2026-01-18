@@ -73,7 +73,8 @@ See **[Architecture Docs](./docs/architecture/)** for details.
 
 **Guides:**
 - [🔄 Updating Data](./docs/guides/updating-data.md) — Add new Spotify exports
-- [🎵 Enrichment](./docs/guides/enrichment.md) — Add Spotify API metadata
+- [🎵 Enrichment](./docs/guides/enrichment.md) — Add Spotify API metadata (full guide)
+- [⚡ Enrichment Quick Start](./docs/guides/enrichment-quickstart.md) — Fast-track setup (5 minutes)
 
 **[📁 Full Documentation Index](./docs/README.md)**
 

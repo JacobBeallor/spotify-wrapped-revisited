@@ -28,11 +28,11 @@ This is a quick, high-visibility improvement that adds transparency.
 
 ## Acceptance Criteria
 
-- [ ] Display "Last updated: [date]" or "Data through December 2024" in header or footer
-- [ ] Extract date from database using `MAX(played_at)` query
-- [ ] Format date in user-friendly way (e.g., "December 2024" or "Dec 31, 2024")
-- [ ] Subtle styling that doesn't distract from main content
-- [ ] Works on both mobile and desktop
+- [x] Display "Last updated: [date]" or "Data through December 2024" in header or footer
+- [x] Extract date from database using `MAX(played_at)` query
+- [x] Format date in user-friendly way (e.g., "December 2024" or "Dec 31, 2024")
+- [x] Subtle styling that doesn't distract from main content
+- [x] Works on both mobile and desktop
 
 ## Implementation Notes
 
@@ -52,11 +52,11 @@ This is a quick, high-visibility improvement that adds transparency.
 
 ## Test Plan
 
-- [ ] Verify query returns correct last played date
-- [ ] Check date displays correctly in UI
-- [ ] Test on mobile and desktop layouts
-- [ ] Verify styling is subtle and non-intrusive
-- [ ] Test with different date ranges (recent vs old data)
+- [x] Verify query returns correct last played date
+- [x] Check date displays correctly in UI
+- [x] Test on mobile and desktop layouts
+- [x] Verify styling is subtle and non-intrusive
+- [x] Test with different date ranges (recent vs old data)
 
 ## Status History
 

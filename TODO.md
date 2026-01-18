@@ -1,157 +1,366 @@
-# Spotify Wrapped 2.0 — TODO List
+# Spotify Wrapped 2.0 — Issues & Roadmap
 
-## ✅ v1.0 Complete (Deployed)
-- [x] Data pipeline (Python + DuckDB)
-- [x] Interactive dashboard (Next.js + TypeScript + Tailwind)
-- [x] Charts & visualizations (ECharts)
-- [x] Client-side filtering
-- [x] Deployed to Vercel
-- [x] Custom favicon
+## 📋 Issue Labels
 
----
+**Priority:**
+- `P0` - Critical/Blocker
+- `P1` - High priority
+- `P2` - Medium priority  
+- `P3` - Low priority/Nice to have
 
-## 🎯 Next Up (v1.1)
+**Size:**
+- `XS` - < 2 hours
+- `S` - 2-4 hours
+- `M` - 4-8 hours (1 day)
+- `L` - 1-3 days
+- `XL` - 3-5 days
 
-### High Priority
-- [ ] **Update KPI card icons** — Replace emoji with better icons/graphics
-- [ ] **Review data ingestion code** — Optimize and document pipeline
-- [ ] **Update data range filter UI** — Improve UX for selecting periods
-- [ ] **Update monthly trends chart** — Add zoom when date range is small
-
-### Core Features
-- [ ] **YoY trend analysis** — Compare year-over-year listening patterns
-- [ ] **Genre/artist evolution over time** — Visualize how tastes changed
-  - Bump chart or streamgraph (research Nivo?)
-- [ ] **Discovery trends** — Track new tracks/artists per month
-  - "First listen" detection and visualization
-- [ ] **Release year analysis** — Analyze listening by song release date
-  - Distribution: 60s, 70s, 80s, 90s, 2000s, 2010s, 2020s
-  - "Musical era preference" visualization
-  - Nostalgia score: % of music older than 10 years
-  - Track if taste skews vintage, modern, or balanced
-- [ ] **Move to server-side queries** — Replace static JSON with dynamic API
-  - Consider tRPC or Next.js API routes
-  - Keep DuckDB for fast queries
-
-### Documentation
-- [ ] Document data pipeline architecture
-- [ ] Add inline code comments
-- [ ] Create data schema documentation
-- [ ] Write migration guide (static → server-side)
+**Type:**
+- `bug` - Something broken
+- `feature` - New functionality
+- `enhancement` - Improve existing feature
+- `docs` - Documentation
 
 ---
 
-## 💡 Ideas to Explore
+## 🎯 Epics
 
-### Spotify Integration
-- [ ] Embedded Spotify widgets — Show playable tracks
-- [ ] Spotify API integration — Get real-time data
-  - Research API limits and authentication
-  - Evaluate privacy implications
+### Epic 1: UI/UX Improvements
+Enhance user experience with better navigation, controls, and visual clarity.
 
-### Data Enrichment
-- [ ] Genre enrichment — Use Spotify API for genre data
-  - Map artists → genres
-  - Create genre distribution charts
-- [ ] Audio feature analysis — Energy, danceability, valence, etc.
-  - Visualize audio features over time
-  - Find correlations with listening patterns
-  - "Musical mood" tracking
+### Epic 2: Data Enrichment & Analytics
+Unlock new insights with Spotify API metadata (genres, release years, audio features).
+
+### Epic 3: Discovery & Exploration Features
+Add features to help users discover patterns in their listening history.
 
 ---
 
-## 📊 Technical Notes
+## 📝 Issues
 
-### Nivo Research
-- React chart library with beautiful defaults
-- Good for bump charts and stream graphs
-- Lighter than D3, easier than ECharts for advanced layouts
-- Evaluate: bundle size vs ECharts
+### Epic 1: UI/UX Improvements
 
-### Server-Side Architecture Options
-1. **Next.js API Routes + DuckDB**
-   - Keep DuckDB for speed
-   - Serverless functions query on-demand
-   - Pros: Fast, familiar
-   - Cons: Cold starts, function timeout
+#### #1 Add data freshness indicator to dashboard
+**Epic:** UI/UX Improvements  
+**Priority:** `P1`  
+**Size:** `XS`  
+**Labels:** `enhancement`
 
-2. **tRPC + DuckDB**
-   - Type-safe API layer
-   - Better DX for full-stack TypeScript
-   - Pros: Type safety, great DX
-   - Cons: Learning curve
+**Description:**
+Show users when their data was last updated. Helps set expectations about data recency.
 
-3. **Edge Functions + Cached Queries**
-   - Deploy DuckDB queries at edge
-   - Cache results with SWR/React Query
-   - Pros: Fast global access
-   - Cons: Complexity
+**Acceptance Criteria:**
+- [ ] Display "Last updated: [date]" in header or footer
+- [ ] Format: "Data through December 2024" or similar
+- [ ] Extract date from database (MAX(played_at))
+- [ ] Subtle styling (doesn't distract from main content)
 
-### Discovery Metrics Ideas
-- Track "first play" timestamp per track/artist
-- Calculate discovery rate: new/(new + repeat)
-- Visualize: "How adventurous am I?"
-- Compare discovery rate over time
+**Technical Notes:**
+- Add to `/api/summary` response
+- Display in Header or KPICards component
 
 ---
 
-## 🎨 Design Improvements
+#### #2 Improve date range filter UI
+**Epic:** UI/UX Improvements  
+**Priority:** `P1`  
+**Size:** `M`  
+**Labels:** `enhancement`
 
-### KPI Card Icons
-Options to explore:
-- React Icons (react-icons)
-- Lucide Icons (lucide-react)
-- Heroicons
-- Custom SVG icons
-- Phosphor Icons
+**Description:**
+Replace current basic date filter with a more intuitive UI including presets and custom range picker.
 
-### Chart Zoom Implementation
-- ECharts has built-in dataZoom
-- Show all data when "All Time" selected
-- Auto-zoom to date range when month selected
-- Add brush selection for custom ranges
+**Acceptance Criteria:**
+- [ ] Add preset buttons: "All Time", "Last Year", "Last 3 Months", "Last Month"
+- [ ] Add custom date range picker (start/end date)
+- [ ] Highlight active preset/range
+- [ ] Persist selection in URL query params
+- [ ] Update all charts when range changes
+- [ ] Show selected range in header
 
----
+**Technical Notes:**
+- Use native HTML date inputs or lightweight picker
+- Update `useApiData` calls with date params
+- Consider adding `react-day-picker` if needed
 
-## 🔄 Migration Plan: Static → Server-Side
-
-### Phase 1: Hybrid Approach
-1. Keep static JSON for initial load (fast)
-2. Add API routes for dynamic queries
-3. Use SWR for client-side data fetching
-
-### Phase 2: Full Server-Side
-1. Remove static JSON files
-2. Query DuckDB on-demand
-3. Implement caching strategy
-4. Add loading states
-
-### Phase 3: Optimization
-1. Implement query pagination
-2. Add data streaming for large results
-3. Consider moving DuckDB to persistent storage
+**Design mockup:**
+```
+┌─────────────────────────────────────────┐
+│ [All Time] [2024] [Last 3M] [Last Month]│
+│ or Custom: [Jan 2024] to [Dec 2024]     │
+└─────────────────────────────────────────┘
+```
 
 ---
 
-## 📅 Timeline
+#### #3 Add section navigation and anchor links
+**Epic:** UI/UX Improvements  
+**Priority:** `P2`  
+**Size:** `S`  
+**Labels:** `enhancement`
 
-**Short term (Next 2 weeks):**
-- KPI icons
-- Review/document code
-- Filter UI improvements
+**Description:**
+Add in-page navigation to quickly jump to different sections (trends, top artists, hour analysis, etc.).
 
-**Medium term (Next month):**
-- Chart zoom functionality
-- YoY analysis
-- Discovery trends
+**Acceptance Criteria:**
+- [ ] Add section IDs to major components
+- [ ] Add sticky nav bar or floating menu
+- [ ] Smooth scroll to sections on click
+- [ ] Highlight active section on scroll
+- [ ] Works on mobile (hamburger menu or horizontal scroll)
 
-**Long term (2-3 months):**
-- Genre/artist evolution
-- Server-side migration
-- Spotify API integration
+**Technical Notes:**
+- Use `IntersectionObserver` for active section detection
+- Add `scroll-margin-top` for proper offset with sticky header
+
+**Sections:**
+- Summary
+- Trends
+- Top Artists
+- Top Tracks
+- Patterns (DOW/Hour)
+- Artist Evolution
 
 ---
 
-**Last Updated:** January 2026  
-**Current Version:** 1.0.0  
-**Status:** ✅ Production | 🚧 Planning v1.1
+#### #4 Fix artist evolution bump chart design
+**Epic:** UI/UX Improvements  
+**Priority:** `P2`  
+**Size:** `S`  
+**Labels:** `bug`, `enhancement`
+
+**Description:**
+The bump chart currently has some visual issues (TypeScript errors fixed but visual customizations removed). Restore proper styling and improve clarity.
+
+**Acceptance Criteria:**
+- [ ] Restore dynamic line width (thicker for top ranks)
+- [ ] Fix point visibility (hide points on "..." row)
+- [ ] Adjust grid lines (only show ranks 1-5)
+- [ ] Improve legend placement
+- [ ] Better responsive behavior
+- [ ] Smoother animations
+
+**Technical Notes:**
+- Previously removed due to Nivo type errors
+- May need to use `any` type assertions or find correct Nivo types
+- Reference: `docs/archive/ARTIST_EVOLUTION.md`
+
+---
+
+### Epic 2: Data Enrichment & Analytics
+
+#### #5 Implement Spotify API enrichment pipeline
+**Epic:** Data Enrichment & Analytics  
+**Priority:** `P1`  
+**Size:** `L`  
+**Labels:** `feature`
+
+**Description:**
+Enable metadata enrichment from Spotify API to unlock genre analysis and release year features.
+
+**Acceptance Criteria:**
+- [x] ~~Create `scripts/enrich_metadata.py`~~ (DONE)
+- [x] ~~Implement track enrichment~~ (DONE)
+- [x] ~~Implement artist enrichment~~ (DONE)
+- [ ] Test with production data
+- [ ] Document API rate limits and best practices
+- [ ] Add progress indicators for long-running enrichment
+- [ ] Handle API errors gracefully
+
+**Technical Notes:**
+- Already implemented, needs testing with real credentials
+- See `docs/guides/enrichment.md`
+- Requires Spotify Developer credentials
+
+**Sub-tasks:**
+- Test track enrichment (50/sec expected)
+- Test artist enrichment (1/sec expected)
+- Verify data quality
+- Document common errors
+
+---
+
+#### #6 Add genre analysis and visualization
+**Epic:** Data Enrichment & Analytics  
+**Priority:** `P1`  
+**Size:** `M`  
+**Labels:** `feature`
+
+**Dependencies:** #5 (enrichment pipeline)
+
+**Description:**
+Show top genres by listening time with pie chart or bar chart.
+
+**Acceptance Criteria:**
+- [ ] Create `/api/genres` endpoint (DONE)
+- [ ] Add GenreChart component
+- [ ] Show top 10-15 genres
+- [ ] Display hours and percentage per genre
+- [ ] Add to main dashboard
+- [ ] Handle genres with commas (split properly)
+- [ ] Filter by date range
+
+**Technical Notes:**
+- API endpoint exists
+- Need frontend component
+- Consider pie chart or bar chart
+- May need to clean up genre names (lowercase, dedupe)
+
+---
+
+#### #7 Add release year/decade analysis
+**Epic:** Data Enrichment & Analytics  
+**Priority:** `P1`  
+**Size:** `M`  
+**Labels:** `feature`
+
+**Dependencies:** #5 (enrichment pipeline)
+
+**Description:**
+Analyze listening preferences by release decade. Are you into classics or modern music?
+
+**Acceptance Criteria:**
+- [ ] Create `/api/release-years` endpoint (DONE)
+- [ ] Add ReleaseYearChart component
+- [ ] Show distribution by decade (bar chart)
+- [ ] Show top decades by hours
+- [ ] Add "All-time favorite decade" stat
+- [ ] Optionally show year-by-year breakdown
+- [ ] Filter by listening date range
+
+**Technical Notes:**
+- API endpoint exists
+- Group by decade: 1960s, 1970s, etc.
+- Consider stacked area chart for decade evolution over time
+
+**Bonus features:**
+- Decade evolution over time (how preferences changed)
+- "Hipster score" (preference for older music)
+
+---
+
+### Epic 3: Discovery & Exploration Features
+
+#### #8 Add discovery trends tracking
+**Epic:** Discovery & Exploration Features  
+**Priority:** `P2`  
+**Size:** `L`  
+**Labels:** `feature`
+
+**Description:**
+Track and visualize when you first listened to new tracks and artists. Show discovery rate over time.
+
+**Acceptance Criteria:**
+- [ ] Detect "first listen" for each track/artist
+- [ ] Create `/api/discovery` endpoint
+- [ ] Show new tracks/artists per month
+- [ ] Line chart showing discovery rate over time
+- [ ] Stats: Total discoveries, peak discovery period
+- [ ] Identify "discovery phases" (periods of exploration)
+- [ ] Compare discovery rate year-over-year
+
+**Technical Notes:**
+```sql
+-- First listen detection
+SELECT 
+  DATE_TRUNC('month', MIN(played_at)) as first_listen_month,
+  COUNT(DISTINCT track_name) as new_tracks,
+  COUNT(DISTINCT artist_name) as new_artists
+FROM plays
+GROUP BY track_name, artist_name
+```
+
+**Implementation approach:**
+1. Add query to calculate first listen dates
+2. Aggregate by month
+3. Create DiscoveryChart component
+4. Add to dashboard
+
+---
+
+#### #9 Add Spotify embedded players and links
+**Epic:** Discovery & Exploration Features  
+**Priority:** `P3`  
+**Size:** `M`  
+**Labels:** `enhancement`
+
+**Description:**
+Make top tracks and artists clickable, linking to Spotify or embedding players.
+
+**Acceptance Criteria:**
+- [ ] Add Spotify URI/URL for tracks and artists
+- [ ] Make track/artist names clickable
+- [ ] Open Spotify web player in new tab
+- [ ] OR embed Spotify iframe player (optional)
+- [ ] Add Spotify icon indicator
+- [ ] Consider hover preview (show album art)
+
+**Technical Notes:**
+- Track URI: `spotify:track:xxx` → `https://open.spotify.com/track/xxx`
+- Artist URI: `spotify:artist:xxx` → `https://open.spotify.com/artist/xxx`
+- Spotify Embed API: https://developer.spotify.com/documentation/embeds
+
+**Challenges:**
+- Need valid Spotify URIs (already in database)
+- Embedded players add page weight
+- Consider privacy implications
+
+---
+
+## 📊 Sprint Planning
+
+### Sprint 1: Core UX Improvements (5-7 days)
+- #1 Data freshness indicator (XS)
+- #2 Date range filter UI (M)
+- #3 Section navigation (S)
+
+### Sprint 2: Enrichment & Genre Analysis (3-5 days)
+- #5 Test enrichment pipeline (L)
+- #6 Genre analysis (M)
+
+### Sprint 3: Release Year & Discovery (5-7 days)
+- #7 Release year analysis (M)
+- #8 Discovery trends (L)
+
+### Sprint 4: Polish & Extras (2-3 days)
+- #4 Fix bump chart (S)
+- #9 Spotify embeds (M) - if time permits
+
+---
+
+## 🎯 Quick Wins (Do First)
+
+These can be done quickly for immediate impact:
+
+1. **#1 Data freshness indicator** - 1 hour
+2. **#3 Section navigation** - 2-3 hours
+3. **#4 Fix bump chart** - 3-4 hours
+
+---
+
+## 📈 Impact vs Effort
+
+```
+High Impact, Low Effort:
+  ├─ #1 Data freshness
+  ├─ #3 Section navigation
+  └─ #6 Genre analysis (if enrichment done)
+
+High Impact, High Effort:
+  ├─ #2 Date range filter
+  ├─ #5 Enrichment pipeline (testing)
+  └─ #8 Discovery trends
+
+Low Priority:
+  └─ #9 Spotify embeds
+```
+
+---
+
+## 🔄 Next Steps
+
+1. Create GitHub issues from this file
+2. Assign to milestones/sprints
+3. Start with Sprint 1 quick wins
+4. Test enrichment pipeline with real data
+5. Begin Sprint 2 after enrichment validation

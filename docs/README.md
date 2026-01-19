@@ -2,6 +2,8 @@
 
 Complete documentation for your personal Spotify analytics dashboard.
 
+**📂 [Documentation Structure Guide](./STRUCTURE.md)** - Map of all docs and when to use them
+
 ## 🚀 Quick Start
 
 **New to the project?** Start here:
@@ -20,7 +22,8 @@ Understand how the system works:
 
 Step-by-step instructions:
 - **[Updating Data](./guides/updating-data.md)** - Add new Spotify exports
-- **[Enrichment](./guides/enrichment.md)** - Add metadata from Spotify API
+- **[Enrichment](./guides/enrichment.md)** - Complete guide to Spotify API enrichment
+- **[Enrichment Quick Start](./guides/enrichment-quickstart.md)** - Fast-track enrichment (5 min setup)
 - **[Local Development](./guides/local-development.md)** - Development workflow
 
 ## 🗂️ Archive

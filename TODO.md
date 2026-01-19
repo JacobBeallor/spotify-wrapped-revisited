@@ -1,12 +1,68 @@
 # Spotify Wrapped 2.0 — Issues & Roadmap
 
-## 📋 Issue Labels
+## Issues
 
-**Priority**
-- `P0` - Critical/Blocker
-- `P1` - High
-- `P2` - Medium
-- `P3` - Low
+### 1. Decouple listening trends graphs from global filter & remove daily granularity option
+- Size: `M`  
+- Make the listening trends graphs independent of the main dashboard filter.
+- Remove daily granularity—only support monthly aggregation in trends view.
+- ⛔ Blocks: Section navigation
+
+### 2. Section navigation
+- Size: `S`  
+- Add quick links and navigation between dashboard sections.
+- Move filters out of header (or into sub-header?) so they only appear on applicable pages
+- Tabs:
+  - Overview (KPI cards, top artists, top tracks)
+  - Listening Patterns (monthly trends, hour chart, week chart, discovery rates)
+  - Taste Evolution (genre streamgraph, decades streamgraph, top artists evolution)
+
+### 3. Migrate Hour & Day of Week charts to radial/polar form
+- Size: `S`  
+- Convert Hour of Day and Day of Week bar charts to radial/polar visualization for better cyclical data representation.
+- Evaluate Nivo Polar Bar vs ECharts polar coordinates (decision TBD)
+- Nivo: Cleaner API, React-first, better defaults (+35KB bundle)
+- ECharts: Already installed, consistent with existing charts, more flexible
+
+### 4. Fix artist evolution bump chart
+- Size: `S`  
+- Restore styling and clarify artist evolution chart.
+
+### 5. Genre analysis & visualization
+- Size: `M`  
+- Display top genres (pie or bar chart) by listening time.
+
+### 6. Release year/decade analysis
+- Size: `M`  
+- Show listening trends by release year/decade.
+
+### 7. Discovery trends tracking
+- Size: `L`  
+- Track first listens and show discovery rate over time.
+
+### 8. Spotify embeds & links
+- Size: `M`  
+- Make top tracks/artists clickable with Spotify links and embeds.
+
+---
+
+## ✅ Completed
+
+### 1. Data freshness indicator
+- Size: `XS`   
+- Show when user data was last updated.
+
+### 2. Date range filter UI
+- Size: `M`  
+- Improve date filter UI with presets and range picker.
+
+### 3. Spotify API enrichment pipeline
+- Size: `L`  
+- Enrich track/artist data from Spotify API for deeper analysis.
+
+---
+
+## 📋 Issue Labels
 
 **Size**
 - `XS` - < 2hrs
@@ -14,100 +70,3 @@
 - `M` - 4-8hrs
 - `L` - 1-3 days
 - `XL` - 3-5 days
-
-**Type**
-- `bug` - Broken functionality
-- `feature` - New functionality
-- `enhancement` - Improve existing feature
-- `docs` - Documentation
-
----
-
-## Issues
-
-### #1 Data freshness indicator ✅
-Priority: `P1`  
-Size: `XS`  
-Type: `enhancement`  
-Show when user data was last updated.
-
-### #2 Date range filter UI ✅
-Priority: `P1`  
-Size: `M`  
-Type: `enhancement`  
-Improve date filter UI with presets and range picker.
-
-### #3 Section navigation
-Priority: `P2`  
-Size: `S`  
-Type: `enhancement`  
-Add quick links and navigation between dashboard sections.
-
-### #4 Fix artist evolution bump chart
-Priority: `P2`  
-Size: `S`  
-Type: `bug`, `enhancement`  
-Restore styling and clarify artist evolution chart.
-
-### #5 Spotify API enrichment pipeline ✅
-Priority: `P1`  
-Size: `L`  
-Type: `feature`  
-Enrich track/artist data from Spotify API for deeper analysis.
-
-### #6 Genre analysis & visualization
-Priority: `P1`  
-Size: `M`  
-Type: `feature`  
-Display top genres (pie or bar chart) by listening time.
-
-### #7 Release year/decade analysis
-Priority: `P1`  
-Size: `M`  
-Type: `feature`  
-Show listening trends by release year/decade.
-
-### #8 Discovery trends tracking
-Priority: `P2`  
-Size: `L`  
-Type: `feature`  
-Track first listens and show discovery rate over time.
-
-### #9 Spotify embeds & links
-Priority: `P3`  
-Size: `M`  
-Type: `enhancement`  
-Make top tracks/artists clickable with Spotify links and embeds.
-
----
-
-## Sprints (suggested order)
-
-1. Core UX: #1, #2, #3
-2. Enrichment & Genres: #5, #6
-3. Release Years & Discovery: #7, #8
-4. Polish & Extras: #4, #9
-
----
-
-## Quick Wins
-
-1. ~~#1 Data freshness indicator~~ ✅
-2. #3 Section navigation
-3. #4 Fix bump chart
-
----
-
-## Impact vs Effort
-
-- High Impact, Low Effort: #1 ✅, #3, #6
-- High Impact, High Effort: #2 ✅, #5 ✅, #8
-- Low Priority: #9
-
----
-
-## Next Steps
-
-- Issues tracked in this file
-- Enrichment pipeline tested
-- Next: Implement #6 (genres), #7 (release years), #3 (navigation), #8 (discovery)

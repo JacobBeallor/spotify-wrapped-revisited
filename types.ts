@@ -27,7 +27,6 @@ export interface DailyData {
 }
 
 export interface DowData {
-  year_month: string
   dow: number
   dow_name: string
   hours: number
@@ -35,7 +34,6 @@ export interface DowData {
 }
 
 export interface HourData {
-  year_month: string
   hour: number
   hours: number
   plays: number

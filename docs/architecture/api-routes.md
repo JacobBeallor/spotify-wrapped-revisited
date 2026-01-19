@@ -65,45 +65,34 @@ FROM plays
 
 ### `GET /api/trends`
 
-**Listening trends over time with dynamic granularity.**
+**Monthly listening trends over time.**
 
-**Parameters:**
-- `granularity` (optional): `daily` | `weekly` | `monthly` | `auto` (default: `auto`)
-- `start` (optional): Start date (YYYY-MM-DD or YYYY-MM)
-- `end` (optional): End date (YYYY-MM-DD or YYYY-MM)
-- `metric` (optional): `hours` | `plays` (default: `hours`)
+**Parameters:** None
 
 **Response:**
 ```json
 {
   "granularity": "monthly",
+  "count": 120,
   "data": [
     {
-      "period": "2024-01",
+      "year_month": "2024-01",
+      "year": 2024,
+      "month": 1,
       "hours": 245.5,
-      "plays": 4521
+      "plays": 4521,
+      "unique_tracks": 342,
+      "unique_artists": 156
     },
     ...
   ]
 }
 ```
 
-**Granularity Logic:**
-- Date range ≤ 3 months → `daily`
-- Date range ≤ 12 months → `weekly`
-- Date range > 12 months → `monthly`
-
-**Example requests:**
-```bash
-# Auto-detect granularity for last 6 months
-GET /api/trends?start=2024-06&end=2024-12
-
-# Force daily granularity
-GET /api/trends?granularity=daily&start=2024-11-01&end=2024-11-30
-
-# Get plays instead of hours
-GET /api/trends?metric=plays
-```
+**Notes:**
+- Returns aggregated data for all time periods
+- Always uses monthly granularity
+- Not affected by date range filters
 
 ---
 
@@ -177,21 +166,17 @@ LIMIT ?
 
 **Listening patterns by day of week.**
 
-**Parameters:**
-- `start` (optional): Start date filter
-- `end` (optional): End date filter
-- `metric` (optional): `hours` | `plays` (default: `hours`)
+**Parameters:** None
 
 **Response:**
 ```json
 {
   "data": [
     {
-      "year_month": "2024-01",
       "dow": 0,
       "dow_name": "Sunday",
-      "hours": 45.2,
-      "plays": 823
+      "hours": 1245.2,
+      "plays": 22823
     },
     ...
   ]
@@ -204,26 +189,26 @@ LIMIT ?
 - ...
 - 6 = Saturday
 
+**Notes:**
+- Returns aggregated data across all time periods
+- Not affected by date range filters
+
 ---
 
 ### `GET /api/hour`
 
 **Listening patterns by hour of day.**
 
-**Parameters:**
-- `start` (optional): Start date filter
-- `end` (optional): End date filter
-- `metric` (optional): `hours` | `plays` (default: `hours`)
+**Parameters:** None
 
 **Response:**
 ```json
 {
   "data": [
     {
-      "year_month": "2024-01",
       "hour": 14,
-      "hours": 32.5,
-      "plays": 598
+      "hours": 432.5,
+      "plays": 7898
     },
     ...
   ]
@@ -231,6 +216,10 @@ LIMIT ?
 ```
 
 **Hour encoding:** 0-23 (24-hour format, local timezone)
+
+**Notes:**
+- Returns aggregated data across all time periods
+- Not affected by date range filters
 
 ---
 

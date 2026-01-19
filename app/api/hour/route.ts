@@ -3,26 +3,17 @@ import { executeQuery } from '../db'
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const start = searchParams.get('start')
-    const end = searchParams.get('end')
-    
     const sql = `
       SELECT 
-        year_month,
         hour,
         ROUND(SUM(ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
         COUNT(*) AS plays
       FROM plays
-      WHERE 1=1
-        ${start ? `AND year_month >= ?` : ''}
-        ${end ? `AND year_month <= ?` : ''}
-      GROUP BY year_month, hour
-      ORDER BY year_month, hour
+      GROUP BY hour
+      ORDER BY hour
     `
     
-    const paramValues = [start, end].filter(Boolean)
-    const results = await executeQuery(sql, paramValues)
+    const results = await executeQuery(sql)
     
     return NextResponse.json({ data: results })
   } catch (error: any) {

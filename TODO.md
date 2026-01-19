@@ -10,6 +10,16 @@
   - Overview (KPI cards, top artists, top tracks)
   - Listening Patterns (monthly trends, hour chart, week chart, discovery rates)
   - Taste Evolution (genre streamgraph, decades streamgraph, top artists evolution)
+- **Filter Placement:**
+  - Use dedicated sub-header below main header for page-specific filters
+  - Sub-header should be sticky (positioned below sticky main header)
+  - Overview page: Period Selector + Metric Toggle
+  - Listening Patterns page: Metric Toggle only
+  - Taste Evolution page: No filters (or metric if needed)
+- **State Persistence:**
+  - Use URL search params to maintain filter values across pages
+  - Enables bookmarking, sharing, and browser back/forward
+  - Filters should persist when navigating between pages
 
 ### 2. Migrate Hour & Day of Week charts to radial/polar form
 - Size: `S`  

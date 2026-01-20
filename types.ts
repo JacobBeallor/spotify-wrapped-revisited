@@ -61,3 +61,9 @@ export interface ArtistEvolution {
   hours: number
 }
 
+export interface DiscoveryRateData {
+  year_month: string
+  discovery_rate_hours: number
+  discovery_rate_plays: number
+}
+

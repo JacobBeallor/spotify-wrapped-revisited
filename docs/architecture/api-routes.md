@@ -223,6 +223,50 @@ LIMIT ?
 
 ---
 
+### `GET /api/discovery-rate`
+
+**Monthly discovery rate - percentage of listening from newly discovered tracks.**
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "year_month": "2024-01",
+      "discovery_rate_hours": 25.5,
+      "discovery_rate_plays": 32.1
+    },
+    ...
+  ]
+}
+```
+
+**Definition:**
+- Discovery rate = (listening from tracks first heard in month) / (total listening in month) × 100
+- A track's "first listen" is determined by the earliest `played_at` timestamp for that `track_name` + `artist_name` combination
+- Returns percentage values (0-100)
+
+**Query Logic:**
+```sql
+WITH first_listens AS (
+  SELECT track_name, artist_name, 
+         MIN(played_at) as first_played_at,
+         STRFTIME(MIN(played_at), '%Y-%m') as first_year_month
+  FROM plays
+  GROUP BY track_name, artist_name
+)
+-- Calculate discovery hours/plays per month
+```
+
+**Notes:**
+- Returns aggregated data across all time periods
+- Not affected by date range filters
+- Higher percentages indicate more exploration of new music
+
+---
+
 ### `GET /api/artist-evolution`
 
 **Artist rank changes over time (for bump chart).**

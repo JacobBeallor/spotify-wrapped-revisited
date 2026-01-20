@@ -1,13 +1,15 @@
 import MonthlyChart from '@/components/MonthlyChart'
 import DayOfWeekChart from '@/components/DayOfWeekChart'
 import HourChart from '@/components/HourChart'
+import DiscoveryRateChart from '@/components/DiscoveryRateChart'
 import MetricFilter from '@/components/filters/MetricFilter'
-import type { MonthlyData, DowData, HourData } from '@/types'
+import type { MonthlyData, DowData, HourData, DiscoveryRateData } from '@/types'
 
 interface ListeningPatternsPageProps {
   monthly: MonthlyData[]
   dow: DowData[]
   hour: HourData[]
+  discovery: DiscoveryRateData[]
   metric: 'hours' | 'plays'
   setMetric: (metric: 'hours' | 'plays') => void
 }
@@ -16,6 +18,7 @@ export default function ListeningPatternsPage({
   monthly,
   dow,
   hour,
+  discovery,
   metric,
   setMetric
 }: ListeningPatternsPageProps) {
@@ -41,6 +44,10 @@ export default function ListeningPatternsPage({
           <div className="animate-fade-in animation-delay-300">
             <HourChart data={hour} metric={metric} />
           </div>
+        </div>
+
+        <div className="animate-fade-in animation-delay-400">
+          <DiscoveryRateChart data={discovery} metric={metric} />
         </div>
       </div>
     </main>

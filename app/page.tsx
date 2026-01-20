@@ -8,7 +8,7 @@ import ListeningPatternsPage from '@/components/pages/ListeningPatternsPage'
 import TasteEvolutionPage from '@/components/pages/TasteEvolutionPage'
 import Footer from '@/components/Footer'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
+import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution, DiscoveryRateData } from '@/types'
 
 export default function Home() {
   // Tab and filter state
@@ -24,6 +24,7 @@ export default function Home() {
   const { data: trendsResponse, loading: trendsLoading } = useApiData<{ data: MonthlyData[], granularity: string }>('trends')
   const { data: dowResponse, loading: dowLoading } = useApiData<{ data: DowData[] }>('dow')
   const { data: hourResponse, loading: hourLoading } = useApiData<{ data: HourData[] }>('hour')
+  const { data: discoveryResponse, loading: discoveryLoading } = useApiData<{ data: DiscoveryRateData[] }>('discovery-rate')
 
   // Pass selected period to top artists/tracks APIs
   const artistsParams = selectedPeriod !== 'all' ? { start: selectedPeriod, end: selectedPeriod } : {}
@@ -39,11 +40,12 @@ export default function Home() {
   const monthly = trendsResponse?.data || []
   const dow = dowResponse?.data || []
   const hour = hourResponse?.data || []
+  const discoveryRate = discoveryResponse?.data || []
   const topArtists = artistsResponse?.data || []
   const topTracks = tracksResponse?.data || []
   const artistEvolution = evolutionResponse?.data || []
 
-  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || artistsLoading || tracksLoading || evolutionLoading
+  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || discoveryLoading || artistsLoading || tracksLoading || evolutionLoading
   const error = summaryError
 
   // Distinguish between initial load and filter changes
@@ -149,6 +151,7 @@ export default function Home() {
           monthly={monthly}
           dow={dow}
           hour={hour}
+          discovery={discoveryRate}
           metric={metric}
           setMetric={setMetric}
         />

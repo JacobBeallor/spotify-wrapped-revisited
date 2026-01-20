@@ -14,12 +14,7 @@
 - Size: `M`  
 - Show listening trends by release year/decade.
 
-### 4. Discovery trends tracking
-- Size: `L`  
-- Track first listens and show discovery rate over time.
-- Overlay/dual-axis with monthly listening trends?
-
-### 5. Spotify embeds & links
+### 4. Spotify embeds & links
 - Size: `M`  
 - Make top tracks/artists clickable with Spotify links and embeds.
 
@@ -54,6 +49,14 @@
 - Made the monthly trends, hour of day, and day of week charts independent of the main dashboard filter.
 - Removed daily granularity—only support monthly aggregation in trends view.
 - Charts now show all-time aggregated data for clearer pattern visualization.
+
+### 6. Discovery trends tracking
+- Size: `L`  
+- Track first listens and show discovery rate over time.
+- Added monthly discovery rate chart showing percentage of listening from newly discovered tracks.
+- Created `/api/discovery-rate` endpoint that calculates discovery metrics based on first listen dates.
+- Discovery rate defined as: (hours/plays of tracks first heard in month X during month X) / (total hours/plays in month X) × 100.
+- Chart styled consistently with other listening pattern visualizations in the Listening Habits tab.
 
 ---
 

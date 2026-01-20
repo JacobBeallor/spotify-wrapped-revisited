@@ -13,10 +13,10 @@ export default function Footer() {
               Data sourced from Spotify Extended Streaming History
             </p>
           </div>
-          
+
           <div className="flex gap-6">
             <a
-              href="https://github.com"
+              href="https://github.com/JacobBeallor/spotify-wrapped-revisited"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-spotify-green transition-colors text-sm"
@@ -24,17 +24,17 @@ export default function Footer() {
               GitHub
             </a>
             <Link
-              href="https://jacobbeallor.com"
+              href="https://jacob-beallor.vercel.app/"
               className="text-gray-400 hover:text-spotify-green transition-colors text-sm"
             >
               Portfolio
             </Link>
           </div>
         </div>
-        
+
         <div className="mt-6 pt-6 border-t border-gray-800">
           <p className="text-gray-500 text-xs text-center">
-            <strong>Privacy:</strong> All data is aggregated and anonymized. 
+            <strong>Privacy:</strong> All data is aggregated and anonymized.
             Raw streaming history is never shared or uploaded.
           </p>
         </div>

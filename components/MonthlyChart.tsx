@@ -9,15 +9,19 @@ interface MonthlyChartProps {
 }
 
 export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
-  // Format x-axis labels for monthly data
-  const formatXAxisLabel = (item: MonthlyData) => {
+  // Format date labels as "MMM 'YY"
+  const formatDate = (item: MonthlyData) => {
     const [year, month] = item.year_month.split('-').map(Number)
     const date = new Date(Date.UTC(year, month - 1, 1))
-    return date.toLocaleDateString('en-US', {
+    const monthStr = date.toLocaleDateString('en-US', {
       month: 'short',
+      timeZone: 'UTC'
+    })
+    const yearStr = date.toLocaleDateString('en-US', {
       year: '2-digit',
       timeZone: 'UTC'
     })
+    return `${monthStr} '${yearStr}`
   }
 
   const option = {
@@ -32,10 +36,12 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
       },
       formatter: (params: any) => {
         const point = params[0]
+        const dataIndex = point.dataIndex
+        const dateLabel = formatDate(data[dataIndex])
         const value = metric === 'hours'
           ? `${point.value.toLocaleString()} hours`
           : `${point.value.toLocaleString()} plays`
-        return `${point.name}<br/><strong>${value}</strong>`
+        return `${dateLabel}<br/><strong>${value}</strong>`
       }
     },
     grid: {
@@ -47,7 +53,7 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
     },
     xAxis: {
       type: 'category',
-      data: data.map(d => formatXAxisLabel(d)),
+      data: data.map(d => formatDate(d)),
       axisLine: {
         lineStyle: { color: '#535353' }
       },

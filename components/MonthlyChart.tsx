@@ -9,7 +9,7 @@ interface MonthlyChartProps {
 }
 
 export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
-  // Format date labels as "MMM 'YY"
+  // Format date labels as "MMM 'YY" for axis
   const formatDate = (item: MonthlyData) => {
     const [year, month] = item.year_month.split('-').map(Number)
     const date = new Date(Date.UTC(year, month - 1, 1))
@@ -22,6 +22,17 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
       timeZone: 'UTC'
     })
     return `${monthStr} '${yearStr}`
+  }
+
+  // Format date labels as "MMM YYYY" for tooltip
+  const formatDateFull = (item: MonthlyData) => {
+    const [year, month] = item.year_month.split('-').map(Number)
+    const date = new Date(Date.UTC(year, month - 1, 1))
+    const monthStr = date.toLocaleDateString('en-US', {
+      month: 'short',
+      timeZone: 'UTC'
+    })
+    return `${monthStr} ${year}`
   }
 
   const option = {
@@ -37,7 +48,7 @@ export default function MonthlyChart({ data, metric }: MonthlyChartProps) {
       formatter: (params: any) => {
         const point = params[0]
         const dataIndex = point.dataIndex
-        const dateLabel = formatDate(data[dataIndex])
+        const dateLabel = formatDateFull(data[dataIndex])
         const value = metric === 'hours'
           ? `${point.value.toLocaleString()} hours`
           : `${point.value.toLocaleString()} plays`

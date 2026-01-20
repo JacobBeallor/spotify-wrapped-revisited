@@ -19,6 +19,7 @@ docs/
 │   └── deployment.md                 # Deploy to Vercel
 │
 ├── architecture/                     # Technical architecture docs
+│   ├── navigation.md                 # Tab navigation & filter state
 │   ├── database.md                   # DuckDB + Postgres design
 │   ├── data-pipeline.md              # Ingestion & enrichment flow
 │   └── api-routes.md                 # API endpoint reference
@@ -51,6 +52,7 @@ docs/
 ### Understanding the System
 
 **How does it work?**
+- **[architecture/navigation.md](./architecture/navigation.md)** - Navigation & filters
 - **[architecture/database.md](./architecture/database.md)** - Database design
 - **[architecture/data-pipeline.md](./architecture/data-pipeline.md)** - Data flow
 - **[architecture/api-routes.md](./architecture/api-routes.md)** - API reference
@@ -109,6 +111,7 @@ docs/
 
 | Topic | Document |
 |-------|----------|
+| Navigation & filters | [architecture/navigation.md](./architecture/navigation.md) |
 | Database design | [architecture/database.md](./architecture/database.md) |
 | Data pipeline | [architecture/data-pipeline.md](./architecture/data-pipeline.md) |
 | API endpoints | [architecture/api-routes.md](./architecture/api-routes.md) |
@@ -140,9 +143,9 @@ When adding new docs:
 ## 📊 Documentation Metrics
 
 Current documentation:
-- **Total docs:** 11 files
+- **Total docs:** 12 files
 - **Guides:** 5 files (user-focused)
-- **Architecture:** 3 files (technical)
+- **Architecture:** 4 files (technical)
 - **Archive:** 4 files (historical)
 
 **Coverage:**

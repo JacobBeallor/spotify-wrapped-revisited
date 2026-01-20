@@ -3,22 +3,19 @@
 import { useState, useEffect } from 'react'
 import { useApiData } from './hooks/useSpotifyData'
 import Header from '@/components/Header'
-import KPICards from '@/components/KPICards'
-import MonthlyChart from '@/components/MonthlyChart'
-import DayOfWeekChart from '@/components/DayOfWeekChart'
-import HourChart from '@/components/HourChart'
-import TopArtists from '@/components/TopArtists'
-import TopTracks from '@/components/TopTracks'
-import ArtistEvolutionChart from '@/components/ArtistEvolutionChart'
+import OverviewPage from '@/components/pages/OverviewPage'
+import ListeningPatternsPage from '@/components/pages/ListeningPatternsPage'
+import TasteEvolutionPage from '@/components/pages/TasteEvolutionPage'
 import Footer from '@/components/Footer'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import type { SummaryData, MonthlyData, DailyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
+import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution } from '@/types'
 
 export default function Home() {
+  // Tab and filter state
+  const [activeTab, setActiveTab] = useState<'overview' | 'patterns' | 'evolution'>('overview')
   const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
   const [availableMonths, setAvailableMonths] = useState<string[]>([])
-
 
   // Fetch data using API
   const { data: summaryResponse, loading: summaryLoading, error: summaryError } = useApiData<SummaryData>('summary')
@@ -53,11 +50,6 @@ export default function Home() {
   const isInitialLoad = summaryLoading && !summary
   const isFilterLoading = (artistsLoading || tracksLoading) && topArtists.length > 0
 
-  // Handle period change - no longer need scroll position tracking!
-  const handlePeriodChange = (newPeriod: string) => {
-    setSelectedPeriod(newPeriod)
-  }
-
   // Extract unique months when monthly data is loaded
   useEffect(() => {
     if (monthly.length > 0) {
@@ -82,11 +74,8 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-spotify-dark via-gray-900 to-black text-white">
         <Header
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={handlePeriodChange}
-          metric={metric}
-          setMetric={setMetric}
-          availableMonths={[]}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
           lastUpdated={undefined}
         />
         <LoadingSpinner />
@@ -99,11 +88,8 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-spotify-dark via-gray-900 to-black text-white">
         <Header
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={handlePeriodChange}
-          metric={metric}
-          setMetric={setMetric}
-          availableMonths={[]}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
           lastUpdated={undefined}
         />
         <main className="container mx-auto px-4 py-16 max-w-2xl">
@@ -125,11 +111,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-spotify-dark via-gray-900 to-black text-white">
       <Header
-        selectedPeriod={selectedPeriod}
-        setSelectedPeriod={handlePeriodChange}
-        metric={metric}
-        setMetric={setMetric}
-        availableMonths={availableMonths}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
         lastUpdated={summary?.last_played_at}
       />
 
@@ -146,47 +129,35 @@ export default function Home() {
         </div>
       )}
 
-      <main className="container mx-auto px-4 py-8 max-w-7xl"
-        style={{ opacity: isFilterLoading ? 0.6 : 1, transition: 'opacity 0.3s ease' }}
-      >
-        {summary && (
-          <div className="animate-fade-in">
-            <KPICards
-              summary={summary}
-              selectedPeriod={selectedPeriod}
-              monthly={filteredMonthly}
-            />
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 gap-6 mt-8">
-          <div className="animate-fade-in animation-delay-100">
-            <MonthlyChart data={monthly} metric={metric} />
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="animate-fade-in animation-delay-200">
-              <DayOfWeekChart data={dow} metric={metric} />
-            </div>
-            <div className="animate-fade-in animation-delay-300">
-              <HourChart data={hour} metric={metric} />
-            </div>
-          </div>
-
-          <div className="animate-fade-in animation-delay-400">
-            <ArtistEvolutionChart data={artistEvolution} topN={3} />
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="animate-fade-in animation-delay-500">
-              <TopArtists data={filteredArtists} metric={metric} limit={10} />
-            </div>
-            <div className="animate-fade-in animation-delay-600">
-              <TopTracks data={filteredTracks} metric={metric} limit={10} />
-            </div>
-          </div>
-        </div>
-      </main>
+      {/* Conditional page rendering based on active tab */}
+      {activeTab === 'overview' && (
+        <OverviewPage
+          summary={summary}
+          topArtists={filteredArtists}
+          topTracks={filteredTracks}
+          selectedPeriod={selectedPeriod}
+          setSelectedPeriod={setSelectedPeriod}
+          filteredMonthly={filteredMonthly}
+          metric={metric}
+          setMetric={setMetric}
+          isFilterLoading={isFilterLoading}
+          availableMonths={availableMonths}
+        />
+      )}
+      {activeTab === 'patterns' && (
+        <ListeningPatternsPage
+          monthly={monthly}
+          dow={dow}
+          hour={hour}
+          metric={metric}
+          setMetric={setMetric}
+        />
+      )}
+      {activeTab === 'evolution' && (
+        <TasteEvolutionPage
+          artistEvolution={artistEvolution}
+        />
+      )}
 
       <Footer />
     </div>

@@ -25,7 +25,20 @@ export default function TopTracks({ data, metric, limit = 10 }: TopTracksProps) 
       const [track_name, artist_name] = key.split('|')
       return { track_name, artist_name, ...stats }
     })
-    .sort((a, b) => (metric === 'hours' ? b.hours - a.hours : b.plays - a.plays))
+    .sort((a, b) => {
+      // Primary sort by selected metric
+      if (metric === 'hours') {
+        if (b.hours !== a.hours) return b.hours - a.hours
+        // Tiebreaker 1: plays
+        if (b.plays !== a.plays) return b.plays - a.plays
+      } else {
+        if (b.plays !== a.plays) return b.plays - a.plays
+        // Tiebreaker 1: hours
+        if (b.hours !== a.hours) return b.hours - a.hours
+      }
+      // Tiebreaker 2: alphabetical by track name
+      return a.track_name.localeCompare(b.track_name)
+    })
     .slice(0, limit)
 
   return (
@@ -58,7 +71,9 @@ export default function TopTracks({ data, metric, limit = 10 }: TopTracksProps) 
                 </div>
                 <span className="text-spotify-green font-bold text-sm ml-3 flex-shrink-0">
                   {metric === 'hours' 
-                    ? `${Math.round(value)}h`
+                    ? value < 1 
+                      ? `${Math.round(value * 60)}m`
+                      : `${value.toFixed(1)}h`
                     : value.toLocaleString()
                   }
                 </span>

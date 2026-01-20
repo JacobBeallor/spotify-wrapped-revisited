@@ -2,31 +2,24 @@
 
 ## Issues
 
-### 1. Migrate Hour & Day of Week charts to radial/polar form
-- Size: `S`  
-- Convert Hour of Day and Day of Week bar charts to radial/polar visualization for better cyclical data representation.
-- Evaluate Nivo Polar Bar vs ECharts polar coordinates (decision TBD)
-- Nivo: Cleaner API, React-first, better defaults (+35KB bundle)
-- ECharts: Already installed, consistent with existing charts, more flexible
-
-### 2. Fix artist evolution bump chart
+### 1. Fix artist evolution bump chart
 - Size: `S`  
 - Restore styling and clarify artist evolution chart.
 
-### 3. Genre analysis & visualization
+### 2. Genre analysis & visualization
 - Size: `M`  
 - Display top genres (pie or bar chart) by listening time.
 
-### 4. Release year/decade analysis
+### 3. Release year/decade analysis
 - Size: `M`  
 - Show listening trends by release year/decade.
 
-### 5. Discovery trends tracking
+### 4. Discovery trends tracking
 - Size: `L`  
 - Track first listens and show discovery rate over time.
 - Overlay/dual-axis with monthly listening trends?
 
-### 6. Spotify embeds & links
+### 5. Spotify embeds & links
 - Size: `M`  
 - Make top tracks/artists clickable with Spotify links and embeds.
 

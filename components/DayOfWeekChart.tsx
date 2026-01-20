@@ -32,10 +32,11 @@ export default function DayOfWeekChart({ data, metric }: DayOfWeekChartProps) {
       },
       formatter: (params: any) => {
         const point = params[0]
+        const fullDayName = aggregated[point.dataIndex].day
         const value = metric === 'hours' 
           ? `${point.value.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours`
           : `${point.value.toLocaleString()} plays`
-        return `${point.name}<br/><strong>${value}</strong>`
+        return `${fullDayName}<br/><strong>${value}</strong>`
       }
     },
     grid: {

@@ -10,11 +10,17 @@ interface HourChartProps {
 
 export default function HourChart({ data, metric }: HourChartProps) {
   // Aggregate by hour
-  const hourlyData = Array.from({ length: 24 }, (_, hour) => {
+  const allHoursData = Array.from({ length: 24 }, (_, hour) => {
     const hourData = data.filter(d => d.hour === hour)
     const sum = hourData.reduce((acc, d) => acc + (metric === 'hours' ? d.hours : d.plays), 0)
     return { hour, value: sum }
   })
+
+  // Reorder to start at 6am
+  const hourlyData = [
+    ...allHoursData.slice(6, 24),  // 6am to 11pm
+    ...allHoursData.slice(0, 6)    // 12am to 5am
+  ]
 
   const formatHour = (hour: number) => {
     if (hour === 0) return '12am'
@@ -38,7 +44,7 @@ export default function HourChart({ data, metric }: HourChartProps) {
       },
       formatter: (params: any) => {
         const point = params[0]
-        const value = metric === 'hours' 
+        const value = metric === 'hours'
           ? `${point.value.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours`
           : `${point.value.toLocaleString()} plays`
         return `${point.name}<br/><strong>${value}</strong>`
@@ -69,7 +75,7 @@ export default function HourChart({ data, metric }: HourChartProps) {
       },
       axisLabel: {
         color: '#B3B3B3',
-        formatter: (value: number) => metric === 'hours' 
+        formatter: (value: number) => metric === 'hours'
           ? `${value}h`
           : value.toLocaleString()
       },
@@ -103,10 +109,10 @@ export default function HourChart({ data, metric }: HourChartProps) {
   return (
     <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700">
       <h2 className="text-xl font-bold mb-4">
-        Hour of Day
+        Time of Day
       </h2>
-      <ReactECharts 
-        option={option} 
+      <ReactECharts
+        option={option}
         style={{ height: '300px' }}
         opts={{ renderer: 'svg' }}
       />

@@ -14,6 +14,7 @@ Complete documentation for your personal Spotify analytics dashboard.
 ## 🏗️ Architecture
 
 Understand how the system works:
+- **[Navigation Architecture](./architecture/navigation.md)** - Tab-based navigation and filter state management
 - **[Database Architecture](./architecture/database.md)** - DuckDB (local) + Postgres (production)
 - **[Data Pipeline](./architecture/data-pipeline.md)** - Ingestion, enrichment, and sync
 - **[API Routes](./architecture/api-routes.md)** - Server-side endpoints

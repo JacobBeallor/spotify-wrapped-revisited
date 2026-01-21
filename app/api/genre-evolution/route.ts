@@ -50,6 +50,9 @@ export async function GET(request: NextRequest) {
       all_genres AS (
         SELECT DISTINCT genre
         FROM monthly_genre_data
+        -- Exclude Holiday genre - upon inspection, artists tagged as "christmas" 
+        -- (e.g., Lawrence) weren't actually holiday music, just miscategorized in Spotify's metadata
+        WHERE genre != 'Holiday'
       ),
       genre_month_spine AS (
         SELECT 

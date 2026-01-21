@@ -269,20 +269,20 @@ WITH first_listens AS (
 
 ### `GET /api/artist-evolution`
 
-**Artist rank changes over time (for bump chart).**
+**Artist ranking changes over time (for racing bar chart).**
 
 **Parameters:**
-- `topN` (optional): Number of ranks to show (default: 5)
+- `metric` (optional): `hours` | `plays` (default: `hours`)
 
 **Response:**
 ```json
 {
   "data": [
     {
-      "quarter": "2024-Q1",
+      "year_month": "2024-01",
       "artist_name": "The Band",
-      "rank": 1,
-      "hours": 124.5
+      "hours": 45.67,
+      "plays": 542
     },
     ...
   ]
@@ -290,12 +290,24 @@ WITH first_listens AS (
 ```
 
 **Logic:**
-- Rolling 12-month window for each quarter
-- Only artists with 3+ months in top N
-- Fixed rank positions (1-5)
-- Artists enter/exit as needed
+- Monthly granularity starting from 2018-01
+- **12-month rolling window** totals for each artist
+- For each month, sums the hours/plays from that month and the previous 11 months
+- Returns **all artists** who appear in the time range (not filtered by rank)
+- Frontend component determines top N for each frame of animation
+- Data sorted by metric value for convenience
 
-See [Artist Evolution docs](../archive/ARTIST_EVOLUTION.md) for details.
+**Query approach:**
+1. Aggregate listening data by month and artist
+2. For each month, calculate rolling 12-month sum for each artist
+3. Include both hours and plays in response
+4. Sort by selected metric descending
+5. Return all artists (no top N filtering in API)
+
+**Use case:**
+Powers the animated racing bar chart on the Taste Evolution page. Shows how top artists change over time within a 12-month sliding window.
+
+See [Artist Evolution docs](../archive/ARTIST_EVOLUTION.md) for implementation details.
 
 ---
 

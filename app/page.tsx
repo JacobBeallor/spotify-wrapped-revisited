@@ -33,7 +33,7 @@ export default function Home() {
   const { data: artistsResponse, loading: artistsLoading } = useApiData<{ data: TopArtist[] }>('top-artists', artistsParams)
   const { data: tracksResponse, loading: tracksLoading } = useApiData<{ data: TopTrack[] }>('top-tracks', tracksParams)
   const { data: evolutionResponse, loading: evolutionLoading } = useApiData<{ data: ArtistEvolution[] }>('artist-evolution', {
-    topN: 3
+    metric: metric
   })
 
   const summary = summaryResponse
@@ -159,6 +159,8 @@ export default function Home() {
       {activeTab === 'evolution' && (
         <TasteEvolutionPage
           artistEvolution={artistEvolution}
+          metric={metric}
+          setMetric={setMetric}
         />
       )}
 

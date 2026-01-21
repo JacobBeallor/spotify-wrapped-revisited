@@ -55,10 +55,11 @@ export interface TopTrack {
 }
 
 export interface ArtistEvolution {
-  year_quarter: string
+  year_month: string
   artist_name: string
   rank: number
   hours: number
+  plays: number
 }
 
 export interface DiscoveryRateData {

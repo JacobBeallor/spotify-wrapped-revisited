@@ -45,19 +45,38 @@ export async function GET(request: NextRequest) {
           ON mad.artist_name = spine.artist_name
           AND mad.year_month <= spine.year_month
         GROUP BY spine.year_month, spine.artist_name
+      ),
+      ranked_artists AS (
+        SELECT 
+          year_month,
+          artist_name,
+          cumulative_hours,
+          cumulative_plays,
+          ROW_NUMBER() OVER (
+            PARTITION BY year_month 
+            ORDER BY CASE WHEN ? = 'hours' THEN cumulative_hours ELSE cumulative_plays END DESC
+          ) AS rank
+        FROM cumulative_totals
+        WHERE cumulative_hours > 0 OR cumulative_plays > 0
+      ),
+      relevant_artists AS (
+        -- Only include artists that appear in top 15 at least once
+        SELECT DISTINCT artist_name
+        FROM ranked_artists
+        WHERE rank <= 15
       )
       SELECT 
-        year_month,
-        artist_name,
-        ROUND(cumulative_hours, 2) AS hours,
-        cumulative_plays AS plays
-      FROM cumulative_totals
-      WHERE cumulative_hours > 0 OR cumulative_plays > 0
-      ORDER BY year_month, 
-        CASE WHEN ? = 'hours' THEN cumulative_hours ELSE cumulative_plays END DESC
+        ra.year_month,
+        ra.artist_name,
+        ROUND(ra.cumulative_hours, 2) AS hours,
+        ra.cumulative_plays AS plays
+      FROM ranked_artists ra
+      JOIN relevant_artists rel ON ra.artist_name = rel.artist_name
+      ORDER BY ra.year_month, 
+        CASE WHEN ? = 'hours' THEN ra.cumulative_hours ELSE ra.cumulative_plays END DESC
     `
 
-    const results = await executeQuery(sql, [metric])
+    const results = await executeQuery(sql, [metric, metric])
 
     return NextResponse.json({ data: results })
   } catch (error: any) {

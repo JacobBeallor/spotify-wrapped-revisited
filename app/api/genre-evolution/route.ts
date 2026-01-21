@@ -71,19 +71,38 @@ export async function GET(request: NextRequest) {
           ON mgd.genre = spine.genre
           AND mgd.year_month <= spine.year_month
         GROUP BY spine.year_month, spine.genre
+      ),
+      ranked_genres AS (
+        SELECT 
+          year_month,
+          genre,
+          cumulative_hours,
+          cumulative_plays,
+          ROW_NUMBER() OVER (
+            PARTITION BY year_month 
+            ORDER BY CASE WHEN ? = 'hours' THEN cumulative_hours ELSE cumulative_plays END DESC
+          ) AS rank
+        FROM cumulative_totals
+        WHERE cumulative_hours > 0 OR cumulative_plays > 0
+      ),
+      relevant_genres AS (
+        -- Only include genres that appear in top 15 at least once
+        SELECT DISTINCT genre
+        FROM ranked_genres
+        WHERE rank <= 15
       )
       SELECT 
-        year_month,
-        genre,
-        ROUND(cumulative_hours, 2) AS hours,
-        cumulative_plays AS plays
-      FROM cumulative_totals
-      WHERE cumulative_hours > 0 OR cumulative_plays > 0
-      ORDER BY year_month, 
-        CASE WHEN ? = 'hours' THEN cumulative_hours ELSE cumulative_plays END DESC
+        rg.year_month,
+        rg.genre,
+        ROUND(rg.cumulative_hours, 2) AS hours,
+        rg.cumulative_plays AS plays
+      FROM ranked_genres rg
+      JOIN relevant_genres rel ON rg.genre = rel.genre
+      ORDER BY rg.year_month, 
+        CASE WHEN ? = 'hours' THEN rg.cumulative_hours ELSE rg.cumulative_plays END DESC
     `
 
-    const results = await executeQuery(sql, [metric])
+    const results = await executeQuery(sql, [metric, metric])
 
     return NextResponse.json({ data: results })
   } catch (error: any) {

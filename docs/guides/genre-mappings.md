@@ -45,6 +45,36 @@ The system maps all subgenres to these 28 categories:
 27. **New Age** (2 subgenres)
 28. **Other** (52 subgenres) - Unmapped or very niche genres
 
+## Genre Evolution Visualization
+
+The genre evolution racing bar chart uses broad genre mappings to show how your taste has evolved over time.
+
+**Location**: Taste Evolution tab → switch to "Genres" view
+
+**How it works**:
+- **Calculation**: All-time cumulative listening by month
+- **Categories**: 28 broad genres (Rock, Soul/R&B, Jazz, etc.)
+- **Display**: Shows top 10 genres at each time point
+- **Metrics**: Toggle between hours and plays
+- **Animation**: Watch your genre preferences shift over your entire listening history
+
+**Why broad genres?**
+
+The visualization uses the 28 broad categories instead of 452+ subgenres because:
+- More meaningful patterns emerge (e.g., "Rock" vs "folk rock", "classic rock", "psychedelic rock" separately)
+- Top 10 chart shows diversity of taste rather than subdivisions of the same genre
+- Easier to track major shifts in listening habits
+
+**Example insights**:
+- See when you discovered a new genre that became a favorite
+- Track long-term shifts (e.g., from Pop to Jazz to Hip Hop)
+- Compare how multiple genres compete for your listening time
+- Identify periods of genre exploration vs focused listening
+
+This provides a higher-level view of your musical taste compared to the granular artist evolution chart.
+
+---
+
 ## Usage
 
 ### Database Table

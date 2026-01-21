@@ -26,13 +26,14 @@ Step-by-step instructions:
 - **[Updating Data](./guides/updating-data.md)** - Add new Spotify exports
 - **[Enrichment](./guides/enrichment.md)** - Complete guide to Spotify API enrichment
 - **[Enrichment Quick Start](./guides/enrichment-quickstart.md)** - Fast-track enrichment (5 min setup)
-- **[Genre Mappings](./guides/genre-mappings.md)** - 452 subgenres → 28 categories
+- **[Genre Mappings](./guides/genre-mappings.md)** - 452 subgenres → 28 categories + genre evolution viz
 - **[Local Development](./guides/local-development.md)** - Development workflow
 
 ## 🗂️ Archive
 
 Historical documentation and implementation notes:
-- [Artist Evolution Feature](./archive/ARTIST_EVOLUTION.md) - Bump chart implementation
+- [Genre Evolution Feature](./archive/GENRE_EVOLUTION.md) - Artist/Genre toggle implementation
+- [Artist Evolution Feature](./archive/ARTIST_EVOLUTION.md) - Racing bar chart implementation
 - [Session 3 Summary](./archive/SESSION_3_SUMMARY.md) - Polish & production ready
 - [Timezone Handling](./archive/TIMEZONE.md) - UTC to local conversion
 - [Migration Notes](./archive/MIGRATION.md) - Server-side migration plan

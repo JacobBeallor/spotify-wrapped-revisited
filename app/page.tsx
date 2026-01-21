@@ -8,13 +8,14 @@ import ListeningPatternsPage from '@/components/pages/ListeningPatternsPage'
 import TasteEvolutionPage from '@/components/pages/TasteEvolutionPage'
 import Footer from '@/components/Footer'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution, DiscoveryRateData } from '@/types'
+import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution, GenreEvolution, DiscoveryRateData } from '@/types'
 
 export default function Home() {
   // Tab and filter state
   const [activeTab, setActiveTab] = useState<'overview' | 'patterns' | 'evolution'>('overview')
   const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
+  const [entity, setEntity] = useState<'artists' | 'genres'>('artists')
   const [availableMonths, setAvailableMonths] = useState<string[]>([])
 
   // Fetch data using API
@@ -35,6 +36,9 @@ export default function Home() {
   const { data: evolutionResponse, loading: evolutionLoading } = useApiData<{ data: ArtistEvolution[] }>('artist-evolution', {
     metric: metric
   })
+  const { data: genreEvolutionResponse, loading: genreEvolutionLoading } = useApiData<{ data: GenreEvolution[] }>('genre-evolution', {
+    metric: metric
+  })
 
   const summary = summaryResponse
   const monthly = trendsResponse?.data || []
@@ -44,8 +48,9 @@ export default function Home() {
   const topArtists = artistsResponse?.data || []
   const topTracks = tracksResponse?.data || []
   const artistEvolution = evolutionResponse?.data || []
+  const genreEvolution = genreEvolutionResponse?.data || []
 
-  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || discoveryLoading || artistsLoading || tracksLoading || evolutionLoading
+  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || discoveryLoading || artistsLoading || tracksLoading || evolutionLoading || genreEvolutionLoading
   const error = summaryError
 
   // Distinguish between initial load and filter changes
@@ -159,8 +164,11 @@ export default function Home() {
       {activeTab === 'evolution' && (
         <TasteEvolutionPage
           artistEvolution={artistEvolution}
+          genreEvolution={genreEvolution}
           metric={metric}
           setMetric={setMetric}
+          entity={entity}
+          setEntity={setEntity}
         />
       )}
 

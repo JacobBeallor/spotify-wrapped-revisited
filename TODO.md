@@ -2,15 +2,11 @@
 
 ## Issues
 
-### 1. Genre analysis & visualization
-- Size: `M`  
-- Display top genres (pie or bar chart) by listening time.
-
-### 2. Release year/decade analysis
+### 1. Release year/decade analysis
 - Size: `M`  
 - Show listening trends by release year/decade.
 
-### 3. Spotify embeds & links
+### 2. Spotify embeds & links
 - Size: `M`  
 - Make top tracks/artists clickable with Spotify links and embeds.
 
@@ -62,6 +58,17 @@
 - Created `/api/discovery-rate` endpoint that calculates discovery metrics based on first listen dates.
 - Discovery rate defined as: (hours/plays of tracks first heard in month X during month X) / (total hours/plays in month X) × 100.
 - Chart styled consistently with other listening pattern visualizations in the Listening Habits tab.
+
+### 8. Genre evolution visualization with artist/genre toggle
+- Size: `M`  
+- Added genre evolution racing bar chart showing top 28 broad genres over time.
+- Created `EntityFilter` toggle component to switch between artists and genres.
+- All-time cumulative calculation matching artist evolution approach.
+- Leverages existing `genre_mappings` table (452 subgenres → 28 categories).
+- New API endpoint: `/api/genre-evolution`.
+- Updated `RacingBarChart` to handle both artists and genres generically.
+- Toggle between "Artists" and "Genres" views on Taste Evolution tab.
+- Provides higher-level view of musical taste evolution compared to granular artist view.
 
 ---
 

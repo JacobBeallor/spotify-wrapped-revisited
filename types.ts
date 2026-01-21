@@ -68,3 +68,10 @@ export interface DiscoveryRateData {
   discovery_rate_plays: number
 }
 
+export interface GenreEvolution {
+  year_month: string
+  genre: string
+  hours: number
+  plays: number
+}
+

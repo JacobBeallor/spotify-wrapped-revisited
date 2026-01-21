@@ -3,21 +3,22 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
 import * as d3 from 'd3'
 
-interface ArtistData {
+interface DataPoint {
   year_month: string
-  artist_name: string
+  name: string
   hours: number
   plays: number
 }
 
 interface RacingBarChartProps {
-  data: ArtistData[]
+  data: DataPoint[]
   metric: 'hours' | 'plays'
   topN?: number
+  entityType?: 'artists' | 'genres'
 }
 
 interface BarData {
-  artist_name: string
+  name: string
   value: number
   rank: number
 }
@@ -25,7 +26,8 @@ interface BarData {
 export default function RacingBarChart({
   data,
   metric = 'hours',
-  topN = 10
+  topN = 10,
+  entityType = 'artists'
 }: RacingBarChartProps) {
   // Animation timing constants
   const FRAME_DURATION = 600 // ms between frames
@@ -63,7 +65,7 @@ export default function RacingBarChart({
       .sort((a, b) => (metric === 'hours' ? b.hours - a.hours : b.plays - a.plays))
       .slice(0, topN)
       .map((d, i) => ({
-        artist_name: d.artist_name,
+        name: d.name,
         value: metric === 'hours' ? d.hours : d.plays,
         rank: i
       }))
@@ -145,7 +147,7 @@ export default function RacingBarChart({
 
     // Data join
     const barGroups = g.selectAll<SVGGElement, BarData>('.bar-group')
-      .data(currentData, d => d.artist_name)
+      .data(currentData, d => d.name)
 
     // Enter
     const barGroupsEnter = barGroups.enter()
@@ -200,7 +202,7 @@ export default function RacingBarChart({
       .attr('width', d => xScale(d.value))
 
     barGroupsMerged.select('.artist-label')
-      .text(d => d.artist_name)
+      .text(d => d.name)
 
     barGroupsMerged.select('.value-label')
       .transition()
@@ -250,9 +252,11 @@ export default function RacingBarChart({
   return (
     <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700">
       <div className="mb-6">
-        <h2 className="text-xl font-bold">Artist Evolution</h2>
+        <h2 className="text-xl font-bold">
+          {entityType === 'artists' ? 'Artist Evolution' : 'Genre Evolution'}
+        </h2>
         <p className="text-gray-400 text-sm mt-1">
-          Top {topN} artists (all-time cumulative by {metric})
+          Top {topN} {entityType} (all-time cumulative by {metric})
         </p>
       </div>
 

@@ -73,7 +73,15 @@ export default function RacingBarChart({
   useEffect(() => {
     if (isPlaying && months.length > 0) {
       timerRef.current = setInterval(() => {
-        setCurrentMonthIndex(prev => (prev + 1) % months.length)
+        setCurrentMonthIndex(prev => {
+          const nextIndex = prev + 1
+          // Pause when reaching the end
+          if (nextIndex >= months.length) {
+            setIsPlaying(false)
+            return prev // Stay at last month
+          }
+          return nextIndex
+        })
       }, FRAME_DURATION)
     }
     return () => {

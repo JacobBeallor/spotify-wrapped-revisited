@@ -2,19 +2,15 @@
 
 ## Issues
 
-### 1. Fix artist evolution bump chart
-- Size: `S`  
-- Restore styling and clarify artist evolution chart.
-
-### 2. Genre analysis & visualization
+### 1. Genre analysis & visualization
 - Size: `M`  
 - Display top genres (pie or bar chart) by listening time.
 
-### 3. Release year/decade analysis
+### 2. Release year/decade analysis
 - Size: `M`  
 - Show listening trends by release year/decade.
 
-### 4. Spotify embeds & links
+### 3. Spotify embeds & links
 - Size: `M`  
 - Make top tracks/artists clickable with Spotify links and embeds.
 
@@ -22,35 +18,44 @@
 
 ## ✅ Completed
 
-### 1. Section navigation
+### 1. Artist evolution racing bar chart
+- Size: `S`  
+- Replaced bump chart with animated D3.js racing bar chart.
+- Shows top 10 artists with all-time cumulative rankings by hours/plays.
+- Auto-play with play/pause controls and manual navigation arrows.
+- Smooth transitions and animations (600ms frame, 450ms transitions).
+- Keyboard shortcuts support (arrow keys, spacebar).
+- Includes all historical data from the beginning of Spotify history.
+
+### 2. Section navigation
 - Size: `S`  
 - Added tab-based navigation between three dashboard sections: Overview, Listening Habits, and Taste Evolution.
 - Created modular filter components (PeriodFilter, MetricFilter) in `components/filters/`.
 - Overview page: Period Selector + Metric Toggle filters at top of page content.
 - Listening Habits page: Metric Toggle filter at top of page content.
-- Taste Evolution page: No filters.
+- Taste Evolution page: Metric Toggle filter at top of page content.
 - Implemented using plain `useState` for simplicity - filters persist automatically when switching tabs.
 - Filters scroll naturally with page content (not sticky) for cleaner UX.
 
-### 2. Data freshness indicator
+### 3. Data freshness indicator
 - Size: `XS`   
 - Show when user data was last updated.
 
-### 3. Date range filter UI
+### 4. Date range filter UI
 - Size: `M`  
 - Improve date filter UI with presets and range picker.
 
-### 4. Spotify API enrichment pipeline
+### 5. Spotify API enrichment pipeline
 - Size: `L`  
 - Enrich track/artist data from Spotify API for deeper analysis.
 
-### 5. Decouple listening trends graphs from global filter & remove daily granularity option
+### 6. Decouple listening trends graphs from global filter & remove daily granularity option
 - Size: `M`  
 - Made the monthly trends, hour of day, and day of week charts independent of the main dashboard filter.
 - Removed daily granularity—only support monthly aggregation in trends view.
 - Charts now show all-time aggregated data for clearer pattern visualization.
 
-### 6. Discovery trends tracking
+### 7. Discovery trends tracking
 - Size: `L`  
 - Track first listens and show discovery rate over time.
 - Added monthly discovery rate chart showing percentage of listening from newly discovered tracks.

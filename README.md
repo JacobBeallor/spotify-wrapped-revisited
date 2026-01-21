@@ -14,7 +14,7 @@ Transform your Spotify extended streaming history into beautiful, interactive vi
 - 📈 **Listening Trends** — Monthly, weekly, or daily patterns with dynamic granularity
 - 📅 **Day/Hour Analysis** — When you listen most throughout the week and day
 - 🎤 **Top Artists & Tracks** — Your most-played music with filterable time ranges
-- 🎸 **Artist Evolution** — Watch your top artists change over time (bump chart)
+- 🎸 **Artist Evolution** — Animated racing bar chart showing your top artists over time
 - 🎵 **Genre Analysis** — Discover your genre preferences (with enrichment)
 - 📅 **Release Year Insights** — See if you prefer classics or modern music (with enrichment)
 - 🎨 **Beautiful UI** — Spotify-inspired dark theme with smooth animations

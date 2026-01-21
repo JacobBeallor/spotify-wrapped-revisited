@@ -9,8 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@nivo/bump": "^0.99.0",
+    "@types/d3": "^7.4.3",
     "@vercel/postgres": "^0.10.0",
+    "d3": "^7.9.0",
     "duckdb-async": "^1.4.2",
     "echarts": "^5.4.3",
     "echarts-for-react": "^3.0.2",

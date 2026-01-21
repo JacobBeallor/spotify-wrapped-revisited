@@ -33,12 +33,11 @@ export default function Home() {
 
   const { data: artistsResponse, loading: artistsLoading } = useApiData<{ data: TopArtist[] }>('top-artists', artistsParams)
   const { data: tracksResponse, loading: tracksLoading } = useApiData<{ data: TopTrack[] }>('top-tracks', tracksParams)
-  const { data: evolutionResponse, loading: evolutionLoading } = useApiData<{ data: ArtistEvolution[] }>('artist-evolution', {
-    metric: metric
-  })
-  const { data: genreEvolutionResponse, loading: genreEvolutionLoading } = useApiData<{ data: GenreEvolution[] }>('genre-evolution', {
-    metric: metric
-  })
+  
+  // Evolution APIs now return data for both metrics (union of top 15 by hours OR plays)
+  // So we only fetch once and switch between metrics client-side
+  const { data: evolutionResponse, loading: evolutionLoading } = useApiData<{ data: ArtistEvolution[] }>('artist-evolution')
+  const { data: genreEvolutionResponse, loading: genreEvolutionLoading } = useApiData<{ data: GenreEvolution[] }>('genre-evolution')
 
   const summary = summaryResponse
   const monthly = trendsResponse?.data || []

@@ -3,10 +3,8 @@ import { executeQuery } from '../db'
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const metric = searchParams.get('metric') || 'hours'
-
     // Calculate all-time cumulative totals including all historical data
+    // Returns artists in top 15 by EITHER hours OR plays (union) to support client-side metric switching
     const sql = `
       WITH monthly_artist_data AS (
         SELECT 
@@ -46,37 +44,38 @@ export async function GET(request: NextRequest) {
           AND mad.year_month <= spine.year_month
         GROUP BY spine.year_month, spine.artist_name
       ),
-      ranked_artists AS (
+      ranked_by_hours AS (
         SELECT 
-          year_month,
           artist_name,
-          cumulative_hours,
-          cumulative_plays,
-          ROW_NUMBER() OVER (
-            PARTITION BY year_month 
-            ORDER BY CASE WHEN ? = 'hours' THEN cumulative_hours ELSE cumulative_plays END DESC
-          ) AS rank
+          ROW_NUMBER() OVER (PARTITION BY year_month ORDER BY cumulative_hours DESC) AS rank
         FROM cumulative_totals
-        WHERE cumulative_hours > 0 OR cumulative_plays > 0
+        WHERE cumulative_hours > 0
+      ),
+      ranked_by_plays AS (
+        SELECT 
+          artist_name,
+          ROW_NUMBER() OVER (PARTITION BY year_month ORDER BY cumulative_plays DESC) AS rank
+        FROM cumulative_totals
+        WHERE cumulative_plays > 0
       ),
       relevant_artists AS (
-        -- Only include artists that appear in top 15 at least once
-        SELECT DISTINCT artist_name
-        FROM ranked_artists
-        WHERE rank <= 15
+        -- Union of artists in top 15 by hours OR plays
+        SELECT DISTINCT artist_name FROM ranked_by_hours WHERE rank <= 15
+        UNION
+        SELECT DISTINCT artist_name FROM ranked_by_plays WHERE rank <= 15
       )
       SELECT 
-        ra.year_month,
-        ra.artist_name,
-        ROUND(ra.cumulative_hours, 2) AS hours,
-        ra.cumulative_plays AS plays
-      FROM ranked_artists ra
-      JOIN relevant_artists rel ON ra.artist_name = rel.artist_name
-      ORDER BY ra.year_month, 
-        CASE WHEN ? = 'hours' THEN ra.cumulative_hours ELSE ra.cumulative_plays END DESC
+        ct.year_month,
+        ct.artist_name,
+        ROUND(ct.cumulative_hours, 2) AS hours,
+        ct.cumulative_plays AS plays
+      FROM cumulative_totals ct
+      JOIN relevant_artists rel ON ct.artist_name = rel.artist_name
+      WHERE ct.cumulative_hours > 0 OR ct.cumulative_plays > 0
+      ORDER BY ct.year_month, ct.cumulative_hours DESC
     `
 
-    const results = await executeQuery(sql, [metric, metric])
+    const results = await executeQuery(sql, [])
 
     return NextResponse.json({ data: results })
   } catch (error: any) {

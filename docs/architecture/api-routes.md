@@ -271,8 +271,7 @@ WITH first_listens AS (
 
 **Artist ranking changes over time (for artist racing bar chart).**
 
-**Parameters:**
-- `metric` (optional): `hours` | `plays` (default: `hours`)
+**Parameters:** None (removed in v2 - now returns union of top 15 by hours OR plays)
 
 **Response:**
 ```json
@@ -292,20 +291,20 @@ WITH first_listens AS (
 **Logic:**
 - Monthly granularity starting from 2018-01
 - **All-time cumulative** totals for each artist
-- For each month, sums the hours/plays from the beginning of time through that month
-- Returns **all artists** who appear in the time range (not filtered by rank)
-- Frontend component determines top N for each frame of animation
-- Data sorted by metric value for convenience
+- Returns artists that appear in **top 15 by either hours OR plays** at least once
+- This union approach enables client-side metric switching without re-fetching
+- Typical payload: ~35-50 artists × ~97 months = ~3,400-4,900 rows
+- Data includes both hours and plays for client-side filtering
 
 **Query approach:**
 1. Aggregate listening data by month and artist
-2. For each month, calculate all-time cumulative sum for each artist
-3. Include both hours and plays in response
-4. Sort by selected metric descending
-5. Return all artists (no top N filtering in API)
+2. Calculate all-time cumulative totals
+3. Rank by hours separately from plays
+4. Take UNION of top 15 from each ranking
+5. Return all months for those relevant artists
 
 **Use case:**
-Powers the artist view of the animated racing bar chart on the Taste Evolution page. Shows how top artists change over time using cumulative listening data.
+Powers the artist view of the animated racing bar chart on the Taste Evolution page. Client switches between hours/plays metrics without additional API calls.
 
 See [Artist Evolution docs](../archive/ARTIST_EVOLUTION.md) for implementation details.
 
@@ -315,8 +314,7 @@ See [Artist Evolution docs](../archive/ARTIST_EVOLUTION.md) for implementation d
 
 **Genre ranking changes over time (for genre racing bar chart).**
 
-**Parameters:**
-- `metric` (optional): `hours` | `plays` (default: `hours`)
+**Parameters:** None (removed in v2 - now returns union of top 15 by hours OR plays)
 
 **Response:**
 ```json
@@ -336,22 +334,23 @@ See [Artist Evolution docs](../archive/ARTIST_EVOLUTION.md) for implementation d
 **Logic:**
 - Monthly granularity starting from 2018-01
 - **All-time cumulative** totals for each broad genre
+- Returns genres that appear in **top 15 by either hours OR plays** at least once
 - Uses `genre_mappings` table to roll up 452 subgenres into 28 broad categories
-- Joins: `plays` → `artists` → `genre_mappings`
-- For each month, sums the hours/plays from the beginning of time through that month
-- Returns all genres with cumulative listening
-- Frontend determines top N for visualization
+- Distributes listening time equally across an artist's unique broad genres
+- This union approach enables client-side metric switching without re-fetching
+- Typical payload: ~15-20 genres × ~97 months = ~1,500-2,000 rows
 
 **Query approach:**
-1. Join plays with artists to get genre data
-2. Expand comma-separated genres using `UNNEST(STRING_SPLIT())`
-3. Map subgenres to broad genres via `genre_mappings` table
-4. Aggregate by month and broad genre
-5. Calculate all-time cumulative totals using spine approach
-6. Return all genres (no top N filtering in API)
+1. Expand each play to its artist's genres
+2. Deduplicate when multiple subgenres map to same broad genre
+3. Distribute listening time across unique broad genres
+4. Calculate all-time cumulative totals
+5. Rank by hours separately from plays
+6. Take UNION of top 15 from each ranking
+7. Return all months for those relevant genres
 
 **Use case:**
-Powers the genre view of the racing bar chart on the Taste Evolution page. Shows how top genres have evolved using the 28 broad genre categories.
+Powers the genre view of the racing bar chart on the Taste Evolution page. Shows how top genres have evolved using the 28 broad genre categories. Client switches between hours/plays metrics without additional API calls.
 
 See [Genre Evolution docs](../archive/GENRE_EVOLUTION.md) and [Genre Mappings Guide](../guides/genre-mappings.md) for details.
 

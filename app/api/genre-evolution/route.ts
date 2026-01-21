@@ -3,10 +3,8 @@ import { executeQuery } from '../db'
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const metric = searchParams.get('metric') || 'hours'
-
     // Calculate all-time cumulative totals for broad genres
+    // Returns genres in top 15 by EITHER hours OR plays (union) to support client-side metric switching
     // IMPORTANT: Deduplicate at play level to avoid double-counting when multiple
     // subgenres map to same broad genre (e.g., "soft rock" + "folk rock" = "Rock")
     const sql = `
@@ -72,37 +70,38 @@ export async function GET(request: NextRequest) {
           AND mgd.year_month <= spine.year_month
         GROUP BY spine.year_month, spine.genre
       ),
-      ranked_genres AS (
+      ranked_by_hours AS (
         SELECT 
-          year_month,
           genre,
-          cumulative_hours,
-          cumulative_plays,
-          ROW_NUMBER() OVER (
-            PARTITION BY year_month 
-            ORDER BY CASE WHEN ? = 'hours' THEN cumulative_hours ELSE cumulative_plays END DESC
-          ) AS rank
+          ROW_NUMBER() OVER (PARTITION BY year_month ORDER BY cumulative_hours DESC) AS rank
         FROM cumulative_totals
-        WHERE cumulative_hours > 0 OR cumulative_plays > 0
+        WHERE cumulative_hours > 0
+      ),
+      ranked_by_plays AS (
+        SELECT 
+          genre,
+          ROW_NUMBER() OVER (PARTITION BY year_month ORDER BY cumulative_plays DESC) AS rank
+        FROM cumulative_totals
+        WHERE cumulative_plays > 0
       ),
       relevant_genres AS (
-        -- Only include genres that appear in top 15 at least once
-        SELECT DISTINCT genre
-        FROM ranked_genres
-        WHERE rank <= 15
+        -- Union of genres in top 15 by hours OR plays
+        SELECT DISTINCT genre FROM ranked_by_hours WHERE rank <= 15
+        UNION
+        SELECT DISTINCT genre FROM ranked_by_plays WHERE rank <= 15
       )
       SELECT 
-        rg.year_month,
-        rg.genre,
-        ROUND(rg.cumulative_hours, 2) AS hours,
-        rg.cumulative_plays AS plays
-      FROM ranked_genres rg
-      JOIN relevant_genres rel ON rg.genre = rel.genre
-      ORDER BY rg.year_month, 
-        CASE WHEN ? = 'hours' THEN rg.cumulative_hours ELSE rg.cumulative_plays END DESC
+        ct.year_month,
+        ct.genre,
+        ROUND(ct.cumulative_hours, 2) AS hours,
+        ct.cumulative_plays AS plays
+      FROM cumulative_totals ct
+      JOIN relevant_genres rel ON ct.genre = rel.genre
+      WHERE ct.cumulative_hours > 0 OR ct.cumulative_plays > 0
+      ORDER BY ct.year_month, ct.cumulative_hours DESC
     `
 
-    const results = await executeQuery(sql, [metric, metric])
+    const results = await executeQuery(sql, [])
 
     return NextResponse.json({ data: results })
   } catch (error: any) {

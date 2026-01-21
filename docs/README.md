@@ -8,6 +8,7 @@ Complete documentation for your personal Spotify analytics dashboard.
 
 **New to the project?** Start here:
 - **[Getting Started Guide](./getting-started.md)** - Setup in 5 minutes
+- **[Pipeline Quick Reference](./PIPELINE.md)** - Complete pipeline commands ⭐
 - **[Local Development](./guides/local-development.md)** - Running locally with DuckDB
 - **[Deployment Guide](./guides/deployment.md)** - Deploy to Vercel
 
@@ -25,6 +26,7 @@ Step-by-step instructions:
 - **[Updating Data](./guides/updating-data.md)** - Add new Spotify exports
 - **[Enrichment](./guides/enrichment.md)** - Complete guide to Spotify API enrichment
 - **[Enrichment Quick Start](./guides/enrichment-quickstart.md)** - Fast-track enrichment (5 min setup)
+- **[Genre Mappings](./guides/genre-mappings.md)** - 452 subgenres → 28 categories
 - **[Local Development](./guides/local-development.md)** - Development workflow
 
 ## 🗂️ Archive
@@ -45,10 +47,13 @@ spotify-wrapped-revisited/
 │   └── page.tsx           # Main dashboard page
 ├── components/            # React components
 ├── scripts/               # Python data pipeline
-│   ├── ingest_spotify.py      # Raw JSON → DuckDB
-│   ├── enrich_metadata.py     # Spotify API enrichment
-│   ├── sync_to_postgres.py    # DuckDB → Postgres
-│   └── run_pipeline.sh        # Run complete pipeline
+│   ├── ingest_spotify.py          # Raw JSON → DuckDB
+│   ├── enrich_metadata.py         # Spotify API enrichment
+│   ├── seed_genre_mappings.py    # Genre categorization
+│   ├── sync_to_postgres.py        # DuckDB → Postgres
+│   ├── run_full_pipeline.sh       # Complete pipeline ⭐
+│   ├── run_enrichment.sh          # Enrichment + genres
+│   └── run_pipeline.sh            # Basic pipeline (legacy)
 ├── data/                  # Local DuckDB database (gitignored)
 ├── data_raw/              # Spotify JSON exports (gitignored)
 ├── docs/                  # Documentation (you are here)
@@ -61,7 +66,7 @@ spotify-wrapped-revisited/
 
 **DuckDB file not found:**
 ```bash
-./scripts/run_pipeline.sh
+./scripts/run_full_pipeline.sh
 ```
 
 **Hitting Vercel Postgres quota:**

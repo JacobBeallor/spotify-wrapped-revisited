@@ -112,6 +112,18 @@ def main():
         )
         """
     )
+    
+    con.execute(
+        """
+        CREATE TABLE IF NOT EXISTS genre_mappings (
+            subgenre TEXT PRIMARY KEY,
+            broad_genre TEXT NOT NULL,
+            confidence TEXT,
+            notes TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """
+    )
 
     # Find all streaming history files
     json_files = sorted(DATA_RAW_DIR.glob("Streaming_History_Audio_*.json"))

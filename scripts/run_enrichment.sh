@@ -68,8 +68,26 @@ python scripts/enrich_metadata.py
 echo ""
 echo "✅ Enrichment complete!"
 echo ""
+
+# Genre Mapping
+echo "🗂️  Mapping genre categories..."
+echo "Categorizing Spotify's granular genres into broad categories..."
+echo ""
+python scripts/seed_genre_mappings.py
+
+echo ""
 echo "🔍 Verify your data:"
-echo "   python -c \"import duckdb; con = duckdb.connect('data/spotify.duckdb'); print('Tracks:', con.execute('SELECT COUNT(*) FROM tracks').fetchone()[0]); print('Artists:', con.execute('SELECT COUNT(*) FROM artists').fetchone()[0])\""
+python -c "
+import duckdb
+con = duckdb.connect('data/spotify.duckdb')
+tracks = con.execute('SELECT COUNT(*) FROM tracks').fetchone()[0]
+artists = con.execute('SELECT COUNT(*) FROM artists').fetchone()[0]
+mappings = con.execute('SELECT COUNT(*) FROM genre_mappings').fetchone()[0]
+print(f'   Tracks:         {tracks:,}')
+print(f'   Artists:        {artists:,}')
+print(f'   Genre mappings: {mappings:,}')
+con.close()
+"
 echo ""
 echo "📤 Next steps:"
 echo "   1. Test locally: npm run dev"

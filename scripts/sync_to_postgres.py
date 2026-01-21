@@ -110,6 +110,17 @@ def create_postgres_schema(pg_cur):
         )
     """)
     
+    # Create genre_mappings table
+    pg_cur.execute("""
+        CREATE TABLE genre_mappings (
+            subgenre TEXT PRIMARY KEY,
+            broad_genre TEXT NOT NULL,
+            confidence TEXT,
+            notes TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    
     # Create indexes
     log("  Creating indexes...")
     pg_cur.execute("CREATE INDEX idx_plays_year_month ON plays(year_month)")
@@ -221,6 +232,10 @@ def main():
         sync_table(duck_con, pg_cur, 'audio_features')
         pg_con.commit()
         log("✓ Audio features committed")
+        
+        sync_table(duck_con, pg_cur, 'genre_mappings')
+        pg_con.commit()
+        log("✓ Genre mappings committed")
         
         # Get summary
         pg_cur.execute("SELECT COUNT(*) FROM plays")

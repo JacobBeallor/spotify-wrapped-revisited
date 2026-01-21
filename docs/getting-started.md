@@ -43,18 +43,23 @@ data_raw/
 
 ### 3. Run Data Pipeline
 
-This ingests your Spotify data into a local DuckDB database:
+This ingests and processes your Spotify data:
 
 ```bash
-./scripts/run_pipeline.sh
+./scripts/run_full_pipeline.sh
 ```
 
 **What this does:**
 - Reads all JSON files from `data_raw/`
 - Filters out plays < 30 seconds
-- Converts UTC timestamps to Toronto timezone
+- Converts UTC timestamps to your local timezone
+- Enriches with Spotify API metadata (if credentials available)
+- Maps 452 granular genres → 28 broad categories
 - Creates `data/spotify.duckdb` with your listening history
-- Takes ~30-60 seconds for 77k+ plays
+
+**Time:**
+- Basic ingestion: ~30-60 seconds for 77k+ plays
+- With enrichment: +1-2 hours (optional, skip with `--no-enrich`)
 
 ### 4. Start Development Server
 
@@ -72,28 +77,40 @@ Your dashboard includes:
 - **⏰ Hour/Day Charts** - When you listen most
 - **🎵 Top Lists** - Your most-played artists and tracks
 - **🎸 Artist Evolution** - How your top artists change over time
+- **🎭 Genre Analysis** - 28 broad genre categories (with enrichment)
 
 ## Next Steps
 
-### Optional: Enrich with Spotify API
+### Optional: Add Spotify API Enrichment
 
-Add metadata like genres, release years, and popularity:
+The full pipeline automatically enriches data if credentials are available.
+
+To enable enrichment:
 
 1. **Get Spotify API credentials:**
    - Visit [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
    - Create an app
    - Copy Client ID and Secret
 
-2. **Set environment variables:**
+2. **Create `.env` file:**
    ```bash
-   export SPOTIFY_CLIENT_ID=your_client_id
-   export SPOTIFY_CLIENT_SECRET=your_client_secret
+   # Copy the example
+   cp .env.example .env
+   
+   # Add your credentials
+   SPOTIFY_CLIENT_ID=your_client_id
+   SPOTIFY_CLIENT_SECRET=your_client_secret
    ```
 
-3. **Run enrichment:**
+3. **Re-run pipeline:**
    ```bash
-   python scripts/enrich_metadata.py
+   ./scripts/run_full_pipeline.sh
    ```
+
+**What enrichment adds:**
+- 🎭 Genre distribution (452 subgenres → 28 categories)
+- 📅 Release year/decade analysis
+- ⭐ Track and artist popularity scores
 
 See [Enrichment Guide](./guides/enrichment.md) for details.
 
@@ -124,10 +141,13 @@ spotify-wrapped-revisited/
 ├── app/                    # Next.js application
 ├── components/            # React components
 ├── scripts/               # Python data pipeline
-│   ├── ingest_spotify.py      # Main ingestion script
-│   ├── enrich_metadata.py     # Spotify API enrichment
-│   ├── sync_to_postgres.py    # Sync to Vercel Postgres
-│   └── run_pipeline.sh        # Run all scripts
+│   ├── ingest_spotify.py          # Main ingestion script
+│   ├── enrich_metadata.py         # Spotify API enrichment
+│   ├── seed_genre_mappings.py    # Genre categorization
+│   ├── sync_to_postgres.py        # Sync to Vercel Postgres
+│   ├── run_full_pipeline.sh       # Complete pipeline (recommended)
+│   ├── run_enrichment.sh          # Enrichment + genre mapping
+│   └── run_pipeline.sh            # Basic pipeline (legacy)
 ├── data/                  # DuckDB database (local only)
 ├── data_raw/              # Your Spotify JSON files
 └── docs/                  # Documentation
@@ -138,7 +158,7 @@ spotify-wrapped-revisited/
 ### "No such file or directory: data/spotify.duckdb"
 Run the data pipeline:
 ```bash
-./scripts/run_pipeline.sh
+./scripts/run_full_pipeline.sh
 ```
 
 ### "Module not found: duckdb"

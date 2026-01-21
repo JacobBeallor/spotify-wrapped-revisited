@@ -12,8 +12,8 @@ When you get new Spotify data exports (or request updated data), follow this wor
 # 1. Add new JSON files
 cp ~/Downloads/Streaming_History*.json data_raw/
 
-# 2. Re-ingest
-./scripts/run_pipeline.sh
+# 2. Run full pipeline (ingest + enrich + map genres)
+./scripts/run_full_pipeline.sh
 
 # 3. Sync to Postgres (for production)
 python scripts/sync_to_postgres.py
@@ -56,17 +56,14 @@ ls -lh data_raw/
 - Script reads all `Streaming_History_Audio_*.json`
 - Old files are fine to keep
 
-### Step 3: Re-run Ingestion
+### Step 3: Run Full Pipeline
 
 ```bash
-# Activate Python environment
-source venv/bin/activate
+# Run complete pipeline (recommended)
+./scripts/run_full_pipeline.sh
 
-# Run ingestion
-python scripts/ingest_spotify.py
-
-# Or use pipeline script
-./scripts/run_pipeline.sh
+# Or skip enrichment if you don't need it
+./scripts/run_full_pipeline.sh --no-enrich
 ```
 
 **What happens:**
@@ -75,9 +72,13 @@ python scripts/ingest_spotify.py
 3. Filters plays < 30 seconds
 4. Converts UTC → local timezone
 5. Creates derived columns
-6. Builds new DuckDB database
+6. Enriches with Spotify API (if credentials available)
+7. Maps genres (452 → 28 broad categories)
+8. Builds new DuckDB database
 
-**Time:** ~30-60 seconds for 100k plays
+**Time:** 
+- Basic ingestion: ~30-60 seconds for 100k plays
+- With enrichment: +1-2 hours (only for new tracks/artists)
 
 **Output:**
 ```
@@ -116,26 +117,27 @@ print('Date range:', con.execute('SELECT MIN(date), MAX(date) FROM plays').fetch
 "
 ```
 
-### Step 5: Re-run Enrichment (Optional)
+### Step 5: Enrichment (Automatic)
 
-If you added enrichment before, re-run for new tracks/artists:
+The full pipeline automatically runs enrichment if credentials are found:
 
-```bash
-# Set Spotify API credentials
-export SPOTIFY_CLIENT_ID=your_client_id
-export SPOTIFY_CLIENT_SECRET=your_secret
+**Credentials location:**
+- `.env` file (recommended)
+- Or environment variables
 
-# Run enrichment
-python scripts/enrich_metadata.py
-```
-
-**What happens:**
+**If enrichment runs:**
 - Finds new tracks not in `tracks` table
 - Finds new artists not in `artists` table
 - Fetches metadata from Spotify API
+- Maps genres to broad categories
 - Updates enrichment tables
 
 **Time:** ~5-10 minutes for 1000 new tracks
+
+**Manual enrichment only:**
+```bash
+./scripts/run_enrichment.sh
+```
 
 ### Step 6: Sync to Postgres
 
@@ -162,6 +164,7 @@ Syncing DuckDB → Vercel Postgres
 ✓ plays synced: 77,800 rows in 1.0s (81k rows/sec)
 ✓ tracks synced: 5,234 rows in 0.2s
 ✓ artists synced: 1,892 rows in 0.1s
+✓ genre_mappings synced: 452 rows in 0.1s
 SYNC COMPLETE ✓
 ```
 
@@ -317,26 +320,18 @@ psql $POSTGRES_URL -c "SELECT COUNT(*) FROM plays"
 
 ## Automation Ideas
 
-### Semi-Automated
+### Semi-Automated (Built-in)
+
+The `run_full_pipeline.sh` script already handles the full workflow:
 
 ```bash
 #!/bin/bash
-# scripts/update_data.sh
+# Complete update workflow
 
-echo "=== Data Update Workflow ==="
+# 1. Run full pipeline (ingest + enrich + map genres)
+./scripts/run_full_pipeline.sh
 
-# 1. Ingest
-echo "Step 1: Ingesting data..."
-./scripts/run_pipeline.sh
-
-# 2. Enrich (if credentials set)
-if [ -n "$SPOTIFY_CLIENT_ID" ]; then
-  echo "Step 2: Enriching metadata..."
-  python scripts/enrich_metadata.py
-fi
-
-# 3. Sync
-echo "Step 3: Syncing to Postgres..."
+# 2. Sync to Postgres
 if [ -n "$POSTGRES_URL" ]; then
   python scripts/sync_to_postgres.py
 else
@@ -349,9 +344,14 @@ echo "Next: git push origin main"
 
 **Usage:**
 ```bash
-chmod +x scripts/update_data.sh
-./scripts/update_data.sh
+./scripts/run_full_pipeline.sh
 ```
+
+The script automatically:
+- Detects credentials from `.env`
+- Runs enrichment if available
+- Maps genres after enrichment
+- Shows warnings if credentials missing
 
 ### Fully Automated (Future)
 

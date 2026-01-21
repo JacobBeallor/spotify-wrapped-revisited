@@ -15,10 +15,11 @@ The navigation and filter state is managed using React's built-in `useState` hoo
 - **Simplicity**: No URL manipulation, no context providers, no external dependencies
 
 ```typescript
-// Three simple state declarations in app/page.tsx
+// Four simple state declarations in app/page.tsx
 const [activeTab, setActiveTab] = useState<'overview' | 'patterns' | 'evolution'>('overview')
 const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
 const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
+const [entity, setEntity] = useState<'artists' | 'genres'>('artists')
 ```
 
 ### Component Structure
@@ -56,9 +57,11 @@ app/page.tsx (Main Controller)
 
 ### 3. Taste Evolution
 **Route**: Evolution tab  
-**Filters**: None  
+**Filters**: Entity Toggle + Metric Toggle  
 **Content**:
-- Artist Evolution Chart (bump chart showing top artists over time)
+- Racing Bar Chart (animated visualization showing top artists or genres over time)
+- Toggle between Artists and Genres views
+- All-time cumulative data
 
 ## Filter Behavior
 
@@ -69,17 +72,26 @@ app/page.tsx (Main Controller)
 - **Default**: "All Time"
 
 ### Metric Toggle
-- **Appears on**: Overview and Listening Patterns tabs
+- **Appears on**: Overview, Listening Patterns, and Taste Evolution tabs
 - **Affects**: All charts and lists
 - **Options**: Hours or Plays
 - **Default**: "Hours"
+
+### Entity Toggle
+- **Appears on**: Taste Evolution tab only
+- **Affects**: Racing bar chart data source
+- **Options**: Artists or Genres
+- **Default**: "Artists"
+- **Independent of**: Metric toggle (both can be set independently)
 
 ### Filter Persistence
 When a user:
 1. Sets filters on Overview tab (e.g., "December 2024", "Plays")
 2. Switches to Listening Patterns tab
 3. The "Plays" metric persists automatically
-4. When returning to Overview, both filters are preserved
+4. Switches to Taste Evolution and changes to "Genres"
+5. When returning to Overview, the period and metric filters are preserved
+6. When returning to Taste Evolution, both "Genres" and the metric are preserved
 
 This works because the parent component (`app/page.tsx`) never unmounts during tab navigation—only the child page components swap in and out.
 
@@ -122,29 +134,21 @@ interface SubHeaderProps {
 }
 ```
 
-**Conditional Rendering**:
-```typescript
-// Overview: both filters
-{activeTab === 'overview' && (
-  <SubHeader showPeriodFilter showMetricFilter ... />
-)}
+**Note**: The SubHeader component has been replaced with individual filter components embedded in page components for better flexibility.
 
-// Listening Patterns: metric only
-{activeTab === 'patterns' && (
-  <SubHeader showMetricFilter ... />
-)}
-
-// Taste Evolution: no sub-header
-```
+**Filter Components**:
+- `components/filters/PeriodFilter.tsx` - Period selector dropdown
+- `components/filters/MetricFilter.tsx` - Hours/Plays toggle
+- `components/filters/EntityFilter.tsx` - Artists/Genres toggle
 
 ### Page Components
 **Location**: `components/pages/`  
 **Type**: Presentational components  
 **Purpose**: Each handles layout and composition of chart components for its section
 
-- `OverviewPage.tsx` - Composes KPI cards and top lists
-- `ListeningPatternsPage.tsx` - Composes temporal pattern charts
-- `TasteEvolutionPage.tsx` - Composes artist evolution chart
+- `OverviewPage.tsx` - Composes KPI cards and top lists with period/metric filters
+- `ListeningPatternsPage.tsx` - Composes temporal pattern charts with metric filter
+- `TasteEvolutionPage.tsx` - Composes racing bar chart with entity/metric filters
 
 ## Design Decisions
 
@@ -191,13 +195,17 @@ flowchart TD
     State --> Tab[activeTab]
     State --> Period[selectedPeriod]
     State --> Metric[metric]
+    State --> Entity[entity]
     
     Page --> API[API Data Fetching]
     API --> Summary[Summary Data]
     API --> Charts[Chart Data]
     API --> TopLists[Top Artists/Tracks]
+    API --> ArtistEvol[Artist Evolution]
+    API --> GenreEvol[Genre Evolution]
     
     Period --> TopLists
+    Metric --> API
     
     Tab --> Render{Conditional Render}
     Render -->|overview| Over[OverviewPage]
@@ -206,12 +214,21 @@ flowchart TD
     
     Over --> Summary
     Over --> TopLists
-    Patt --> Charts
-    Evol --> Charts
+    Over --> PeriodFilter[PeriodFilter]
+    Over --> MetricFilter1[MetricFilter]
     
-    Period --> SubHdr[SubHeader]
-    Metric --> SubHdr
-    Tab --> SubHdr
+    Patt --> Charts
+    Patt --> MetricFilter2[MetricFilter]
+    
+    Evol --> ArtistEvol
+    Evol --> GenreEvol
+    Evol --> EntityFilter[EntityFilter]
+    Evol --> MetricFilter3[MetricFilter]
+    
+    Entity --> Evol
+    Metric --> Over
+    Metric --> Patt
+    Metric --> Evol
 ```
 
 ## Performance Considerations

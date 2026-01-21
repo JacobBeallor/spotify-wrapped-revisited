@@ -9,17 +9,20 @@ graph LR
     A[Spotify JSON] -->|ingest| B[DuckDB]
     B -->|enrich| C[Spotify API]
     C -->|metadata| B
-    B -->|sync| D[Vercel Postgres]
-    D -->|query| E[Next.js API]
-    E -->|response| F[Frontend]
+    B -->|map| D[Genre Mappings]
+    D -->|categorize| B
+    B -->|sync| E[Vercel Postgres]
+    E -->|query| F[Next.js API]
+    F -->|response| G[Frontend]
 ```
 
 **Flow:**
 1. **Ingest** - Raw JSON → DuckDB (local)
 2. **Enrich** - Spotify API → DuckDB metadata tables (optional)
-3. **Sync** - DuckDB → Vercel Postgres (for production)
-4. **Query** - API routes query database
-5. **Display** - Frontend shows visualizations
+3. **Map** - 452 subgenres → 28 broad categories (after enrichment)
+4. **Sync** - DuckDB → Vercel Postgres (for production)
+5. **Query** - API routes query database
+6. **Display** - Frontend shows visualizations
 
 ## Scripts
 
@@ -56,6 +59,7 @@ MIN_PLAY_DURATION_MS = 30000  # 30 seconds
 - `tracks` table - Track metadata (empty until enriched)
 - `artists` table - Artist metadata (empty until enriched)
 - `audio_features` table - Audio characteristics (empty until enriched)
+- `genre_mappings` table - Subgenre → broad genre mappings (empty until seeded)
 
 See [Database Architecture](../architecture/database.md) for full schema.
 
@@ -126,7 +130,46 @@ python scripts/enrich_metadata.py
 
 ---
 
-### 3. `sync_to_postgres.py` - Sync to Production
+### 3. `seed_genre_mappings.py` - Genre Categorization
+
+**Purpose:** Map Spotify's 452+ granular genres into 28 manageable broad categories.
+
+**Requirements:**
+- Must run after enrichment (needs genres in `artists` table)
+
+**What it does:**
+1. Reads all unique genres from `artists` table
+2. Applies pattern-based categorization rules
+3. Maps each subgenre to a broad category:
+   - Rock (49 subgenres)
+   - Electronic/Dance (66 subgenres)
+   - Pop (41 subgenres)
+   - Jazz (29 subgenres)
+   - And 24 more categories
+4. Stores mappings in `genre_mappings` table
+
+**Run it:**
+```bash
+python scripts/seed_genre_mappings.py
+```
+
+**Performance:**
+- Instant (<1 second)
+- Re-runnable (clears and rebuilds)
+
+**Features unlocked:**
+- Broad genre analysis via `/api/genres-broad`
+- 93.8% reduction in genre complexity (452 → 28)
+- Easier visualization and insights
+
+**Customization:**
+Edit `categorize_genre()` function to adjust mappings.
+
+See [Genre Mappings Guide](../guides/genre-mappings.md) for details.
+
+---
+
+### 4. `sync_to_postgres.py` - Sync to Production
 
 **Purpose:** Copy DuckDB data to Vercel Postgres for serverless deployment.
 
@@ -161,16 +204,23 @@ python scripts/sync_to_postgres.py
 - Single transaction
 - Minimal network round-trips
 
+**Tables synced:**
+- plays
+- tracks
+- artists
+- audio_features
+- genre_mappings (new!)
+
 **When to run:**
 - After ingesting new data
-- After enrichment
+- After enrichment and genre mapping
 - Before deploying to Vercel
 
 ---
 
-### 4. `run_pipeline.sh` - Complete Pipeline
+### 5. `run_full_pipeline.sh` - Complete Pipeline (Recommended)
 
-**Purpose:** Run the complete data pipeline in one command.
+**Purpose:** Run the entire data pipeline in one command.
 
 **What it does:**
 ```bash
@@ -181,18 +231,70 @@ source venv/bin/activate
 # 2. Ingest raw data
 python scripts/ingest_spotify.py
 
-# 3. Optional: Enrich metadata
-if [ "$ENRICH" = "true" ]; then
+# 3. Enrich metadata (if credentials available)
+if credentials exist:
   python scripts/enrich_metadata.py
+  python scripts/seed_genre_mappings.py
+else:
+  show warning about missing credentials
 fi
 ```
+
+**Run it:**
+```bash
+# Full pipeline (default: with enrichment)
+./scripts/run_full_pipeline.sh
+
+# Skip enrichment
+./scripts/run_full_pipeline.sh --no-enrich
+
+# Help
+./scripts/run_full_pipeline.sh --help
+```
+
+**Credentials:**
+Automatically loads from `.env` file if present.
+
+---
+
+### 6. `run_enrichment.sh` - Enrichment Only
+
+**Purpose:** Run enrichment + genre mapping on already-ingested data.
+
+**What it does:**
+```bash
+# 1. Load credentials from .env
+# 2. Run enrichment
+python scripts/enrich_metadata.py
+
+# 3. Map genres
+python scripts/seed_genre_mappings.py
+```
+
+**Run it:**
+```bash
+./scripts/run_enrichment.sh
+```
+
+---
+
+### 7. `run_pipeline.sh` - Basic Pipeline (Legacy)
+
+**Purpose:** Basic ingestion with optional enrichment (legacy).
+
+**Note:** Use `run_full_pipeline.sh` instead (includes genre mapping).
+
+**What it does:**
+- Ingests data
+- Optionally enriches if `ENRICH=true`
+- Does NOT include genre mapping
 
 **Run it:**
 ```bash
 # Basic (no enrichment)
 ./scripts/run_pipeline.sh
 
-# With enrichment
+# With enrichment (missing genre mapping step)
 ENRICH=true ./scripts/run_pipeline.sh
 ```
 
@@ -227,10 +329,22 @@ See [Timezone docs](../archive/TIMEZONE.md) for details.
 
 ## Workflow Examples
 
-### Fresh Setup
+### Fresh Setup (Recommended)
 ```bash
-# 1. Ingest
-./scripts/run_pipeline.sh
+# 1. Full pipeline (ingest + enrich + map genres)
+./scripts/run_full_pipeline.sh
+
+# 2. Sync to Postgres
+python scripts/sync_to_postgres.py
+
+# 3. Deploy
+git push origin main
+```
+
+### Fresh Setup (Without Enrichment)
+```bash
+# 1. Basic ingest only
+./scripts/run_full_pipeline.sh --no-enrich
 
 # 2. Sync to Postgres
 python scripts/sync_to_postgres.py
@@ -242,8 +356,8 @@ git push origin main
 ### Update with New Data
 ```bash
 # 1. Add new JSON files to data_raw/
-# 2. Re-run ingestion (drops old data)
-./scripts/run_pipeline.sh
+# 2. Re-run full pipeline
+./scripts/run_full_pipeline.sh
 
 # 3. Re-sync
 python scripts/sync_to_postgres.py
@@ -252,21 +366,30 @@ python scripts/sync_to_postgres.py
 git push
 ```
 
-### Add Enrichment
+### Add Enrichment to Existing Data
 ```bash
 # 1. Get Spotify API credentials
-# 2. Set environment variables
-export SPOTIFY_CLIENT_ID=xxx
-export SPOTIFY_CLIENT_SECRET=yyy
+# 2. Add to .env file:
+#    SPOTIFY_CLIENT_ID=xxx
+#    SPOTIFY_CLIENT_SECRET=yyy
 
-# 3. Enrich
-python scripts/enrich_metadata.py
+# 3. Run enrichment (includes genre mapping)
+./scripts/run_enrichment.sh
 
 # 4. Sync to Postgres
 python scripts/sync_to_postgres.py
 
 # 5. Deploy
 git push
+```
+
+### Update Genre Mappings Only
+```bash
+# If you customize categorization logic
+python scripts/seed_genre_mappings.py
+
+# Sync to Postgres
+python scripts/sync_to_postgres.py
 ```
 
 ---

@@ -390,16 +390,23 @@ def enrich_audio_features(con, sp):
 
 ## Best Practices
 
-✅ **Run enrichment after ingestion**
+✅ **Use the full pipeline (recommended)**
 ```bash
-./scripts/run_pipeline.sh
+./scripts/run_full_pipeline.sh
+```
+This runs ingestion → enrichment → genre mapping in one command.
+
+✅ **Or run enrichment separately:**
+```bash
 ./scripts/run_enrichment.sh
 ```
+This runs enrichment + genre mapping (assumes data already ingested).
 
 ✅ **Or run manually:**
 ```bash
 source venv/bin/activate
 python scripts/enrich_metadata.py
+python scripts/seed_genre_mappings.py  # Map genres after enrichment
 ```
 
 ✅ **Keep credentials secure**

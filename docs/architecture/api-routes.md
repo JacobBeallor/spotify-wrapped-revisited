@@ -113,22 +113,30 @@ FROM plays
     {
       "artist_name": "The Band",
       "hours": 124.26,
-      "plays": 1747
+      "plays": 1747,
+      "spotify_artist_id": "0OdUWJ0sBjDrqHygGUXeCF"
     },
     ...
   ]
 }
 ```
 
+**Notes:**
+- `spotify_artist_id` field is included if data has been enriched via Spotify API
+- This field is used for interactive embeds and deep links to Spotify
+- Returns `null` if artist has not been enriched yet
+
 **Query:**
 ```sql
 SELECT 
-  artist_name,
-  ROUND(SUM(ms_played) / 1000.0 / 60 / 60, 2) as hours,
-  COUNT(*) as plays
-FROM plays
-WHERE date >= ? AND date <= ?
-GROUP BY artist_name
+  p.artist_name,
+  ROUND(SUM(p.ms_played) / 1000.0 / 60 / 60, 2) as hours,
+  COUNT(*) as plays,
+  a.spotify_artist_id
+FROM plays p
+LEFT JOIN artists a ON p.artist_name = a.artist_name
+WHERE p.year_month >= ? AND p.year_month <= ?
+GROUP BY p.artist_name, a.spotify_artist_id
 ORDER BY hours DESC
 LIMIT ?
 ```
@@ -153,11 +161,34 @@ LIMIT ?
       "track_name": "The Weight",
       "artist_name": "The Band",
       "hours": 12.5,
-      "plays": 87
+      "plays": 87,
+      "spotify_track_uri": "spotify:track:6rqhFgbbKwnb9MLmUQDhG6"
     },
     ...
   ]
 }
+```
+
+**Notes:**
+- `spotify_track_uri` field is included if data has been enriched via Spotify API
+- This field is used for interactive embeds and deep links to Spotify
+- Returns `null` if track has not been enriched yet
+- URI format: `spotify:track:{trackId}`
+
+**Query:**
+```sql
+SELECT 
+  p.track_name,
+  p.artist_name,
+  ROUND(SUM(p.ms_played) / 1000.0 / 60 / 60, 2) as hours,
+  COUNT(*) as plays,
+  t.spotify_track_uri
+FROM plays p
+LEFT JOIN tracks t ON p.spotify_track_uri = t.spotify_track_uri
+WHERE p.year_month >= ? AND p.year_month <= ?
+GROUP BY p.track_name, p.artist_name, t.spotify_track_uri
+ORDER BY hours DESC
+LIMIT ?
 ```
 
 ---

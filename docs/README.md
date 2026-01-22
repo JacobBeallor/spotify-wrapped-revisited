@@ -19,6 +19,7 @@ Understand how the system works:
 - **[Database Architecture](./architecture/database.md)** - DuckDB (local) + Postgres (production)
 - **[Data Pipeline](./architecture/data-pipeline.md)** - Ingestion, enrichment, and sync
 - **[API Routes](./architecture/api-routes.md)** - Server-side endpoints
+- **[Spotify Embeds](./architecture/spotify-embeds.md)** - Interactive player with iFrame API
 
 ## 📖 Guides
 

@@ -4,17 +4,19 @@ interface TopArtistsProps {
   data: TopArtist[]
   metric: 'hours' | 'plays'
   limit?: number
+  onArtistClick?: (artistId: string, artistName: string) => void
 }
 
-export default function TopArtists({ data, metric, limit = 10 }: TopArtistsProps) {
+export default function TopArtists({ data, metric, limit = 10, onArtistClick }: TopArtistsProps) {
   // Aggregate by artist and sort
-  const artistMap = new Map<string, { hours: number, plays: number }>()
+  const artistMap = new Map<string, { hours: number, plays: number, spotify_artist_id?: string }>()
   
   data.forEach(item => {
     const existing = artistMap.get(item.artist_name) || { hours: 0, plays: 0 }
     artistMap.set(item.artist_name, {
       hours: existing.hours + item.hours,
-      plays: existing.plays + item.plays
+      plays: existing.plays + item.plays,
+      spotify_artist_id: existing.spotify_artist_id || item.spotify_artist_id
     })
   })
   
@@ -47,10 +49,19 @@ export default function TopArtists({ data, metric, limit = 10 }: TopArtistsProps
           const value = metric === 'hours' ? artist.hours : artist.plays
           const maxValue = metric === 'hours' ? sortedArtists[0].hours : sortedArtists[0].plays
           const percentage = (value / maxValue) * 100
+          const isClickable = !!artist.spotify_artist_id && !!onArtistClick
           
           return (
-            <div key={artist.artist_name} className="group">
-              <div className="flex items-center justify-between mb-1">
+            <div 
+              key={artist.artist_name} 
+              className={`group ${isClickable ? 'cursor-pointer' : ''}`}
+              onClick={() => {
+                if (artist.spotify_artist_id && onArtistClick) {
+                  onArtistClick(artist.spotify_artist_id, artist.artist_name)
+                }
+              }}
+            >
+              <div className={`flex items-center justify-between mb-1 transition-opacity ${isClickable ? 'group-hover:opacity-80' : ''}`}>
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <span className="text-gray-500 font-mono text-sm w-6 flex-shrink-0">
                     {(index + 1).toString().padStart(2, '0')}
@@ -71,7 +82,7 @@ export default function TopArtists({ data, metric, limit = 10 }: TopArtistsProps
               <div className="ml-9">
                 <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-gradient-to-r from-spotify-green to-green-400 rounded-full transition-all duration-500 ease-out"
+                    className={`h-full bg-gradient-to-r from-spotify-green to-green-400 rounded-full transition-all duration-500 ease-out ${isClickable ? 'group-hover:brightness-110' : ''}`}
                     style={{ width: `${percentage}%` }}
                   />
                 </div>

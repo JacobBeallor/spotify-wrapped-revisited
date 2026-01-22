@@ -59,14 +59,15 @@ export default function TopTracks({ data, metric, limit = 10, onTrackClick }: To
           return (
             <div
               key={`${track.track_name}-${track.artist_name}`}
-              className={`group ${isClickable ? 'cursor-pointer' : ''}`}
+              className={`group px-3 pb-1 -mx-3 rounded-lg transition-colors duration-200 ${isClickable ? 'cursor-pointer hover:bg-gray-700/40' : ''
+                }`}
               onClick={() => {
                 if (track.spotify_track_uri && onTrackClick) {
                   onTrackClick(track.spotify_track_uri, track.track_name)
                 }
               }}
             >
-              <div className={`flex items-center justify-between mb-1 transition-opacity ${isClickable ? 'group-hover:opacity-80' : ''}`}>
+              <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <span className="text-gray-500 font-mono text-sm w-6 flex-shrink-0">
                     {(index + 1).toString().padStart(2, '0')}
@@ -92,7 +93,7 @@ export default function TopTracks({ data, metric, limit = 10, onTrackClick }: To
               <div className="ml-9">
                 <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                   <div
-                    className={`h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500 ease-out ${isClickable ? 'group-hover:brightness-110' : ''}`}
+                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 ease-out"
                     style={{ width: `${percentage}%` }}
                   />
                 </div>

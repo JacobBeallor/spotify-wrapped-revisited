@@ -6,9 +6,9 @@
 - Size: `M`  
 - Show listening trends by release year/decade.
 
-### 2. Spotify embeds & links
-- Size: `M`  
-- Make top tracks/artists clickable with Spotify links and embeds.
+### 2. Add thumbnails to top artists and tracks
+
+### 3. Jukebox feature?
 
 ---
 
@@ -69,6 +69,19 @@
 - Updated `RacingBarChart` to handle both artists and genres generically.
 - Toggle between "Artists" and "Genres" views on Taste Evolution tab.
 - Provides higher-level view of musical taste evolution compared to granular artist view.
+
+### 9. Spotify embeds & interactive player
+- Size: `M`  
+- Integrated Spotify iFrame API for interactive music player on Overview page.
+- Swapped Top Tracks and Top Artists positions (tracks left, artists right).
+- Made tracks and artists clickable - clicking updates embedded player instantly.
+- Added `spotify_track_uri` field to `/api/top-tracks` endpoint (joined with `tracks` table).
+- Added `spotify_artist_id` field to `/api/top-artists` endpoint (joined with `artists` table).
+- Created `SpotifyEmbed` component with dynamic `loadUri()` functionality.
+- Player loads paused with top track, updates smoothly without page reloads.
+- Graceful degradation: non-enriched items display but aren't clickable.
+- Hover effects (opacity, brightness) only on items with Spotify IDs.
+- Added comprehensive architecture documentation: `docs/architecture/spotify-embeds.md`.
 
 ---
 

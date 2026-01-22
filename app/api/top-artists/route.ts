@@ -10,14 +10,16 @@ export async function GET(request: NextRequest) {
     
     const sql = `
       SELECT 
-        artist_name,
-        ROUND(SUM(ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
-        COUNT(*) AS plays
-      FROM plays
+        p.artist_name,
+        ROUND(SUM(p.ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
+        COUNT(*) AS plays,
+        a.spotify_artist_id
+      FROM plays p
+      LEFT JOIN artists a ON p.artist_name = a.artist_name
       WHERE 1=1
-        ${start ? `AND year_month >= ?` : ''}
-        ${end ? `AND year_month <= ?` : ''}
-      GROUP BY artist_name
+        ${start ? `AND p.year_month >= ?` : ''}
+        ${end ? `AND p.year_month <= ?` : ''}
+      GROUP BY p.artist_name, a.spotify_artist_id
       ORDER BY hours DESC
       LIMIT ?
     `

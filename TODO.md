@@ -6,6 +6,10 @@
 - Size: `M`  
 - Show listening trends by release year/decade.
 
+### 2. Add thumbnails to top artists and tracks
+
+### 3. Jukebox feature?
+
 ---
 
 ## ✅ Completed

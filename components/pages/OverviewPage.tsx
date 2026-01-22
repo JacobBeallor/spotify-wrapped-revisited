@@ -35,27 +35,38 @@ export default function OverviewPage({
   availableMonths
 }: OverviewPageProps) {
   const embedControllerRef = useRef<any>(null)
+  const hasInitialLoadedRef = useRef(false)
 
   // Find the first track with a spotify_track_uri for initial embed
   const initialTrack = topTracks.find(track => track.spotify_track_uri)
   const initialUri = initialTrack?.spotify_track_uri
 
   const handleTrackClick = (trackUri: string, trackName: string) => {
-    embedControllerRef.current?.loadUri(trackUri)
+    if (embedControllerRef.current) {
+      embedControllerRef.current.loadUri(trackUri)
+      // Small delay to ensure content loads before playing
+      setTimeout(() => {
+        embedControllerRef.current?.play()
+      }, 100)
+    }
   }
 
   const handleArtistClick = (artistId: string, artistName: string) => {
-    // Construct Spotify artist URI
-    const artistUri = `spotify:artist:${artistId}`
-    embedControllerRef.current?.loadUri(artistUri)
-  }
-
-  // Load the top track once we have both the controller and the data
-  useEffect(() => {
-    if (embedControllerRef.current && initialUri) {
-      embedControllerRef.current.loadUri(initialUri)
+    if (embedControllerRef.current) {
+      // Find the top track by this artist
+      const artistTopTrack = topTracks.find(
+        track => track.artist_name === artistName && track.spotify_track_uri
+      )
+      
+      if (artistTopTrack?.spotify_track_uri) {
+        embedControllerRef.current.loadUri(artistTopTrack.spotify_track_uri)
+        // Small delay to ensure content loads before playing
+        setTimeout(() => {
+          embedControllerRef.current?.play()
+        }, 100)
+      }
     }
-  }, [initialUri])
+  }
 
   return (
     <main
@@ -101,9 +112,10 @@ export default function OverviewPage({
               initialUri={initialUri}
               onControllerReady={(controller) => {
                 embedControllerRef.current = controller
-                // Load the correct track immediately if we have it
-                if (initialUri) {
+                // Only load initial track on first mount, not on filter changes
+                if (initialUri && !hasInitialLoadedRef.current) {
                   controller.loadUri(initialUri)
+                  hasInitialLoadedRef.current = true
                 }
               }}
             />

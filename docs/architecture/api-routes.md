@@ -114,7 +114,8 @@ FROM plays
       "artist_name": "The Band",
       "hours": 124.26,
       "plays": 1747,
-      "spotify_artist_id": "0OdUWJ0sBjDrqHygGUXeCF"
+      "spotify_artist_id": "0OdUWJ0sBjDrqHygGUXeCF",
+      "image_url": "https://i.scdn.co/image/ab6761610000e5eb..."
     },
     ...
   ]
@@ -123,7 +124,8 @@ FROM plays
 
 **Notes:**
 - `spotify_artist_id` field is included if data has been enriched via Spotify API
-- This field is used for interactive embeds and deep links to Spotify
+- `image_url` field contains the artist's profile image (300x300px from Spotify CDN)
+- These fields are used for interactive embeds, thumbnails, and deep links to Spotify
 - Returns `null` if artist has not been enriched yet
 
 **Query:**
@@ -132,11 +134,12 @@ SELECT
   p.artist_name,
   ROUND(SUM(p.ms_played) / 1000.0 / 60 / 60, 2) as hours,
   COUNT(*) as plays,
-  a.spotify_artist_id
+  a.spotify_artist_id,
+  a.image_url
 FROM plays p
 LEFT JOIN artists a ON p.artist_name = a.artist_name
 WHERE p.year_month >= ? AND p.year_month <= ?
-GROUP BY p.artist_name, a.spotify_artist_id
+GROUP BY p.artist_name, a.spotify_artist_id, a.image_url
 ORDER BY hours DESC
 LIMIT ?
 ```
@@ -162,7 +165,8 @@ LIMIT ?
       "artist_name": "The Band",
       "hours": 12.5,
       "plays": 87,
-      "spotify_track_uri": "spotify:track:6rqhFgbbKwnb9MLmUQDhG6"
+      "spotify_track_uri": "spotify:track:6rqhFgbbKwnb9MLmUQDhG6",
+      "album_image_url": "https://i.scdn.co/image/ab67616d00001e02..."
     },
     ...
   ]
@@ -171,7 +175,8 @@ LIMIT ?
 
 **Notes:**
 - `spotify_track_uri` field is included if data has been enriched via Spotify API
-- This field is used for interactive embeds and deep links to Spotify
+- `album_image_url` field contains the album cover art (300x300px from Spotify CDN)
+- These fields are used for interactive embeds, thumbnails, and deep links to Spotify
 - Returns `null` if track has not been enriched yet
 - URI format: `spotify:track:{trackId}`
 
@@ -182,11 +187,12 @@ SELECT
   p.artist_name,
   ROUND(SUM(p.ms_played) / 1000.0 / 60 / 60, 2) as hours,
   COUNT(*) as plays,
-  t.spotify_track_uri
+  t.spotify_track_uri,
+  t.album_image_url
 FROM plays p
 LEFT JOIN tracks t ON p.spotify_track_uri = t.spotify_track_uri
 WHERE p.year_month >= ? AND p.year_month <= ?
-GROUP BY p.track_name, p.artist_name, t.spotify_track_uri
+GROUP BY p.track_name, p.artist_name, t.spotify_track_uri, t.album_image_url
 ORDER BY hours DESC
 LIMIT ?
 ```

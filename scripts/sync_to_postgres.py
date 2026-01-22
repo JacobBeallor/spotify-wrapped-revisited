@@ -69,6 +69,7 @@ def create_postgres_schema(pg_cur):
             track_name TEXT NOT NULL,
             primary_artist_name TEXT NOT NULL,
             album_name TEXT,
+            album_image_url TEXT,
             release_date TEXT,
             release_year INTEGER,
             release_decade TEXT,
@@ -87,6 +88,7 @@ def create_postgres_schema(pg_cur):
             popularity INTEGER,
             followers INTEGER,
             spotify_artist_id TEXT,
+            image_url TEXT,
             enriched_at TIMESTAMP
         )
     """)

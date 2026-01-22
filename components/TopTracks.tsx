@@ -9,7 +9,7 @@ interface TopTracksProps {
 
 export default function TopTracks({ data, metric, limit = 10, onTrackClick }: TopTracksProps) {
   // Aggregate by track and sort
-  const trackMap = new Map<string, { artist: string, hours: number, plays: number, spotify_track_uri?: string }>()
+  const trackMap = new Map<string, { artist: string, hours: number, plays: number, spotify_track_uri?: string, album_image_url?: string }>()
 
   data.forEach(item => {
     const key = `${item.track_name}|${item.artist_name}`
@@ -18,7 +18,8 @@ export default function TopTracks({ data, metric, limit = 10, onTrackClick }: To
       artist: item.artist_name,
       hours: existing.hours + item.hours,
       plays: existing.plays + item.plays,
-      spotify_track_uri: existing.spotify_track_uri || item.spotify_track_uri
+      spotify_track_uri: existing.spotify_track_uri || item.spotify_track_uri,
+      album_image_url: existing.album_image_url || item.album_image_url
     })
   })
 
@@ -67,35 +68,47 @@ export default function TopTracks({ data, metric, limit = 10, onTrackClick }: To
                 }
               }}
             >
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <span className="text-gray-500 font-mono text-sm w-6 flex-shrink-0">
-                    {(index + 1).toString().padStart(2, '0')}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-white font-medium truncate">
-                      {track.track_name}
-                    </div>
-                    <div className="text-gray-400 text-sm truncate">
-                      {track.artist_name}
-                    </div>
-                  </div>
-                </div>
-                <span className="text-spotify-green font-bold text-sm ml-3 flex-shrink-0">
-                  {metric === 'hours'
-                    ? value < 1
-                      ? `${Math.round(value * 60)}m`
-                      : `${value.toFixed(1)}h`
-                    : value.toLocaleString()
-                  }
+              <div className="flex items-center gap-3">
+                {/* Column 1: Number */}
+                <span className="text-gray-500 font-mono text-sm w-6 flex-shrink-0">
+                  {(index + 1).toString().padStart(2, '0')}
                 </span>
-              </div>
-              <div className="ml-9">
-                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 ease-out"
-                    style={{ width: `${percentage}%` }}
+
+                {/* Column 2: Image */}
+                {track.album_image_url && (
+                  <img
+                    src={track.album_image_url}
+                    alt={`${track.track_name} album cover`}
+                    className="w-10 h-10 rounded flex-shrink-0 object-cover"
                   />
+                )}
+
+                {/* Column 3: Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="min-w-0 flex-1">
+                      <div className="text-white font-medium truncate">
+                        {track.track_name}
+                      </div>
+                      <div className="text-gray-400 text-sm truncate">
+                        {track.artist_name}
+                      </div>
+                    </div>
+                    <span className="text-spotify-green font-bold text-sm ml-3 flex-shrink-0">
+                      {metric === 'hours'
+                        ? value < 1
+                          ? `${Math.round(value * 60)}m`
+                          : `${value.toFixed(1)}h`
+                        : value.toLocaleString()
+                      }
+                    </span>
+                  </div>
+                  <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 ease-out"
+                      style={{ width: `${percentage}%` }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

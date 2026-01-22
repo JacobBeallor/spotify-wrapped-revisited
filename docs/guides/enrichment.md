@@ -105,6 +105,7 @@ WHERE spotify_track_uri IS NOT NULL
 **Fetches metadata:**
 - Release date → calculates year and decade
 - Album name
+- Album cover image URL (300x300px)
 - Popularity (0-100)
 - Duration
 - Explicit flag
@@ -135,6 +136,7 @@ WHERE artist_name NOT IN (SELECT artist_name FROM artists)
 - Popularity (0-100)
 - Follower count
 - Spotify artist ID
+- Artist profile image URL (300x300px)
 
 **One at a time:** 1 artist per API call (requires search)
 
@@ -184,6 +186,49 @@ python scripts/enrich_metadata.py
 # Second run: only enriches 200 new tracks, 50 artists (5 min)
 python scripts/enrich_metadata.py
 ```
+
+---
+
+## Backfilling Image URLs
+
+If you have existing enriched data from before image URL support was added, use the backfill script to populate image URLs for existing records:
+
+```bash
+# Activate Python environment
+source venv/bin/activate
+
+# Run backfill script
+python scripts/backfill_images.py
+```
+
+**What it does:**
+- Finds tracks/artists with `NULL` image URLs
+- Fetches only image data from Spotify (not all metadata)
+- Updates existing records with image URLs
+- Much faster than re-enriching everything
+
+**When to use:**
+- After upgrading to a version with image URL support
+- If image URLs are missing for some records
+- To refresh image URLs (if Spotify updates them)
+
+**Output:**
+```
+Backfilling track album images...
+Found 5,234 tracks without images
+  Processed 500/5,234
+  ...
+
+Backfilling artist images...
+Found 1,892 artists without images
+  Processed 100/1,892
+  ...
+
+✓ Tracks updated: 5,234
+✓ Artists updated: 1,892
+```
+
+See [Backfill Images Guide](./backfill-images.md) for detailed documentation.
 
 ---
 

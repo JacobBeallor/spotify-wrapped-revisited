@@ -45,6 +45,7 @@ export interface TopArtist {
   hours: number
   plays: number
   spotify_artist_id?: string
+  image_url?: string
 }
 
 export interface TopTrack {
@@ -54,6 +55,7 @@ export interface TopTrack {
   hours: number
   plays: number
   spotify_track_uri?: string
+  album_image_url?: string
 }
 
 export interface ArtistEvolution {

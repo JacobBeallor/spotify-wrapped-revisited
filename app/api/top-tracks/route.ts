@@ -14,13 +14,14 @@ export async function GET(request: NextRequest) {
         p.artist_name,
         ROUND(SUM(p.ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
         COUNT(*) AS plays,
-        t.spotify_track_uri
+        t.spotify_track_uri,
+        t.album_image_url
       FROM plays p
       LEFT JOIN tracks t ON p.spotify_track_uri = t.spotify_track_uri
       WHERE 1=1
         ${start ? `AND p.year_month >= ?` : ''}
         ${end ? `AND p.year_month <= ?` : ''}
-      GROUP BY p.track_name, p.artist_name, t.spotify_track_uri
+      GROUP BY p.track_name, p.artist_name, t.spotify_track_uri, t.album_image_url
       ORDER BY hours DESC
       LIMIT ?
     `

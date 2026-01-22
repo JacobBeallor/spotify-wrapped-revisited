@@ -35,7 +35,7 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
     const initController = (IFrameAPI: any) => {
       if (!containerRef.current || isInitialized.current) return
 
-      const uri = initialUriRef.current || 'spotify:track:6rqhFgbbKwnb9MLmUQDhG6'
+      const uri = initialUriRef.current || 'spotify:track:5gRCBF8BbbQA4M7wRFjqxg' // Sour Candy by Melt
       isInitialized.current = true
 
       const options = {

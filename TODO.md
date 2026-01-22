@@ -2,11 +2,13 @@
 
 ## Issues
 
-### 1. Release year/decade analysis
+### 1. Fix spotify embed not loading after switching tabs
+
+### 2. Release year/decade analysis
 - Size: `M`  
 - Show listening trends by release year/decade.
 
-### 2. Jukebox feature?
+### 3. Jukebox feature?
 
 ---
 

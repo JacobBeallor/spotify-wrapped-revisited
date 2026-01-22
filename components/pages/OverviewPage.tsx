@@ -50,6 +50,13 @@ export default function OverviewPage({
     embedControllerRef.current?.loadUri(artistUri)
   }
 
+  // Load the top track once we have both the controller and the data
+  useEffect(() => {
+    if (embedControllerRef.current && initialUri) {
+      embedControllerRef.current.loadUri(initialUri)
+    }
+  }, [initialUri])
+
   return (
     <main
       className="container mx-auto px-4 py-8 max-w-7xl"
@@ -94,6 +101,10 @@ export default function OverviewPage({
               initialUri={initialUri}
               onControllerReady={(controller) => {
                 embedControllerRef.current = controller
+                // Load the correct track immediately if we have it
+                if (initialUri) {
+                  controller.loadUri(initialUri)
+                }
               }}
             />
           </div>

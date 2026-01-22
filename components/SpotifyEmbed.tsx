@@ -20,6 +20,7 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
   const initialUriRef = useRef(initialUri)
   const onReadyRef = useRef(onControllerReady)
   const [isLoading, setIsLoading] = useState(true)
+  const [isChanging, setIsChanging] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   // Update the callback ref when it changes
@@ -35,7 +36,6 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
       if (!containerRef.current || isInitialized.current) return
 
       const uri = initialUriRef.current || 'spotify:track:6rqhFgbbKwnb9MLmUQDhG6'
-      console.log('Initializing Spotify embed with URI:', uri)
       isInitialized.current = true
 
       const options = {
@@ -48,9 +48,29 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
           containerRef.current,
           options,
           (controller: any) => {
-            console.log('Spotify controller ready:', controller)
             controllerRef.current = controller
             setIsLoading(false)
+
+            // Listen for playback updates to detect when new content loads
+            controller.addListener('playback_update', (e: any) => {
+              // When we get playback update, content has loaded
+              setIsChanging(false)
+            })
+
+            // Also listen for ready event
+            controller.addListener('ready', () => {
+              setIsChanging(false)
+            })
+
+            // Wrap loadUri to show loading state
+            const originalLoadUri = controller.loadUri.bind(controller)
+            controller.loadUri = (uri: string) => {
+              setIsChanging(true)
+              originalLoadUri(uri)
+              // Fallback timeout in case events don't fire
+              setTimeout(() => setIsChanging(false), 1500)
+            }
+
             onReadyRef.current?.(controller)
           }
         )
@@ -64,13 +84,10 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
     // Retry checking for API with a small delay
     const checkAndInit = () => {
       if ((window as any).SpotifyIframeApi) {
-        console.log('Spotify API found, initializing...')
         initController((window as any).SpotifyIframeApi)
       } else {
-        console.log('Waiting for Spotify API to load...')
         // Set up callback for when API loads
         window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
-          console.log('Spotify API ready callback triggered')
           initController(IFrameAPI)
         }
       }
@@ -95,6 +112,8 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
   return (
     <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700">
       {/* <h2 className="text-xl font-bold mb-4">Now Playing</h2> */}
+
+      {/* Initial loading state */}
       {isLoading && !error && (
         <div className="h-[152px] flex items-center justify-center text-gray-400">
           <div className="text-center">
@@ -103,6 +122,8 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
           </div>
         </div>
       )}
+
+      {/* Error state */}
       {error && (
         <div className="h-[152px] flex items-center justify-center text-gray-400">
           <div className="text-center">
@@ -111,10 +132,22 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
           </div>
         </div>
       )}
-      <div
-        ref={containerRef}
-        className={`rounded-xl overflow-hidden ${isLoading || error ? 'hidden' : ''}`}
-      />
+
+      {/* Player container with loading overlay - always rendered but hidden when loading */}
+      <div className={`relative ${isLoading || error ? 'hidden' : ''}`}>
+        {/* Loading overlay during track changes */}
+        <div
+          className={`absolute inset-0 bg-gray-900/70 backdrop-blur-[2px] rounded-xl z-10 flex items-center justify-center transition-opacity duration-200 pointer-events-none ${isChanging ? 'opacity-100' : 'opacity-0'
+            }`}
+        >
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-spotify-green"></div>
+        </div>
+        <div
+          ref={containerRef}
+          className={`rounded-xl overflow-hidden transition-opacity duration-200 ${isChanging ? 'opacity-50' : 'opacity-100'
+            }`}
+        />
+      </div>
     </div>
   )
 }

@@ -33,9 +33,11 @@ const results = await executeQuery<YourType>(`
 
 ### `GET /api/summary`
 
-**Summary statistics for the entire dataset.**
+**Summary statistics for the entire dataset or filtered date range.**
 
-**Parameters:** None
+**Parameters:**
+- `startDate` (optional): Start date filter (YYYY-MM-DD format)
+- `endDate` (optional): End date filter (YYYY-MM-DD format)
 
 **Response:**
 ```json
@@ -45,9 +47,16 @@ const results = await executeQuery<YourType>(`
   "unique_tracks": 16230,
   "unique_artists": 5776,
   "first_played_at": "2015-01-01T12:34:56",
-  "last_played_at": "2025-12-31T23:59:59"
+  "last_played_at": "2025-12-31T23:59:59",
+  "min_date": "2015-01-01",
+  "max_date": "2025-12-31"
 }
 ```
+
+**Notes:**
+- `min_date` and `max_date` represent the available date range in the database
+- Used by the date range picker to disable out-of-range dates
+- When `startDate` and `endDate` are provided, statistics are filtered to that range
 
 **Query:**
 ```sql
@@ -57,8 +66,13 @@ SELECT
   COUNT(DISTINCT spotify_track_uri) as unique_tracks,
   COUNT(DISTINCT artist_name) as unique_artists,
   MIN(played_at) as first_played_at,
-  MAX(played_at) as last_played_at
+  MAX(played_at) as last_played_at,
+  CAST(MIN(date) AS VARCHAR) as min_date,
+  CAST(MAX(date) AS VARCHAR) as max_date
 FROM plays
+WHERE 1=1
+  AND (? IS NULL OR date >= ?)
+  AND (? IS NULL OR date <= ?)
 ```
 
 ---
@@ -102,8 +116,8 @@ FROM plays
 
 **Parameters:**
 - `limit` (optional): Number of results (default: 50, max: 100)
-- `start` (optional): Start date filter
-- `end` (optional): End date filter
+- `startDate` (optional): Start date filter (YYYY-MM-DD format)
+- `endDate` (optional): End date filter (YYYY-MM-DD format)
 - `metric` (optional): `hours` | `plays` (default: `hours`)
 
 **Response:**
@@ -127,6 +141,7 @@ FROM plays
 - `image_url` field contains the artist's profile image (300x300px from Spotify CDN)
 - These fields are used for interactive embeds, thumbnails, and deep links to Spotify
 - Returns `null` if artist has not been enriched yet
+- When no date range provided, returns all-time top artists
 
 **Query:**
 ```sql
@@ -138,10 +153,17 @@ SELECT
   a.image_url
 FROM plays p
 LEFT JOIN artists a ON p.artist_name = a.artist_name
-WHERE p.year_month >= ? AND p.year_month <= ?
+WHERE 1=1
+  AND (? IS NULL OR p.date >= ?)
+  AND (? IS NULL OR p.date <= ?)
 GROUP BY p.artist_name, a.spotify_artist_id, a.image_url
 ORDER BY hours DESC
 LIMIT ?
+```
+
+**Example:**
+```
+GET /api/top-artists?startDate=2024-01-01&endDate=2024-12-31&limit=10
 ```
 
 ---
@@ -152,8 +174,8 @@ LIMIT ?
 
 **Parameters:**
 - `limit` (optional): Number of results (default: 50, max: 100)
-- `start` (optional): Start date filter
-- `end` (optional): End date filter
+- `startDate` (optional): Start date filter (YYYY-MM-DD format)
+- `endDate` (optional): End date filter (YYYY-MM-DD format)
 - `metric` (optional): `hours` | `plays` (default: `hours`)
 
 **Response:**
@@ -179,6 +201,7 @@ LIMIT ?
 - These fields are used for interactive embeds, thumbnails, and deep links to Spotify
 - Returns `null` if track has not been enriched yet
 - URI format: `spotify:track:{trackId}`
+- When no date range provided, returns all-time top tracks
 
 **Query:**
 ```sql
@@ -191,10 +214,17 @@ SELECT
   t.album_image_url
 FROM plays p
 LEFT JOIN tracks t ON p.spotify_track_uri = t.spotify_track_uri
-WHERE p.year_month >= ? AND p.year_month <= ?
+WHERE 1=1
+  AND (? IS NULL OR p.date >= ?)
+  AND (? IS NULL OR p.date <= ?)
 GROUP BY p.track_name, p.artist_name, t.spotify_track_uri, t.album_image_url
 ORDER BY hours DESC
 LIMIT ?
+```
+
+**Example:**
+```
+GET /api/top-tracks?startDate=2024-06-01&endDate=2024-06-30&limit=20
 ```
 
 ---

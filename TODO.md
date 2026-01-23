@@ -6,13 +6,26 @@
 - Size: `M`  
 - Show listening trends by release year/decade.
 
-### 2. Update date filter to use proper date picker element
-
-### 3. Jukebox feature?
+### 2. Jukebox feature?
 
 ---
 
 ## ✅ Completed
+
+### 1. Date range filter with flexible date picker
+- Size: `M`
+- Replaced month-based `PeriodFilter` with comprehensive date range picker.
+- Features dual calendar view showing two consecutive months side-by-side.
+- Quick filter presets: This month, Last month, This year, Last year, All time.
+- Custom date range selection with visual feedback and range highlighting.
+- Glassmorphism design matching Spotify theme colors (#1DB954 green accents).
+- Updated all API endpoints to accept `startDate` and `endDate` parameters (YYYY-MM-DD format).
+- API routes now filter by `date` column instead of `year_month` for finer granularity.
+- State management updated to use date range objects instead of period strings.
+- Monthly data filtering maintains compatibility with existing charts.
+- Available date range fetched from database to disable out-of-bounds dates.
+- Created comprehensive documentation: `docs/architecture/date-range-filter.md`.
+- Updated API documentation to reflect new date range parameters.
 
 ### 1. Artist evolution racing bar chart
 - Size: `S`  

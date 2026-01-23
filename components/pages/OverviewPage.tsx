@@ -5,34 +5,34 @@ import KPICards from '@/components/KPICards'
 import TopArtists from '@/components/TopArtists'
 import TopTracks from '@/components/TopTracks'
 import SpotifyEmbed from '@/components/SpotifyEmbed'
-import PeriodFilter from '@/components/filters/PeriodFilter'
+import DateRangePicker from '@/components/filters/DateRangePicker'
 import MetricFilter from '@/components/filters/MetricFilter'
-import type { SummaryData, MonthlyData, TopArtist, TopTrack } from '@/types'
+import type { SummaryData, MonthlyData, TopArtist, TopTrack, AvailableDateRange } from '@/types'
 
 interface OverviewPageProps {
   summary: SummaryData | null
   topArtists: TopArtist[]
   topTracks: TopTrack[]
-  selectedPeriod: string
-  setSelectedPeriod: (period: string) => void
+  dateRange: { start: Date | null; end: Date | null }
+  setDateRange: (range: { start: Date | null; end: Date | null }) => void
   filteredMonthly: MonthlyData[]
   metric: 'hours' | 'plays'
   setMetric: (metric: 'hours' | 'plays') => void
   isFilterLoading: boolean
-  availableMonths: string[]
+  availableDateRange: AvailableDateRange
 }
 
 export default function OverviewPage({
   summary,
   topArtists,
   topTracks,
-  selectedPeriod,
-  setSelectedPeriod,
+  dateRange,
+  setDateRange,
   filteredMonthly,
   metric,
   setMetric,
   isFilterLoading,
-  availableMonths
+  availableDateRange
 }: OverviewPageProps) {
   const embedControllerRef = useRef<any>(null)
   const hasInitialLoadedRef = useRef(false)
@@ -75,10 +75,12 @@ export default function OverviewPage({
     >
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-center mb-8">
-        <PeriodFilter
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={setSelectedPeriod}
-          availableMonths={availableMonths}
+        <DateRangePicker
+          startDate={dateRange.start}
+          endDate={dateRange.end}
+          onApply={(start, end) => setDateRange({ start, end })}
+          minDate={availableDateRange.min}
+          maxDate={availableDateRange.max}
         />
         <MetricFilter
           metric={metric}
@@ -90,7 +92,7 @@ export default function OverviewPage({
         <div className="animate-fade-in">
           <KPICards
             summary={summary}
-            selectedPeriod={selectedPeriod}
+            selectedPeriod={dateRange.start && dateRange.end ? 'custom' : 'all'}
             monthly={filteredMonthly}
           />
         </div>

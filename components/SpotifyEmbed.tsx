@@ -98,6 +98,8 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
 
     return () => {
       clearTimeout(timeout)
+      // Reset initialization flag so component can reinitialize on next mount
+      isInitialized.current = false
       // Cleanup
       if (controllerRef.current?.destroy) {
         try {

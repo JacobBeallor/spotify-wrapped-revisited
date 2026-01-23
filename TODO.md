@@ -2,11 +2,11 @@
 
 ## Issues
 
-### 1. Fix spotify embed not loading after switching tabs
-
-### 2. Release year/decade analysis
+### 1. Release year/decade analysis
 - Size: `M`  
 - Show listening trends by release year/decade.
+
+### 2. Update date filter to use proper date picker element
 
 ### 3. Jukebox feature?
 
@@ -98,6 +98,11 @@
 - Graceful degradation: thumbnails only display when image URLs are available.
 - Images served directly from Spotify CDN (stable, long-lived URLs).
 - Documentation updated: database schema, enrichment guide, API routes, and new backfill guide.
+
+### 11. Fix spotify embed not loading after switching tabs
+- **Issue:** When switching from the overview tab to a different tab and back, the Spotify player would perpetually show "Loading Spotify player..." state
+- **Root Cause:** The `isInitialized` ref was not being reset on component unmount, preventing reinitialization
+- **Fix:** Added `isInitialized.current = false` to the cleanup function in `SpotifyEmbed.tsx` to allow proper reinitialization on remount
 
 ---
 

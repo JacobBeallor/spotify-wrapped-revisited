@@ -4,12 +4,12 @@ interface TopArtistsProps {
   data: TopArtist[]
   metric: 'hours' | 'plays'
   limit?: number
-  onArtistClick?: (artistId: string, artistName: string) => void
+  onArtistClick?: (artistId: string, artistName: string, topTrackUri?: string) => void
 }
 
 export default function TopArtists({ data, metric, limit = 10, onArtistClick }: TopArtistsProps) {
   // Aggregate by artist and sort
-  const artistMap = new Map<string, { hours: number, plays: number, spotify_artist_id?: string, image_url?: string }>()
+  const artistMap = new Map<string, { hours: number, plays: number, spotify_artist_id?: string, image_url?: string, top_track_uri?: string }>()
 
   data.forEach(item => {
     const existing = artistMap.get(item.artist_name) || { hours: 0, plays: 0 }
@@ -17,7 +17,8 @@ export default function TopArtists({ data, metric, limit = 10, onArtistClick }: 
       hours: existing.hours + item.hours,
       plays: existing.plays + item.plays,
       spotify_artist_id: existing.spotify_artist_id || item.spotify_artist_id,
-      image_url: existing.image_url || item.image_url
+      image_url: existing.image_url || item.image_url,
+      top_track_uri: existing.top_track_uri || item.top_track_uri
     })
   })
 
@@ -59,7 +60,7 @@ export default function TopArtists({ data, metric, limit = 10, onArtistClick }: 
                 }`}
               onClick={() => {
                 if (artist.spotify_artist_id && onArtistClick) {
-                  onArtistClick(artist.spotify_artist_id, artist.artist_name)
+                  onArtistClick(artist.spotify_artist_id, artist.artist_name, artist.top_track_uri)
                 }
               }}
             >

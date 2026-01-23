@@ -58,6 +58,8 @@ export interface TopArtist {
   plays: number
   spotify_artist_id?: string
   image_url?: string
+  top_track_name?: string
+  top_track_uri?: string
 }
 
 export interface TopTrack {

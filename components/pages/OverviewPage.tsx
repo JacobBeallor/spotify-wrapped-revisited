@@ -51,20 +51,17 @@ export default function OverviewPage({
     }
   }
 
-  const handleArtistClick = (artistId: string, artistName: string) => {
+  const handleArtistClick = (artistId: string, artistName: string, topTrackUri?: string) => {
     if (embedControllerRef.current) {
-      // Find the top track by this artist
-      const artistTopTrack = topTracks.find(
-        track => track.artist_name === artistName && track.spotify_track_uri
-      )
+      // Use the artist's #1 track from their listening history if available
+      // Otherwise fall back to the artist page
+      const uri = topTrackUri || `spotify:artist:${artistId}`
       
-      if (artistTopTrack?.spotify_track_uri) {
-        embedControllerRef.current.loadUri(artistTopTrack.spotify_track_uri)
-        // Small delay to ensure content loads before playing
-        setTimeout(() => {
-          embedControllerRef.current?.play()
-        }, 100)
-      }
+      embedControllerRef.current.loadUri(uri)
+      // Small delay to ensure content loads before playing
+      setTimeout(() => {
+        embedControllerRef.current?.play()
+      }, 100)
     }
   }
 

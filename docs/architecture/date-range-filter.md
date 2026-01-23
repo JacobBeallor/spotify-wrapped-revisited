@@ -4,16 +4,18 @@ Documentation for the flexible date range picker component and date-based filter
 
 ## Overview
 
-The date range filter provides a user-friendly interface for filtering listening data by custom date ranges. It features a dual-calendar view, quick preset filters, and integrates with all API endpoints that support date-based filtering.
+The date range filter provides a user-friendly interface for filtering listening data by custom date ranges. It features a single month calendar view with clickable month/year selectors, hover range preview, quick preset filters, and integrates with all API endpoints that support date-based filtering.
 
 **Location:** `components/filters/DateRangePicker.tsx`
 
 **Design:** Glassmorphism dropdown matching Spotify's dark theme aesthetic
 
 **Key Features:**
-- Dual calendar view showing two consecutive months
+- Single month calendar view with compact design (450px width)
+- Clickable month and year selectors for quick navigation
 - Quick filter presets (This month, Last month, This year, Last year, All time)
-- Date range selection with visual feedback
+- Date range selection with visual feedback and hover preview
+- Selected date range display in action bar
 - Responsive and accessible design
 - Matches existing filter components' glassmorphism style
 
@@ -31,12 +33,15 @@ DateRangePicker (main component)
 │   ├── This year
 │   ├── Last year
 │   └── All time
-├── Dual Calendar View
-│   ├── Calendar (first month)
-│   └── Calendar (second month)
-└── Action Buttons
-    ├── Cancel
-    └── Apply
+├── Calendar View
+│   ├── Navigation arrows
+│   ├── Month/Year Selectors (clickable)
+│   │   ├── Month dropdown menu
+│   │   └── Year dropdown menu
+│   └── Calendar (single month)
+└── Action Bar
+    ├── Selected date range display
+    └── Action Buttons (Cancel, Apply)
 ```
 
 ### Component Files
@@ -89,6 +94,7 @@ interface CalendarProps {
   minDate: Date
   maxDate: Date
   onDateClick: (date: Date) => void
+  onDateHover: (date: Date | null) => void
   hoverDate: Date | null
 }
 ```
@@ -100,18 +106,24 @@ interface CalendarProps {
 ### User Flow
 
 1. **Click dropdown button** → Opens date picker panel
-2. **Select start date** → Highlights date, shows green background
-3. **Select end date** → Completes range, fills in-between dates
-4. **Click Apply** → Applies selection, closes dropdown
-5. **Click Cancel** → Reverts to previous selection, closes dropdown
+2. **Navigate months** → Use arrow buttons or click month/year to select from dropdown
+3. **Select start date** → Highlights date, shows green background
+4. **Hover over dates** → Preview date range with lighter highlighting
+5. **Select end date** → Completes range, fills in-between dates
+6. **Review selection** → See selected range displayed in action bar
+7. **Click Apply** → Applies selection, closes dropdown
+8. **Click Cancel** → Reverts to previous selection, closes dropdown
 
 ### Selection Rules
 
 - **First click:** Sets start date, clears end date
+- **Hover preview:** When start date is selected, hovering shows potential range
 - **Second click:** Sets end date
 - **Auto-swap:** If second click is before start, dates are automatically swapped
 - **Range highlight:** All dates between start and end show green background
+- **Hover highlight:** Potential range shows lighter green background on hover
 - **Disabled dates:** Dates outside min/max range cannot be selected
+- **Persistent selection:** Selected dates remain visible when navigating months
 
 ### Quick Filters
 
@@ -147,12 +159,16 @@ const [hoverDate, setHoverDate] = useState<Date | null>(null)
 const [activeQuickFilter, setActiveQuickFilter] = useState<QuickFilter | null>(null)
 const [viewMonth, setViewMonth] = useState(new Date().getMonth())
 const [viewYear, setViewYear] = useState(new Date().getFullYear())
+const [showMonthSelector, setShowMonthSelector] = useState(false)
+const [showYearSelector, setShowYearSelector] = useState(false)
 ```
 
 **Why temporary state?**
 - Changes aren't applied until user clicks "Apply"
 - Allows users to explore different ranges without triggering API calls
 - "Cancel" button can revert to previous selection
+- Hover state provides real-time preview without committing changes
+- Month/year selectors remain visible until selection is made
 
 ### Global State (app/page.tsx)
 
@@ -227,15 +243,143 @@ border: 1px solid rgba(255, 255, 255, 0.15);
 - Text color: `#000` (black for contrast)
 - Font weight: `700` (bold)
 
-**Date in range:**
+**Date in confirmed range:**
 - Background: `rgba(29, 185, 84, 0.15)` (15% opacity green)
+
+**Date in hover preview range:**
+- Background: `rgba(29, 185, 84, 0.08)` (8% opacity green)
 
 **Hover state:**
 - Background: `rgba(255, 255, 255, 0.08)`
 
+**Clickable month/year:**
+- Hover: `rgba(255, 255, 255, 0.05)` background
+- Cursor: pointer
+
+**Selector dropdown:**
+- Background: `rgba(26, 26, 26, 0.98)` with blur
+- Active item: `rgba(29, 185, 84, 0.15)` with green text
+
 **Disabled date:**
 - Color: `rgba(255, 255, 255, 0.2)`
 - Cursor: `not-allowed`
+
+---
+
+## Month and Year Navigation
+
+### Clickable Month/Year Selectors
+
+Users can quickly jump to any month or year by clicking the month or year text in the calendar header:
+
+**Month Selector:**
+- Displays all 12 months in a dropdown menu
+- Highlights the currently selected month
+- Closes automatically after selection
+
+**Year Selector:**
+- Shows all available years (from `minDate` to `maxDate`)
+- Highlights the current year
+- Scrollable if many years available
+- Closes automatically after selection
+
+**Implementation:**
+```typescript
+const handleMonthSelect = (monthIndex: number) => {
+  setViewMonth(monthIndex)
+  setShowMonthSelector(false)
+}
+
+const handleYearSelect = (year: number) => {
+  setViewYear(year)
+  setShowYearSelector(false)
+}
+```
+
+**Styling:**
+- Dropdowns use glassmorphism theme matching main panel
+- Active items highlighted with Spotify green
+- Hover states for better interactivity
+- Positioned absolutely below the selector buttons
+
+---
+
+## Hover Range Preview
+
+### Dynamic Highlighting
+
+When a user has selected a start date but not yet selected an end date, hovering over other dates shows a preview of the potential date range:
+
+**Behavior:**
+- Only active when `tempStart` is set and `tempEnd` is null
+- Shows lighter green background (8% opacity vs 15% for confirmed range)
+- Updates in real-time as mouse moves over calendar dates
+- Cleared when mouse leaves the calendar
+
+**Implementation:**
+```typescript
+const handleDateHover = (date: Date | null) => {
+  setHoverDate(date)
+}
+
+// In Calendar component
+onMouseEnter={() => !dayInfo.isDisabled && onDateHover(dayInfo.date)}
+onMouseLeave={() => onDateHover(null)}
+```
+
+**Visual distinction:**
+- Confirmed range: `rgba(29, 185, 84, 0.15)` (15% opacity)
+- Hover preview: `rgba(29, 185, 84, 0.08)` (8% opacity)
+
+---
+
+## Selected Range Display
+
+### Action Bar Information
+
+The action bar at the bottom of the date picker now displays the currently selected date range:
+
+**Display format:**
+- Both dates selected: "Jan 12, 2025 - Jan 18, 2025"
+- Only start date: "Jan 12, 2025 - ?"
+- No dates selected (All Time): "All Time"
+- Quick filter active: Shows actual date range (e.g., "Jan 1, 2025 - Jan 31, 2025" for "This Month")
+
+**Implementation:**
+```typescript
+const getSelectedRangeDisplay = () => {
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
+    })
+  }
+  
+  if (!tempStart && !tempEnd) return 'All Time'
+  if (tempStart && tempEnd) {
+    return `${formatDate(tempStart)} - ${formatDate(tempEnd)}`
+  }
+  if (tempStart) {
+    return `${formatDate(tempStart)} - ?`
+  }
+  return 'Select dates'
+}
+```
+
+**Layout:**
+```
++------------------------------------------------------------------------+
+| Selected: Jan 12 - Jan 18, 2025                       Cancel   Apply   |
++------------------------------------------------------------------------+
+```
+
+**Purpose:**
+- Provides clear confirmation of what will be applied
+- Reduces user uncertainty about current selection
+- Shows actual date ranges for all selections (including quick filters)
+- Only exception: "All Time" displays as text instead of date range
+- Updates in real-time as user makes selections
 
 ---
 
@@ -306,6 +450,15 @@ const isDateInRange = (date: Date): boolean => {
   if (!selectedStart || !selectedEnd) return false
   const time = date.getTime()
   return time >= selectedStart.getTime() && time <= selectedEnd.getTime()
+}
+
+// Check if date falls within hover preview range
+const isDateInHoverRange = (date: Date): boolean => {
+  if (!selectedStart || !hoverDate || selectedEnd) return false
+  const time = date.getTime()
+  const start = Math.min(selectedStart.getTime(), hoverDate.getTime())
+  const end = Math.max(selectedStart.getTime(), hoverDate.getTime())
+  return time >= start && time <= end
 }
 ```
 
@@ -532,19 +685,31 @@ The component prevents unnecessary API calls by:
 - [ ] Glassmorphism effects match MetricFilter style
 - [ ] Spotify green accents on selected dates
 - [ ] Dropdown positioning doesn't overflow viewport
-- [ ] Dual calendar months display correctly
-- [ ] Date range highlighting shows correctly
+- [ ] Single calendar displays correctly at 450px width
+- [ ] Month/year selectors are clearly clickable
+- [ ] Month/year dropdown menus open and close properly
+- [ ] Date range highlighting shows correctly (confirmed vs hover)
+- [ ] Hover preview updates in real-time
+- [ ] Selected range display shows in action bar
 - [ ] Quick filter active states work
 
 ### Functional Testing
 
 - [ ] Date selection completes range properly
+- [ ] Selected dates persist when navigating months
 - [ ] Dates auto-swap when end < start
+- [ ] Hover preview shows correct range
+- [ ] Hover preview clears when leaving calendar
 - [ ] Quick filters calculate correct ranges
+- [ ] Month selector displays all months and highlights current
+- [ ] Year selector displays available years
+- [ ] Selectors close after selection
+- [ ] Selectors close when clicking outside
+- [ ] Selected range display updates in real-time
 - [ ] "Apply" triggers API calls with correct params
 - [ ] "Cancel" reverts to previous selection
 - [ ] "All time" clears date range
-- [ ] Month navigation works forward/backward
+- [ ] Month navigation works forward/backward with arrows
 
 ### Data Validation
 
@@ -556,21 +721,26 @@ The component prevents unnecessary API calls by:
 
 ---
 
-## Migration from PeriodFilter
+## Evolution History
 
-### What Changed
-
-**Before:**
+### Original PeriodFilter (Deprecated)
 - Month-based dropdown (YYYY-MM format)
 - Single month selection
 - "All Time" or specific month only
 - API params: `start` and `end` as year_month
 
-**After:**
-- Date range picker with dual calendars
+### First DateRangePicker (v1)
+- Date range picker with dual calendars (700px width)
 - Custom date range selection
 - Quick filter presets + custom ranges
 - API params: `startDate` and `endDate` as dates
+
+### Enhanced DateRangePicker (v2 - Current)
+- Single month calendar (450px width for compact design)
+- Clickable month/year selectors with dropdown menus
+- Hover range preview for better UX
+- Selected range display in action bar
+- Improved date persistence during navigation
 
 ### Breaking Changes
 

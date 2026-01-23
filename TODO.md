@@ -12,6 +12,15 @@
 
 ## ✅ Completed
 
+### 1. Enhanced date picker UX improvements
+- Size: `S`
+- Converted dual calendar view to single month view for more compact UI (450px vs 700px width).
+- Added clickable month and year selectors with dropdown menus for quick navigation.
+- Implemented dynamic hover range highlighting - shows preview of date range as user hovers.
+- Added selected date range display in action bar showing current selection before applying.
+- Improved date selection persistence - dates remain selected when navigating between months.
+- Enhanced user feedback with real-time display of selected dates and quick filter names.
+
 ### 1. Date range filter with flexible date picker
 - Size: `M`
 - Replaced month-based `PeriodFilter` with comprehensive date range picker.

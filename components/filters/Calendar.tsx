@@ -12,6 +12,7 @@ interface CalendarProps {
   minDate: Date
   maxDate: Date
   onDateClick: (date: Date) => void
+  onDateHover: (date: Date | null) => void
   hoverDate: Date | null
 }
 
@@ -23,6 +24,7 @@ export default function Calendar({
   minDate,
   maxDate,
   onDateClick,
+  onDateHover,
   hoverDate
 }: CalendarProps) {
   // Generate calendar days for the month
@@ -133,6 +135,8 @@ export default function Calendar({
                 isInHover ? 'in-hover-range' : ''
               } ${isStart ? 'range-start' : ''} ${isEnd ? 'range-end' : ''}`}
               onClick={() => !dayInfo.isDisabled && onDateClick(dayInfo.date)}
+              onMouseEnter={() => !dayInfo.isDisabled && onDateHover(dayInfo.date)}
+              onMouseLeave={() => onDateHover(null)}
               disabled={dayInfo.isDisabled}
               type="button"
             >

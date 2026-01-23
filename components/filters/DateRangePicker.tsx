@@ -25,9 +25,13 @@ export default function DateRangePicker({
   const [activeQuickFilter, setActiveQuickFilter] = useState<QuickFilter | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Current calendar view (showing two consecutive months)
+  // Current calendar view (single month)
   const [viewMonth, setViewMonth] = useState(new Date().getMonth())
   const [viewYear, setViewYear] = useState(new Date().getFullYear())
+
+  // Month and year selector states
+  const [showMonthSelector, setShowMonthSelector] = useState(false)
+  const [showYearSelector, setShowYearSelector] = useState(false)
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -46,7 +50,7 @@ export default function DateRangePicker({
     if (!isOpen) {
       setTempStart(startDate)
       setTempEnd(endDate)
-      
+
       // Determine active quick filter
       if (!startDate && !endDate) {
         setActiveQuickFilter('all_time')
@@ -60,7 +64,7 @@ export default function DateRangePicker({
   // Handle date click in calendar
   const handleDateClick = (date: Date) => {
     setActiveQuickFilter(null)
-    
+
     if (!tempStart || (tempStart && tempEnd)) {
       // Start new selection
       setTempStart(date)
@@ -81,7 +85,7 @@ export default function DateRangePicker({
   const handleQuickFilter = (filter: QuickFilter) => {
     setActiveQuickFilter(filter)
     const now = new Date()
-    
+
     switch (filter) {
       case 'this_month':
         setTempStart(new Date(now.getFullYear(), now.getMonth(), 1))
@@ -141,29 +145,67 @@ export default function DateRangePicker({
   // Format display value
   const getDisplayValue = () => {
     if (!startDate && !endDate) return 'All Time'
-    
+
     if (startDate && endDate) {
       const formatDate = (date: Date) => {
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       }
       return `${formatDate(startDate)} - ${formatDate(endDate)}`
     }
-    
+
     if (startDate) {
       return startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     }
-    
+
     return 'Select dates'
   }
-
-  // Calculate second month
-  const secondMonth = viewMonth === 11 ? 0 : viewMonth + 1
-  const secondYear = viewMonth === 11 ? viewYear + 1 : viewYear
 
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ]
+
+  // Generate available years for selector
+  const availableYears = Array.from(
+    { length: maxDate.getFullYear() - minDate.getFullYear() + 1 },
+    (_, i) => minDate.getFullYear() + i
+  )
+
+  // Handle month selector
+  const handleMonthSelect = (monthIndex: number) => {
+    setViewMonth(monthIndex)
+    setShowMonthSelector(false)
+  }
+
+  // Handle year selector
+  const handleYearSelect = (year: number) => {
+    setViewYear(year)
+    setShowYearSelector(false)
+  }
+
+  // Handle date hover
+  const handleDateHover = (date: Date | null) => {
+    setHoverDate(date)
+  }
+
+  // Get selected range display
+  const getSelectedRangeDisplay = () => {
+    const formatDate = (date: Date) => {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    }
+
+    if (!tempStart && !tempEnd) return 'All Time'
+
+    if (tempStart && tempEnd) {
+      return `${formatDate(tempStart)} - ${formatDate(tempEnd)}`
+    }
+
+    if (tempStart) {
+      return `${formatDate(tempStart)} - ?`
+    }
+
+    return 'Select dates'
+  }
 
   return (
     <div className="date-range-picker" ref={dropdownRef}>
@@ -226,76 +268,108 @@ export default function DateRangePicker({
               </button>
             </div>
 
-            {/* Dual Calendar View */}
+            {/* Single Calendar View */}
             <div className="calendars-container">
-              {/* Navigation and Month Headers */}
-              <div className="calendar-headers">
-                <div className="calendar-header">
+              {/* Navigation and Month Header */}
+              <div className="calendar-header">
+                <button
+                  className="nav-button"
+                  onClick={() => navigateMonth('prev')}
+                  type="button"
+                >
+                  <svg width="8" height="12" viewBox="0 0 8 12" fill="none">
+                    <path d="M6.5 1L1.5 6L6.5 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+
+                <div className="month-year-selector">
                   <button
-                    className="nav-button"
-                    onClick={() => navigateMonth('prev')}
+                    className="month-button"
+                    onClick={() => setShowMonthSelector(!showMonthSelector)}
                     type="button"
                   >
-                    <svg width="8" height="12" viewBox="0 0 8 12" fill="none">
-                      <path d="M6.5 1L1.5 6L6.5 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    {monthNames[viewMonth]}
                   </button>
-                  <span className="month-label">
-                    {monthNames[viewMonth]} {viewYear}
-                  </span>
-                  <div style={{ width: '24px' }} /> {/* Spacer */}
-                </div>
-                <div className="calendar-header">
-                  <div style={{ width: '24px' }} /> {/* Spacer */}
-                  <span className="month-label">
-                    {monthNames[secondMonth]} {secondYear}
-                  </span>
                   <button
-                    className="nav-button"
-                    onClick={() => navigateMonth('next')}
+                    className="year-button"
+                    onClick={() => setShowYearSelector(!showYearSelector)}
                     type="button"
                   >
-                    <svg width="8" height="12" viewBox="0 0 8 12" fill="none">
-                      <path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    {viewYear}
                   </button>
+
+                  {/* Month Selector Dropdown */}
+                  {showMonthSelector && (
+                    <div className="selector-dropdown month-dropdown">
+                      {monthNames.map((month, index) => (
+                        <button
+                          key={month}
+                          className={`selector-item ${index === viewMonth ? 'active' : ''}`}
+                          onClick={() => handleMonthSelect(index)}
+                          type="button"
+                        >
+                          {month}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Year Selector Dropdown */}
+                  {showYearSelector && (
+                    <div className="selector-dropdown year-dropdown">
+                      {availableYears.map((year) => (
+                        <button
+                          key={year}
+                          className={`selector-item ${year === viewYear ? 'active' : ''}`}
+                          onClick={() => handleYearSelect(year)}
+                          type="button"
+                        >
+                          {year}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
+                <button
+                  className="nav-button"
+                  onClick={() => navigateMonth('next')}
+                  type="button"
+                >
+                  <svg width="8" height="12" viewBox="0 0 8 12" fill="none">
+                    <path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
               </div>
 
-              {/* Dual Calendars */}
-              <div className="dual-calendars">
-                <Calendar
-                  month={viewMonth}
-                  year={viewYear}
-                  selectedStart={tempStart}
-                  selectedEnd={tempEnd}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  onDateClick={handleDateClick}
-                  hoverDate={hoverDate}
-                />
-                <Calendar
-                  month={secondMonth}
-                  year={secondYear}
-                  selectedStart={tempStart}
-                  selectedEnd={tempEnd}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  onDateClick={handleDateClick}
-                  hoverDate={hoverDate}
-                />
-              </div>
+              {/* Single Calendar */}
+              <Calendar
+                month={viewMonth}
+                year={viewYear}
+                selectedStart={tempStart}
+                selectedEnd={tempEnd}
+                minDate={minDate}
+                maxDate={maxDate}
+                onDateClick={handleDateClick}
+                onDateHover={handleDateHover}
+                hoverDate={hoverDate}
+              />
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="action-buttons">
-            <button className="btn-cancel" onClick={handleCancel} type="button">
-              Cancel
-            </button>
-            <button className="btn-apply" onClick={handleApply} type="button">
-              Apply
-            </button>
+            <span className="selected-range">
+              {getSelectedRangeDisplay()}
+            </span>
+            <div className="button-group">
+              <button className="btn-cancel" onClick={handleCancel} type="button">
+                Cancel
+              </button>
+              <button className="btn-apply" onClick={handleApply} type="button">
+                Apply
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -351,7 +425,8 @@ export default function DateRangePicker({
         .dropdown-panel {
           position: absolute;
           top: calc(100% + 8px);
-          left: 0;
+          left: 50%;
+          transform: translateX(-50%);
           background-color: rgba(26, 26, 26, 0.98);
           backdrop-filter: blur(20px);
           border-radius: 16px;
@@ -361,17 +436,17 @@ export default function DateRangePicker({
             inset 0 1px 0 rgba(255, 255, 255, 0.1);
           z-index: 1000;
           animation: slideDown 0.2s ease-out;
-          min-width: 700px;
+          min-width: 450px;
         }
 
         @keyframes slideDown {
           from {
             opacity: 0;
-            transform: translateY(-8px);
+            transform: translateX(-50%) translateY(-8px);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
           }
         }
 
@@ -419,24 +494,87 @@ export default function DateRangePicker({
           flex: 1;
         }
 
-        .calendar-headers {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1rem;
-          margin-bottom: 0.5rem;
-        }
-
         .calendar-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 0 0.5rem;
+          margin-bottom: 0.5rem;
         }
 
-        .month-label {
+        .month-year-selector {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+          position: relative;
+        }
+
+        .month-button,
+        .year-button {
           font-size: 14px;
           font-weight: 600;
           color: rgba(255, 255, 255, 0.9);
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 0.25rem 0.5rem;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+        }
+
+        .month-button:hover,
+        .year-button:hover {
+          background-color: rgba(255, 255, 255, 0.05);
+          color: white;
+        }
+
+        .selector-dropdown {
+          position: absolute;
+          top: calc(100% + 4px);
+          left: 0;
+          background-color: rgba(26, 26, 26, 0.98);
+          backdrop-filter: blur(20px);
+          border-radius: 8px;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+          z-index: 1001;
+          max-height: 240px;
+          overflow-y: auto;
+          min-width: 140px;
+        }
+
+        .month-dropdown {
+          left: 0;
+        }
+
+        .year-dropdown {
+          left: auto;
+          right: 0;
+        }
+
+        .selector-item {
+          display: block;
+          width: 100%;
+          padding: 0.5rem 0.75rem;
+          font-size: 13px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.8);
+          background: transparent;
+          border: none;
+          text-align: left;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .selector-item:hover {
+          background-color: rgba(255, 255, 255, 0.05);
+          color: white;
+        }
+
+        .selector-item.active {
+          background-color: rgba(29, 185, 84, 0.15);
+          color: #1db954;
+          font-weight: 600;
         }
 
         .nav-button {
@@ -458,18 +596,25 @@ export default function DateRangePicker({
           color: rgba(255, 255, 255, 0.9);
         }
 
-        .dual-calendars {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1rem;
-        }
 
         .action-buttons {
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-between;
+          align-items: center;
           gap: 0.75rem;
           padding: 1rem;
           border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .selected-range {
+          font-size: 14px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        .button-group {
+          display: flex;
+          gap: 0.75rem;
         }
 
         .btn-cancel,

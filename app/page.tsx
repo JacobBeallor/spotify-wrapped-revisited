@@ -13,10 +13,14 @@ import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, 
 export default function Home() {
   // Tab and filter state
   const [activeTab, setActiveTab] = useState<'overview' | 'patterns' | 'evolution'>('overview')
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('all')
+  const [dateRange, setDateRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null
+  })
   const [metric, setMetric] = useState<'hours' | 'plays'>('hours')
   const [entity, setEntity] = useState<'artists' | 'genres'>('artists')
   const [availableMonths, setAvailableMonths] = useState<string[]>([])
+  const [availableDateRange, setAvailableDateRange] = useState<{ min: Date; max: Date } | null>(null)
 
   // Fetch data using API
   const { data: summaryResponse, loading: summaryLoading, error: summaryError } = useApiData<SummaryData>('summary')
@@ -27,9 +31,18 @@ export default function Home() {
   const { data: hourResponse, loading: hourLoading } = useApiData<{ data: HourData[] }>('hour')
   const { data: discoveryResponse, loading: discoveryLoading } = useApiData<{ data: DiscoveryRateData[] }>('discovery-rate')
 
-  // Pass selected period to top artists/tracks APIs
-  const artistsParams = selectedPeriod !== 'all' ? { start: selectedPeriod, end: selectedPeriod } : {}
-  const tracksParams = selectedPeriod !== 'all' ? { start: selectedPeriod, end: selectedPeriod } : {}
+  // Pass date range to top artists/tracks APIs
+  const formatDateForAPI = (date: Date | null): string | undefined => {
+    if (!date) return undefined
+    return date.toISOString().split('T')[0] // YYYY-MM-DD format
+  }
+
+  const artistsParams = dateRange.start && dateRange.end 
+    ? { startDate: formatDateForAPI(dateRange.start), endDate: formatDateForAPI(dateRange.end) } 
+    : {}
+  const tracksParams = dateRange.start && dateRange.end 
+    ? { startDate: formatDateForAPI(dateRange.start), endDate: formatDateForAPI(dateRange.end) } 
+    : {}
 
   const { data: artistsResponse, loading: artistsLoading } = useApiData<{ data: TopArtist[] }>('top-artists', artistsParams)
   const { data: tracksResponse, loading: tracksLoading } = useApiData<{ data: TopTrack[] }>('top-tracks', tracksParams)
@@ -56,7 +69,7 @@ export default function Home() {
   const isInitialLoad = summaryLoading && !summary
   const isFilterLoading = (artistsLoading || tracksLoading) && topArtists.length > 0
 
-  // Extract unique months when monthly data is loaded
+  // Extract unique months and available date range when data is loaded
   useEffect(() => {
     if (monthly.length > 0) {
       const months = monthly.map((m: MonthlyData) => m.year_month).sort()
@@ -64,13 +77,31 @@ export default function Home() {
     }
   }, [monthly])
 
-  // Filter data based on selected period
-  const filterByPeriod = <T extends { year_month: string }>(data: T[]): T[] => {
-    if (selectedPeriod === 'all') return data
-    return data.filter(item => item.year_month === selectedPeriod)
+  // Set available date range from summary data
+  useEffect(() => {
+    if (summary?.min_date && summary?.max_date) {
+      setAvailableDateRange({
+        min: new Date(summary.min_date),
+        max: new Date(summary.max_date)
+      })
+    }
+  }, [summary])
+
+  // Filter monthly data based on date range
+  const filterMonthlyByDateRange = (data: MonthlyData[]): MonthlyData[] => {
+    if (!dateRange.start || !dateRange.end) return data
+    
+    return data.filter(item => {
+      const [year, monthNum] = item.year_month.split('-').map(Number)
+      const monthDate = new Date(year, monthNum - 1, 1)
+      const monthEnd = new Date(year, monthNum, 0)
+      
+      // Include month if it overlaps with the date range
+      return monthEnd >= dateRange.start! && monthDate <= dateRange.end!
+    })
   }
 
-  const filteredMonthly = filterByPeriod(monthly) // Filter monthly data for KPICards
+  const filteredMonthly = filterMonthlyByDateRange(monthly) // Filter monthly data for KPICards
   // Top Artists and Top Tracks are filtered server-side via API params
   const filteredArtists = topArtists
   const filteredTracks = topTracks
@@ -136,18 +167,18 @@ export default function Home() {
       )}
 
       {/* Conditional page rendering based on active tab */}
-      {activeTab === 'overview' && (
+      {activeTab === 'overview' && availableDateRange && (
         <OverviewPage
           summary={summary}
           topArtists={filteredArtists}
           topTracks={filteredTracks}
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={setSelectedPeriod}
+          dateRange={dateRange}
+          setDateRange={setDateRange}
           filteredMonthly={filteredMonthly}
           metric={metric}
           setMetric={setMetric}
           isFilterLoading={isFilterLoading}
-          availableMonths={availableMonths}
+          availableDateRange={availableDateRange}
         />
       )}
       {activeTab === 'patterns' && (

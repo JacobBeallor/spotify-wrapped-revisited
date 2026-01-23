@@ -4,8 +4,8 @@ import { executeQuery } from '../db'
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
-    const start = searchParams.get('start')
-    const end = searchParams.get('end')
+    const startDate = searchParams.get('startDate')
+    const endDate = searchParams.get('endDate')
     const limit = parseInt(searchParams.get('limit') || '50')
     
     const sql = `
@@ -18,14 +18,14 @@ export async function GET(request: NextRequest) {
       FROM plays p
       LEFT JOIN artists a ON p.artist_name = a.artist_name
       WHERE 1=1
-        ${start ? `AND p.year_month >= ?` : ''}
-        ${end ? `AND p.year_month <= ?` : ''}
+        ${startDate ? `AND p.date >= ?` : ''}
+        ${endDate ? `AND p.date <= ?` : ''}
       GROUP BY p.artist_name, a.spotify_artist_id, a.image_url
       ORDER BY hours DESC
       LIMIT ?
     `
     
-    const paramValues = [start, end, limit].filter(v => v !== null)
+    const paramValues = [startDate, endDate, limit].filter(v => v !== null)
     const results = await executeQuery(sql, paramValues)
     
     return NextResponse.json({ data: results })

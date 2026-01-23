@@ -1,9 +1,13 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { executeQuery } from '../db'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const result = await executeQuery(`
+    const searchParams = request.nextUrl.searchParams
+    const startDate = searchParams.get('startDate')
+    const endDate = searchParams.get('endDate')
+    
+    const sql = `
       SELECT 
         ROUND(SUM(ms_played) / 1000.0 / 60.0 / 60.0, 2) AS total_hours,
         COUNT(*) AS total_plays,
@@ -11,9 +15,17 @@ export async function GET() {
         COUNT(DISTINCT artist_name) AS unique_artists,
         MIN(played_at) AS first_played_at,
         MAX(played_at) AS last_played_at,
-        CAST(MAX(played_at) AS VARCHAR) AS last_played_at_str
+        CAST(MAX(played_at) AS VARCHAR) AS last_played_at_str,
+        CAST(MIN(date) AS VARCHAR) AS min_date,
+        CAST(MAX(date) AS VARCHAR) AS max_date
       FROM plays
-    `)
+      WHERE 1=1
+        ${startDate ? `AND date >= ?` : ''}
+        ${endDate ? `AND date <= ?` : ''}
+    `
+    
+    const paramValues = [startDate, endDate].filter(v => v !== null)
+    const result = await executeQuery(sql, paramValues)
     
     const data = result[0]
     

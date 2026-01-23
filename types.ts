@@ -1,4 +1,14 @@
 // Data types
+export interface DateRange {
+  start: Date | null
+  end: Date | null
+}
+
+export interface AvailableDateRange {
+  min: Date
+  max: Date
+}
+
 export interface SummaryData {
   total_hours: number
   total_plays: number
@@ -6,6 +16,8 @@ export interface SummaryData {
   unique_artists: number
   first_played_at: string
   last_played_at: string
+  min_date?: string
+  max_date?: string
 }
 
 export interface MonthlyData {

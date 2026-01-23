@@ -69,6 +69,7 @@ def main():
             track_name TEXT NOT NULL,
             primary_artist_name TEXT NOT NULL,
             album_name TEXT,
+            album_image_url TEXT,
             release_date TEXT,
             release_year INTEGER,
             release_decade TEXT,
@@ -88,6 +89,7 @@ def main():
             popularity INTEGER,
             followers INTEGER,
             spotify_artist_id TEXT,
+            image_url TEXT,
             enriched_at TIMESTAMP
         )
         """

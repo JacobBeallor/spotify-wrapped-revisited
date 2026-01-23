@@ -2,11 +2,11 @@
 
 ## Issues
 
-### 1. Release year/decade analysis
+### 1. Fix spotify embed not loading after switching tabs
+
+### 2. Release year/decade analysis
 - Size: `M`  
 - Show listening trends by release year/decade.
-
-### 2. Add thumbnails to top artists and tracks
 
 ### 3. Jukebox feature?
 
@@ -82,6 +82,22 @@
 - Graceful degradation: non-enriched items display but aren't clickable.
 - Hover effects (opacity, brightness) only on items with Spotify IDs.
 - Added comprehensive architecture documentation: `docs/architecture/spotify-embeds.md`.
+
+### 10. Thumbnail images for top artists and tracks
+- Size: `M`  
+- Added `album_image_url` column to tracks table for album cover thumbnails (300x300px).
+- Added `image_url` column to artists table for artist profile images (300x300px).
+- Updated enrichment script (`enrich_metadata.py`) to capture image URLs from Spotify API.
+- Created backfill script (`backfill_images.py`) to populate image URLs for existing enriched records.
+- Updated database schemas in both DuckDB (ingest) and Postgres (sync) scripts.
+- Modified API routes (`/api/top-tracks` and `/api/top-artists`) to include image URLs.
+- Updated TypeScript types (`TopTrack` and `TopArtist`) with optional image URL fields.
+- Updated frontend components to display thumbnails:
+  - `TopTracks.tsx`: Shows 40x40px square album covers with slight rounding.
+  - `TopArtists.tsx`: Shows 40x40px circular artist profile photos.
+- Graceful degradation: thumbnails only display when image URLs are available.
+- Images served directly from Spotify CDN (stable, long-lived URLs).
+- Documentation updated: database schema, enrichment guide, API routes, and new backfill guide.
 
 ---
 

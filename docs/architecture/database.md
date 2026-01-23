@@ -136,7 +136,9 @@ Both databases use identical schemas:
 ### Tables
 1. **`plays`** - Core listening history (77,800+ rows)
 2. **`tracks`** - Track metadata from Spotify API
-3. **`artists`** - Artist metadata from Spotify API  
+   - Includes `album_image_url` for album cover thumbnails
+3. **`artists`** - Artist metadata from Spotify API
+   - Includes `image_url` for artist profile images
 4. **`audio_features`** - Audio characteristics (tempo, energy, etc.)
 
 See [MIGRATION.md](./MIGRATION.md) for full schema details.

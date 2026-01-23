@@ -89,18 +89,28 @@ def enrich_tracks(con, sp):
                 # Get primary artist ID
                 primary_artist_id = track['artists'][0]['id'] if track['artists'] else None
                 
+                # Get album image URL (prefer medium size, fallback to first available)
+                album_images = track['album'].get('images', [])
+                album_image_url = None
+                if album_images:
+                    # Spotify typically provides [640x640, 300x300, 64x64]
+                    # Get medium (300x300) or first available
+                    medium_image = next((img for img in album_images if img.get('height') == 300), None)
+                    album_image_url = medium_image['url'] if medium_image else album_images[0]['url']
+                
                 con.execute("""
                     INSERT OR REPLACE INTO tracks (
                         spotify_track_uri, track_name, primary_artist_name, primary_artist_id,
-                        album_name, release_date, release_year, release_decade,
+                        album_name, album_image_url, release_date, release_year, release_decade,
                         popularity, duration_ms, explicit, enriched_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, [
                     uri,
                     track['name'],
                     track['artists'][0]['name'] if track['artists'] else None,
                     primary_artist_id,
                     track['album']['name'],
+                    album_image_url,
                     release_date,
                     release_year,
                     release_decade,
@@ -151,17 +161,26 @@ def enrich_artists(con, sp):
             artist = sp.artist(artist_id)
             
             if artist:
+                # Get artist image URL (prefer medium size, fallback to first available)
+                artist_images = artist.get('images', [])
+                image_url = None
+                if artist_images:
+                    # Get medium (300x300) or first available
+                    medium_image = next((img for img in artist_images if img.get('height') == 300), None)
+                    image_url = medium_image['url'] if medium_image else artist_images[0]['url']
+                
                 con.execute("""
                     INSERT OR REPLACE INTO artists (
                         artist_name, genres, popularity, followers,
-                        spotify_artist_id, enriched_at
-                    ) VALUES (?, ?, ?, ?, ?, ?)
+                        spotify_artist_id, image_url, enriched_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
                 """, [
                     artist_name,
                     ','.join(artist['genres']) if artist.get('genres') else None,
                     artist.get('popularity', 0),
                     artist.get('followers', {}).get('total', 0),
                     artist.get('id'),
+                    image_url,
                     datetime.now().isoformat()
                 ])
                 enriched += 1

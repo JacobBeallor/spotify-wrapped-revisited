@@ -112,7 +112,7 @@ WHERE 1=1
 
 ### `GET /api/top-artists`
 
-**Top artists by listening time or play count.**
+**Top artists by listening time or play count, with each artist's #1 track.**
 
 **Parameters:**
 - `limit` (optional): Number of results (default: 50, max: 100)
@@ -129,7 +129,9 @@ WHERE 1=1
       "hours": 124.26,
       "plays": 1747,
       "spotify_artist_id": "0OdUWJ0sBjDrqHygGUXeCF",
-      "image_url": "https://i.scdn.co/image/ab6761610000e5eb..."
+      "image_url": "https://i.scdn.co/image/ab6761610000e5eb...",
+      "top_track_name": "The Weight",
+      "top_track_uri": "spotify:track:6rqhFgbbKwnb9MLmUQDhG6"
     },
     ...
   ]
@@ -139,26 +141,54 @@ WHERE 1=1
 **Notes:**
 - `spotify_artist_id` field is included if data has been enriched via Spotify API
 - `image_url` field contains the artist's profile image (300x300px from Spotify CDN)
+- `top_track_name` and `top_track_uri` contain the artist's most-played track within the filtered date range
 - These fields are used for interactive embeds, thumbnails, and deep links to Spotify
 - Returns `null` if artist has not been enriched yet
 - When no date range provided, returns all-time top artists
+- The top track enables consistent auto-play behavior when clicking artists in the UI
 
 **Query:**
 ```sql
+WITH artist_stats AS (
+  SELECT 
+    p.artist_name,
+    ROUND(SUM(p.ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
+    COUNT(*) AS plays,
+    a.spotify_artist_id,
+    a.image_url
+  FROM plays p
+  LEFT JOIN artists a ON p.artist_name = a.artist_name
+  WHERE 1=1
+    AND (? IS NULL OR p.date >= ?)
+    AND (? IS NULL OR p.date <= ?)
+  GROUP BY p.artist_name, a.spotify_artist_id, a.image_url
+  ORDER BY hours DESC
+  LIMIT ?
+),
+artist_top_tracks AS (
+  SELECT 
+    p.artist_name,
+    p.track_name,
+    p.spotify_track_uri,
+    SUM(p.ms_played) AS total_ms,
+    ROW_NUMBER() OVER (PARTITION BY p.artist_name ORDER BY SUM(p.ms_played) DESC) AS rn
+  FROM plays p
+  WHERE p.artist_name IN (SELECT artist_name FROM artist_stats)
+    AND (? IS NULL OR p.date >= ?)
+    AND (? IS NULL OR p.date <= ?)
+  GROUP BY p.artist_name, p.track_name, p.spotify_track_uri
+)
 SELECT 
-  p.artist_name,
-  ROUND(SUM(p.ms_played) / 1000.0 / 60 / 60, 2) as hours,
-  COUNT(*) as plays,
-  a.spotify_artist_id,
-  a.image_url
-FROM plays p
-LEFT JOIN artists a ON p.artist_name = a.artist_name
-WHERE 1=1
-  AND (? IS NULL OR p.date >= ?)
-  AND (? IS NULL OR p.date <= ?)
-GROUP BY p.artist_name, a.spotify_artist_id, a.image_url
-ORDER BY hours DESC
-LIMIT ?
+  s.artist_name,
+  s.hours,
+  s.plays,
+  s.spotify_artist_id,
+  s.image_url,
+  t.track_name AS top_track_name,
+  t.spotify_track_uri AS top_track_uri
+FROM artist_stats s
+LEFT JOIN artist_top_tracks t ON s.artist_name = t.artist_name AND t.rn = 1
+ORDER BY s.hours DESC
 ```
 
 **Example:**

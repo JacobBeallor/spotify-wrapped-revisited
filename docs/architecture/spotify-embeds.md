@@ -21,7 +21,7 @@ OverviewPage
 ├── TopTracks (clickable)
 │   └── onTrackClick(uri) → embedController.loadUri(uri)
 ├── TopArtists (clickable)
-│   └── onArtistClick(id) → embedController.loadUri(`spotify:artist:${id}`)
+│   └── onArtistClick(id, name, topTrackUri) → embedController.loadUri(topTrackUri)
 └── SpotifyEmbed
     ├── Initializes controller
     └── Exposes controller ref to parent
@@ -30,16 +30,23 @@ OverviewPage
 ### Data Flow
 
 1. **Initial Load**
-   - `OverviewPage` fetches top tracks/artists (with Spotify IDs)
+   - `OverviewPage` fetches top tracks/artists (with Spotify IDs and top track URIs)
    - `SpotifyEmbed` component initializes with first available track URI
    - Controller ref is stored in parent via `onControllerReady` callback
 
-2. **User Clicks Track/Artist**
-   - Click handler receives Spotify URI/ID
-   - Calls `embedController.loadUri(spotifyUri)`
-   - Player updates instantly without reload
+2. **User Clicks Track**
+   - Click handler receives track URI
+   - Calls `embedController.loadUri(trackUri)`
+   - Player updates instantly to that specific track
 
-3. **Graceful Degradation**
+3. **User Clicks Artist**
+   - API response includes artist's #1 track from listening history (`top_track_uri`)
+   - Click handler receives artist's top track URI
+   - Calls `embedController.loadUri(topTrackUri)`
+   - Player updates instantly to that track (guaranteed auto-play)
+   - Falls back to artist page URI if no track available
+
+4. **Graceful Degradation**
    - If no Spotify IDs available (data not enriched), items aren't clickable
    - Hover styles only apply to clickable items
    - Player shows default track or helpful message
@@ -98,13 +105,24 @@ const handleTrackClick = (trackUri: string, trackName: string) => {
   embedControllerRef.current?.loadUri(trackUri)
 }
 
-const handleArtistClick = (artistId: string, artistName: string) => {
-  const artistUri = `spotify:artist:${artistId}`
-  embedControllerRef.current?.loadUri(artistUri)
+const handleArtistClick = (artistId: string, artistName: string, topTrackUri?: string) => {
+  // Use the artist's #1 track from their listening history if available
+  // Otherwise fall back to the artist page
+  const uri = topTrackUri || `spotify:artist:${artistId}`
+  embedControllerRef.current?.loadUri(uri)
+  
+  // Auto-play after loading
+  setTimeout(() => {
+    embedControllerRef.current?.play()
+  }, 100)
 }
 ```
 
-The controller's `loadUri()` method accepts Spotify URIs and updates the player seamlessly.
+**Why this approach?**
+- Track URIs reliably auto-play, artist page URIs do not
+- Each artist's API response includes their #1 most-played track within the filtered date range
+- Provides consistent auto-play behavior for all artists
+- Falls back to artist page only if no track data available
 
 ## URI Format
 
@@ -159,15 +177,19 @@ Spotify IDs are populated via the enrichment pipeline:
 }
 ```
 
-**`/api/top-artists`** - Returns `spotify_artist_id` field
+**`/api/top-artists`** - Returns `spotify_artist_id` and artist's top track
 ```json
 {
   "artist_name": "Artist Name",
   "hours": 124.26,
   "plays": 1747,
-  "spotify_artist_id": "xyz789"
+  "spotify_artist_id": "xyz789",
+  "top_track_name": "Their Best Song",
+  "top_track_uri": "spotify:track:abc123"
 }
 ```
+
+The `top_track_uri` field contains the artist's #1 most-played track within the filtered date range, enabling consistent auto-play when clicking artists.
 
 See [API Routes Documentation](./api-routes.md) for full details.
 

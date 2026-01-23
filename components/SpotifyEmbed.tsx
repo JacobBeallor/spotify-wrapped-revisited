@@ -17,6 +17,7 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
   const containerRef = useRef<HTMLDivElement>(null)
   const controllerRef = useRef<any>(null)
   const isInitialized = useRef(false)
+  const isInitializing = useRef(false)
   const initialUriRef = useRef(initialUri)
   const onReadyRef = useRef(onControllerReady)
   const [isLoading, setIsLoading] = useState(true)
@@ -28,14 +29,32 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
     onReadyRef.current = onControllerReady
   }, [onControllerReady])
 
+  // Keep initialUriRef in sync with prop changes
   useEffect(() => {
-    // Prevent multiple initializations
-    if (isInitialized.current) return
+    initialUriRef.current = initialUri
+  }, [initialUri])
+
+  // Main initialization effect
+  useEffect(() => {
+    let mounted = true
+    let timeoutId: NodeJS.Timeout | null = null
 
     const initController = (IFrameAPI: any) => {
-      if (!containerRef.current || isInitialized.current) return
+      // Check if already initialized/initializing or component unmounted
+      if (isInitialized.current || isInitializing.current || !mounted || !containerRef.current) {
+        return
+      }
+
+      // Verify API is available
+      if (!IFrameAPI || typeof IFrameAPI.createController !== 'function') {
+        console.error('[SpotifyEmbed] Invalid Spotify IFrame API')
+        setError('Spotify player API not available')
+        setIsLoading(false)
+        return
+      }
 
       const uri = initialUriRef.current || 'spotify:track:5gRCBF8BbbQA4M7wRFjqxg' // Sour Candy by Melt
+      isInitializing.current = true
       isInitialized.current = true
 
       const options = {
@@ -48,8 +67,15 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
           containerRef.current,
           options,
           (controller: any) => {
+            if (!mounted) {
+              controller?.destroy?.()
+              return
+            }
+
             controllerRef.current = controller
             setIsLoading(false)
+            setError(null)
+            isInitializing.current = false
 
             // Listen for playback updates to detect when new content loads
             controller.addListener('playback_update', (e: any) => {
@@ -75,39 +101,85 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
           }
         )
       } catch (err) {
-        console.error('Error creating Spotify controller:', err)
+        console.error('[SpotifyEmbed] Error creating Spotify controller:', err)
         setError('Failed to load Spotify player')
         setIsLoading(false)
+        isInitialized.current = false
+        isInitializing.current = false
       }
     }
 
-    // Retry checking for API with a small delay
+    // Poll for API availability with retries
+    let retryCount = 0
+    const maxRetries = 50 // 50 * 200ms = 10 seconds total
+    
     const checkAndInit = () => {
-      if ((window as any).SpotifyIframeApi) {
-        initController((window as any).SpotifyIframeApi)
+      // Stop polling if component unmounted or already initialized/initializing
+      if (!mounted || isInitialized.current || isInitializing.current) {
+        return
+      }
+
+      const api = (window as any).SpotifyIframeApi
+      if (api) {
+        initController(api)
       } else {
-        // Set up callback for when API loads
-        window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
-          initController(IFrameAPI)
+        retryCount++
+        if (retryCount < maxRetries) {
+          timeoutId = setTimeout(checkAndInit, 200)
+        } else {
+          console.error('[SpotifyEmbed] Spotify API not available after max retries')
+          setError('Spotify player failed to load')
+          setIsLoading(false)
         }
       }
     }
 
-    // Small delay to ensure DOM is ready
-    const timeout = setTimeout(checkAndInit, 100)
+    // Set up callback as fallback (for first load)
+    const existingCallback = window.onSpotifyIframeApiReady
+    window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
+      if (mounted && !isInitialized.current && !isInitializing.current) {
+        initController(IFrameAPI)
+      }
+      // Call existing callback if there was one
+      if (existingCallback && typeof existingCallback === 'function') {
+        existingCallback(IFrameAPI)
+      }
+    }
+    
+    // Small delay to ensure DOM is ready, then start polling
+    timeoutId = setTimeout(checkAndInit, 100)
 
     return () => {
-      clearTimeout(timeout)
-      // Reset initialization flag so component can reinitialize on next mount
-      isInitialized.current = false
-      // Cleanup
+      mounted = false
+
+      // Clear timeout
+      if (timeoutId) clearTimeout(timeoutId)
+
+      // Destroy controller BEFORE resetting flags
       if (controllerRef.current?.destroy) {
         try {
           controllerRef.current.destroy()
         } catch (error) {
-          console.error('Error destroying controller:', error)
+          console.error('[SpotifyEmbed] Error destroying controller:', error)
         }
       }
+
+      // Clear the container DOM to ensure iframe is removed
+      if (containerRef.current) {
+        containerRef.current.innerHTML = ''
+      }
+
+      // Reset all refs and state
+      controllerRef.current = null
+      isInitialized.current = false
+      isInitializing.current = false
+
+      // Reset loading state for next mount
+      setIsLoading(true)
+      setError(null)
+      setIsChanging(false)
+
+      // Don't clear window.onSpotifyIframeApiReady - let it persist for reinitialization
     }
   }, []) // Empty deps - only run once on mount
 

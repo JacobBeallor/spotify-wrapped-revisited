@@ -123,8 +123,13 @@
 
 ### 11. Fix spotify embed not loading after switching tabs
 - **Issue:** When switching from the overview tab to a different tab and back, the Spotify player would perpetually show "Loading Spotify player..." state
-- **Root Cause:** The `isInitialized` ref was not being reset on component unmount, preventing reinitialization
-- **Fix:** Added `isInitialized.current = false` to the cleanup function in `SpotifyEmbed.tsx` to allow proper reinitialization on remount
+- **Root Cause:** Multiple issues - race conditions between cleanup/initialization, reliance on callback that only fires once, and incomplete state management
+- **Fix:** Comprehensive rewrite of initialization logic in `SpotifyEmbed.tsx`:
+  - Added active polling (200ms intervals, 50 retries) instead of relying solely on `onSpotifyIframeApiReady` callback
+  - Introduced `isInitializing` flag alongside `isInitialized` to prevent concurrent initialization attempts
+  - Enhanced cleanup to destroy controller before resetting flags, clear container DOM, and reset all state
+  - Added `mounted` flag to handle async initialization after component unmount
+  - Synchronized `initialUriRef` with prop changes via dedicated useEffect
 
 ---
 

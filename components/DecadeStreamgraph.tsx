@@ -29,7 +29,7 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
     // Get unique decades and months
     const decadesSet = new Set<string>()
     const monthsSet = new Set<string>()
-    
+
     data.forEach(d => {
       decadesSet.add(d.decade)
       monthsSet.add(d.year_month)
@@ -94,7 +94,7 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
     // Create tooltip div if it doesn't exist
-    let tooltip = d3.select('body').select('.decade-tooltip')
+    let tooltip = d3.select('body').select<HTMLDivElement>('.decade-tooltip')
     if (tooltip.empty()) {
       tooltip = d3.select('body')
         .append('div')
@@ -162,18 +162,18 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
       .attr('fill', d => colorScale(d.key))
       .attr('opacity', 0.85)
       .style('cursor', 'pointer')
-      .on('mouseenter', function(event, d) {
+      .on('mouseenter', function (event, d) {
         d3.select(this)
           .attr('opacity', 1)
           .attr('stroke', '#fff')
           .attr('stroke-width', 2)
-        
+
         tooltip.style('display', 'block')
       })
-      .on('mousemove', function(event, d) {
+      .on('mousemove', function (event, d) {
         const [mouseX] = d3.pointer(event, svg.node())
         const adjustedX = mouseX - margin.left
-        
+
         // Find closest month
         let closestIndex = 0
         let minDistance = Infinity
@@ -189,7 +189,7 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
         const month = months[closestIndex]
         const dataPoint = d[closestIndex]
         const value = dataPoint[1] - dataPoint[0]
-        
+
         // Format month for display
         const [year, monthNum] = month.split('-')
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -199,20 +199,20 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
           <div style="font-weight: bold; margin-bottom: 4px;">${d.key}</div>
           <div style="font-size: 12px; color: #b3b3b3;">${formattedMonth}</div>
           <div style="margin-top: 4px;">
-            ${metric === 'hours' 
-              ? `${value.toFixed(1)} hours` 
-              : `${Math.round(value).toLocaleString()} plays`
-            }
+            ${metric === 'hours'
+            ? `${value.toFixed(1)} hours`
+            : `${Math.round(value).toLocaleString()} plays`
+          }
           </div>
         `)
-        .style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY - 10) + 'px')
+          .style('left', (event.pageX + 10) + 'px')
+          .style('top', (event.pageY - 10) + 'px')
       })
-      .on('mouseleave', function() {
+      .on('mouseleave', function () {
         d3.select(this)
           .attr('opacity', 0.85)
           .attr('stroke', 'none')
-        
+
         tooltip.style('display', 'none')
       })
 
@@ -280,9 +280,9 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
 
     // Legend hover effects
     legendItems
-      .on('mouseenter', function(event, decade) {
+      .on('mouseenter', function (event, decade) {
         // Highlight the corresponding layer
-        layers.each(function(d) {
+        layers.each(function (d) {
           if (d.key === decade) {
             d3.select(this)
               .attr('opacity', 1)
@@ -293,7 +293,7 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
           }
         })
       })
-      .on('mouseleave', function() {
+      .on('mouseleave', function () {
         layers
           .attr('opacity', 0.85)
           .attr('stroke', 'none')
@@ -309,7 +309,7 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
   if (data.length === 0) {
     return (
       <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700">
-        <h2 className="text-xl font-bold mb-4">Decade Evolution</h2>
+        <h2 className="text-xl font-bold mb-4">Decades of Sound</h2>
         <p className="text-gray-400 text-center py-8">
           No data available. Run enrichment script to populate release decade metadata.
         </p>
@@ -320,9 +320,9 @@ export default function DecadeStreamgraph({ data, metric }: DecadeStreamgraphPro
   return (
     <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700">
       <div className="mb-6">
-        <h2 className="text-xl font-bold">Decade Evolution</h2>
+        <h2 className="text-xl font-bold">Decades of Sound</h2>
         <p className="text-gray-400 text-sm mt-1">
-          Listening trends by release decade over time
+          A journey through musical eras
         </p>
       </div>
 

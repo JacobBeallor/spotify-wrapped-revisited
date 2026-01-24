@@ -122,14 +122,15 @@
 - Documentation updated: database schema, enrichment guide, API routes, and new backfill guide.
 
 ### 11. Fix spotify embed not loading after switching tabs
-- **Issue:** When switching from the overview tab to a different tab and back, the Spotify player would perpetually show "Loading Spotify player..." state
-- **Root Cause:** Multiple issues - race conditions between cleanup/initialization, reliance on callback that only fires once, and incomplete state management
-- **Fix:** Comprehensive rewrite of initialization logic in `SpotifyEmbed.tsx`:
-  - Added active polling (200ms intervals, 50 retries) instead of relying solely on `onSpotifyIframeApiReady` callback
-  - Introduced `isInitializing` flag alongside `isInitialized` to prevent concurrent initialization attempts
-  - Enhanced cleanup to destroy controller before resetting flags, clear container DOM, and reset all state
-  - Added `mounted` flag to handle async initialization after component unmount
-  - Synchronized `initialUriRef` with prop changes via dedicated useEffect
+- Size: `S`
+- **Issue:** When navigating from Overview tab to another tab and back, the Spotify player would show "Loading Spotify player..." perpetually
+- **Root Cause:** The Spotify iFrame API only fires `window.onSpotifyIframeApiReady` callback once on initial script load. When the `SpotifyEmbed` component remounts (after tab navigation), the callback doesn't fire again, and the component was stuck polling for a global API reference that didn't exist
+- **Fix:** Store the API globally when callback first fires:
+  - Added `window.SpotifyIframeApi` to global window object when `onSpotifyIframeApiReady` fires
+  - Component now checks for existing global API reference on mount (finds it immediately on remount)
+  - Added comprehensive logging to track initialization lifecycle
+  - Enhanced polling logic to check both container ref readiness and API availability
+  - Proper cleanup on unmount with iframe destruction and state reset
 
 ---
 

@@ -239,6 +239,23 @@ flowchart TD
 - Only affected components re-render on filter change
 - Chart libraries (Recharts) handle their own memoization
 
+### Component Lifecycle During Navigation
+When switching tabs, page components **fully unmount and remount**:
+- State within page components is reset
+- `useEffect` cleanup functions run on unmount
+- New component instance created on mount
+
+**Example**: The `SpotifyEmbed` component in `OverviewPage`:
+- Unmounts when navigating away from Overview tab
+- Destroys Spotify player controller on unmount
+- Reinitializes player when navigating back to Overview
+- Uses global API reference (`window.SpotifyIframeApi`) for fast reinitialization
+
+This is expected behavior and works correctly because:
+1. Parent component state persists (filters, data)
+2. Child components properly clean up resources
+3. Reinitialization is optimized (e.g., Spotify API cached globally)
+
 ### Could Use React.memo If Needed
 ```typescript
 // Not needed now, but available if performance becomes an issue

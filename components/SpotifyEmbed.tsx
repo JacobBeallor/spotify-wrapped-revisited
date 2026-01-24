@@ -10,6 +10,7 @@ interface SpotifyEmbedProps {
 declare global {
   interface Window {
     onSpotifyIframeApiReady?: (IFrameAPI: any) => void
+    SpotifyIframeApi?: any
   }
 }
 
@@ -54,8 +55,8 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
       }
 
       const uri = initialUriRef.current || 'spotify:track:5gRCBF8BbbQA4M7wRFjqxg' // Sour Candy by Melt
+      console.log('[SpotifyEmbed] Initializing controller with URI:', uri)
       isInitializing.current = true
-      isInitialized.current = true
 
       const options = {
         uri,
@@ -68,11 +69,14 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
           options,
           (controller: any) => {
             if (!mounted) {
+              console.log('[SpotifyEmbed] Component unmounted, destroying controller')
               controller?.destroy?.()
               return
             }
 
+            console.log('[SpotifyEmbed] Controller created successfully')
             controllerRef.current = controller
+            isInitialized.current = true
             setIsLoading(false)
             setError(null)
             isInitializing.current = false
@@ -119,15 +123,37 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
         return
       }
 
+      // Also check if container ref is ready
+      if (!containerRef.current) {
+        retryCount++
+        if (retryCount < maxRetries) {
+          if (retryCount % 10 === 0) {
+            console.log(`[SpotifyEmbed] Waiting for container ref (attempt ${retryCount}/${maxRetries})`)
+          }
+          timeoutId = setTimeout(checkAndInit, 200)
+        } else {
+          console.error('[SpotifyEmbed] Container ref not available after max retries')
+          setError('Player container not ready')
+          setIsLoading(false)
+        }
+        return
+      }
+
       const api = (window as any).SpotifyIframeApi
       if (api) {
+        console.log('[SpotifyEmbed] Spotify API found in global, initializing controller')
         initController(api)
       } else {
         retryCount++
         if (retryCount < maxRetries) {
+          if (retryCount % 10 === 0) {
+            console.log(`[SpotifyEmbed] Waiting for Spotify API (attempt ${retryCount}/${maxRetries})`)
+          }
           timeoutId = setTimeout(checkAndInit, 200)
         } else {
           console.error('[SpotifyEmbed] Spotify API not available after max retries')
+          console.error('[SpotifyEmbed] window.SpotifyIframeApi:', window.SpotifyIframeApi)
+          console.error('[SpotifyEmbed] window.onSpotifyIframeApiReady:', window.onSpotifyIframeApiReady)
           setError('Spotify player failed to load')
           setIsLoading(false)
         }
@@ -137,6 +163,10 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
     // Set up callback as fallback (for first load)
     const existingCallback = window.onSpotifyIframeApiReady
     window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
+      console.log('[SpotifyEmbed] onSpotifyIframeApiReady callback fired')
+      // Store API globally so it persists across component remounts
+      window.SpotifyIframeApi = IFrameAPI
+      
       if (mounted && !isInitialized.current && !isInitializing.current) {
         initController(IFrameAPI)
       }
@@ -146,18 +176,27 @@ export default function SpotifyEmbed({ initialUri, onControllerReady }: SpotifyE
       }
     }
     
-    // Small delay to ensure DOM is ready, then start polling
-    timeoutId = setTimeout(checkAndInit, 100)
+    // Small delay to ensure DOM is ready, then start checking
+    console.log('[SpotifyEmbed] Scheduling initialization check')
+    timeoutId = setTimeout(() => {
+      timeoutId = null
+      checkAndInit()
+    }, 100)
 
     return () => {
+      console.log('[SpotifyEmbed] Cleanup: unmounting component')
       mounted = false
 
       // Clear timeout
-      if (timeoutId) clearTimeout(timeoutId)
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
+      }
 
       // Destroy controller BEFORE resetting flags
       if (controllerRef.current?.destroy) {
         try {
+          console.log('[SpotifyEmbed] Cleanup: destroying controller')
           controllerRef.current.destroy()
         } catch (error) {
           console.error('[SpotifyEmbed] Error destroying controller:', error)

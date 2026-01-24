@@ -68,6 +68,8 @@ import Script from 'next/script'
 
 The API initializes via the global `window.onSpotifyIframeApiReady` callback.
 
+**Important:** The callback only fires once when the script loads. To support component remounting (e.g., when navigating between tabs), the API reference is stored in `window.SpotifyIframeApi` for reuse.
+
 ### 2. SpotifyEmbed Component
 
 **File:** `components/SpotifyEmbed.tsx`
@@ -319,6 +321,7 @@ The right column uses flexbox to stack Top Artists and Spotify Embed vertically:
 - [ ] Player loads on page load with top track
 - [ ] Clicking a track updates player instantly
 - [ ] Clicking an artist updates player to artist page
+- [ ] Navigate to another tab and back - player reinitializes successfully
 - [ ] Hover effects show only on enriched items
 - [ ] Non-enriched items display but aren't clickable
 - [ ] Player controls (play/pause) work correctly
@@ -344,6 +347,24 @@ FROM artists;
 ```
 
 ## Troubleshooting
+
+### Player Stuck on "Loading..." After Tab Navigation
+
+**Issue:** Player shows "Loading Spotify player..." perpetually after navigating back to Overview tab
+
+**Root Cause:** The Spotify iFrame API's `window.onSpotifyIframeApiReady` callback only fires once when the script initially loads. When the `SpotifyEmbed` component remounts after tab navigation, the callback doesn't fire again.
+
+**Solution (Implemented):**
+- The component stores the API in `window.SpotifyIframeApi` when the callback first fires
+- On subsequent mounts, the component checks for this global reference
+- If found, initialization proceeds immediately without waiting for callback
+- Enables seamless player reinitialization across component mount/unmount cycles
+
+**Debug Steps:**
+1. Open browser console
+2. Check for initialization logs: `[SpotifyEmbed] Scheduling initialization check`
+3. Verify API is found: `[SpotifyEmbed] Spotify API found in global, initializing controller`
+4. Confirm success: `[SpotifyEmbed] Controller created successfully`
 
 ### Player Not Loading
 

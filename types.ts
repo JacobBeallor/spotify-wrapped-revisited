@@ -93,3 +93,10 @@ export interface GenreEvolution {
   plays: number
 }
 
+export interface DecadeEvolution {
+  year_month: string
+  decade: string
+  hours: number
+  plays: number
+}
+

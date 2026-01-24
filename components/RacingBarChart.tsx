@@ -33,14 +33,16 @@ export default function RacingBarChart({
   const FRAME_DURATION = 600 // ms between frames
   const TRANSITION_DURATION = 450 // ms for D3 transitions
 
+  const containerRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const [isPlaying, setIsPlaying] = useState(false) // Start paused
   const [currentMonthIndex, setCurrentMonthIndex] = useState(0)
+  const [dimensions, setDimensions] = useState({ width: 0, height: 450 })
   const timerRef = useRef<NodeJS.Timeout>()
 
   // Group data by month and get unique months
   const { monthlyData, months } = useMemo(() => {
-    const grouped = new Map<string, ArtistData[]>()
+    const grouped = new Map<string, DataPoint[]>()
 
     data.forEach(d => {
       if (!grouped.has(d.year_month)) {
@@ -53,6 +55,23 @@ export default function RacingBarChart({
 
     return { monthlyData: grouped, months: monthsList }
   }, [data])
+
+  // Handle resize
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        setDimensions({
+          width: entry.contentRect.width,
+          height: 450
+        })
+      }
+    })
+
+    resizeObserver.observe(containerRef.current)
+    return () => resizeObserver.disconnect()
+  }, [])
 
   // Get top N artists for current month
   const currentData = useMemo(() => {
@@ -118,11 +137,11 @@ export default function RacingBarChart({
 
   // D3 rendering
   useEffect(() => {
-    if (!svgRef.current || currentData.length === 0) return
+    if (!svgRef.current || currentData.length === 0 || dimensions.width === 0) return
 
     const svg = d3.select(svgRef.current)
     const margin = { top: 20, right: 120, bottom: 20, left: 200 }
-    const width = svgRef.current.clientWidth - margin.left - margin.right
+    const width = dimensions.width - margin.left - margin.right
     const height = 400
 
     // Clear previous content on first render only
@@ -232,7 +251,7 @@ export default function RacingBarChart({
       .attr('transform', `translate(0, ${height})`)
       .remove()
 
-  }, [currentData, metric, topN, TRANSITION_DURATION])
+  }, [currentData, metric, topN, TRANSITION_DURATION, dimensions.width])
 
   if (months.length === 0) {
     return (
@@ -268,7 +287,7 @@ export default function RacingBarChart({
       </div>
 
       {/* Chart */}
-      <div className="relative">
+      <div ref={containerRef} className="relative w-full">
         <svg
           ref={svgRef}
           width="100%"

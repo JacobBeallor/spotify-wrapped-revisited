@@ -1,11 +1,13 @@
 import RacingBarChart from '@/components/RacingBarChart'
+import DecadeStreamgraph from '@/components/DecadeStreamgraph'
 import MetricFilter from '@/components/filters/MetricFilter'
 import EntityFilter from '@/components/filters/EntityFilter'
-import type { ArtistEvolution, GenreEvolution } from '@/types'
+import type { ArtistEvolution, GenreEvolution, DecadeEvolution } from '@/types'
 
 interface TasteEvolutionPageProps {
   artistEvolution: ArtistEvolution[]
   genreEvolution: GenreEvolution[]
+  decadeEvolution: DecadeEvolution[]
   metric: 'hours' | 'plays'
   setMetric: (metric: 'hours' | 'plays') => void
   entity: 'artists' | 'genres'
@@ -15,6 +17,7 @@ interface TasteEvolutionPageProps {
 export default function TasteEvolutionPage({
   artistEvolution,
   genreEvolution,
+  decadeEvolution,
   metric,
   setMetric,
   entity,
@@ -56,6 +59,12 @@ export default function TasteEvolutionPage({
             metric={metric} 
             topN={10}
             entityType={entity}
+          />
+        </div>
+        <div className="animate-fade-in animation-delay-500">
+          <DecadeStreamgraph 
+            data={decadeEvolution} 
+            metric={metric}
           />
         </div>
       </div>

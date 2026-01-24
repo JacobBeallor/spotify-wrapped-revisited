@@ -513,6 +513,60 @@ Joins `plays` with `tracks` table on `spotify_track_uri`.
 
 ---
 
+### `GET /api/decade-evolution`
+
+**Monthly listening trends by release decade for streamgraph visualization.**
+
+**Requirements:** `tracks` table populated via `enrich_metadata.py`
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "year_month": "2024-01",
+      "decade": "1970s",
+      "hours": 12.5,
+      "plays": 234
+    },
+    {
+      "year_month": "2024-01",
+      "decade": "2010s",
+      "hours": 45.2,
+      "plays": 891
+    },
+    ...
+  ]
+}
+```
+
+**Query:**
+```sql
+SELECT 
+  p.year_month,
+  t.release_decade AS decade,
+  ROUND(SUM(p.ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
+  COUNT(*) AS plays
+FROM plays p
+JOIN tracks t ON p.spotify_track_uri = t.spotify_track_uri
+WHERE t.release_decade IS NOT NULL
+  AND t.release_year >= 1950
+GROUP BY p.year_month, t.release_decade
+ORDER BY p.year_month, t.release_decade
+```
+
+**Usage:** Powers the decade streamgraph on Taste Evolution tab.
+
+**Notes:**
+- Returns monthly values (not cumulative) for streamgraph visualization
+- Filters out pre-1950s music (release_year >= 1950)
+- Includes all available data from the beginning of the dataset
+- Requires enriched track metadata with `release_decade` field
+
+---
+
 ## Error Handling
 
 All routes return consistent error format:

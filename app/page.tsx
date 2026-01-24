@@ -8,7 +8,7 @@ import ListeningPatternsPage from '@/components/pages/ListeningPatternsPage'
 import TasteEvolutionPage from '@/components/pages/TasteEvolutionPage'
 import Footer from '@/components/Footer'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution, GenreEvolution, DiscoveryRateData } from '@/types'
+import type { SummaryData, MonthlyData, DowData, HourData, TopArtist, TopTrack, ArtistEvolution, GenreEvolution, DecadeEvolution, DiscoveryRateData } from '@/types'
 
 export default function Home() {
   // Tab and filter state
@@ -51,6 +51,7 @@ export default function Home() {
   // So we only fetch once and switch between metrics client-side
   const { data: evolutionResponse, loading: evolutionLoading } = useApiData<{ data: ArtistEvolution[] }>('artist-evolution')
   const { data: genreEvolutionResponse, loading: genreEvolutionLoading } = useApiData<{ data: GenreEvolution[] }>('genre-evolution')
+  const { data: decadeEvolutionResponse, loading: decadeEvolutionLoading } = useApiData<{ data: DecadeEvolution[] }>('decade-evolution')
 
   const summary = summaryResponse
   const monthly = trendsResponse?.data || []
@@ -61,8 +62,9 @@ export default function Home() {
   const topTracks = tracksResponse?.data || []
   const artistEvolution = evolutionResponse?.data || []
   const genreEvolution = genreEvolutionResponse?.data || []
+  const decadeEvolution = decadeEvolutionResponse?.data || []
 
-  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || discoveryLoading || artistsLoading || tracksLoading || evolutionLoading || genreEvolutionLoading
+  const loading = summaryLoading || trendsLoading || dowLoading || hourLoading || discoveryLoading || artistsLoading || tracksLoading || evolutionLoading || genreEvolutionLoading || decadeEvolutionLoading
   const error = summaryError
 
   // Distinguish between initial load and filter changes
@@ -195,6 +197,7 @@ export default function Home() {
         <TasteEvolutionPage
           artistEvolution={artistEvolution}
           genreEvolution={genreEvolution}
+          decadeEvolution={decadeEvolution}
           metric={metric}
           setMetric={setMetric}
           entity={entity}

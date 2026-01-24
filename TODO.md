@@ -2,15 +2,23 @@
 
 ## Issues
 
-### 1. Release year/decade analysis
-- Size: `M`  
-- Show listening trends by release year/decade.
-
-### 2. Jukebox feature?
+### 1. Jukebox feature?
 
 ---
 
 ## ✅ Completed
+
+### 1. Decade streamgraph visualization
+- Size: `M`
+- Added D3.js streamgraph showing listening trends across release decades over time.
+- Monthly aggregation with hours/plays metric toggle.
+- Integrated into Taste Evolution tab below artist/genre racing bar chart.
+- Interactive hover tooltips showing exact values per decade.
+- Smooth flowing visualization using d3.stackOffsetWiggle for aesthetic appeal.
+- Legend with color-coded decades (1950s-2020s) and hover interactions.
+- Requires tracks enriched with release_decade metadata from Spotify API.
+- New API endpoint: `/api/decade-evolution`.
+- Created comprehensive documentation: `docs/architecture/decade-streamgraph.md`.
 
 ### 1. Enhanced date picker UX improvements
 - Size: `S`

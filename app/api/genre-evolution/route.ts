@@ -9,27 +9,35 @@ export async function GET(request: NextRequest) {
     // subgenres map to same broad genre (e.g., "soft rock" + "folk rock" = "Rock")
     const sql = `
       WITH play_genres_expanded AS (
-        -- Expand each play to all its genres with count per play
+        -- Expand each play to all its genres
         SELECT 
           p.played_at,
           p.year_month,
           p.ms_played,
-          COALESCE(gm.broad_genre, artist_subgenre) AS genre,
-          COUNT(DISTINCT COALESCE(gm.broad_genre, artist_subgenre)) OVER (PARTITION BY p.played_at) AS unique_genre_count
+          COALESCE(gm.broad_genre, artist_subgenre) AS genre
         FROM plays p
         JOIN artists a ON p.artist_name = a.artist_name
-        CROSS JOIN UNNEST(STRING_SPLIT(a.genres, ',')) AS t(artist_subgenre)
+        CROSS JOIN unnest(string_to_array(a.genres, ',')) AS artist_subgenre
         LEFT JOIN genre_mappings gm ON TRIM(artist_subgenre) = gm.subgenre
         WHERE a.genres IS NOT NULL
+      ),
+      play_genre_counts AS (
+        -- Count distinct genres per play (Redshift doesn't support COUNT(DISTINCT) in window functions)
+        SELECT 
+          played_at,
+          COUNT(DISTINCT genre) AS unique_genre_count
+        FROM play_genres_expanded
+        GROUP BY played_at
       ),
       play_genre_mapping AS (
         -- Deduplicate broad genres and distribute time
         SELECT DISTINCT
-          played_at,
-          year_month,
-          ms_played / unique_genre_count AS ms_played_distributed,
-          genre
-        FROM play_genres_expanded
+          pge.played_at,
+          pge.year_month,
+          pge.ms_played / pgc.unique_genre_count AS ms_played_distributed,
+          pge.genre
+        FROM play_genres_expanded pge
+        JOIN play_genre_counts pgc ON pge.played_at = pgc.played_at
       ),
       monthly_genre_data AS (
         -- Aggregate by month and genre

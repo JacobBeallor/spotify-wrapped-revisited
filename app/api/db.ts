@@ -1,10 +1,20 @@
 import { prisma } from '@/lib/db'
 
-// Helper function to convert BigInt to Number for JSON serialization
+// Helper function to convert BigInt, Decimal, and numeric strings to Number for JSON serialization
 function convertBigIntsToNumbers(obj: any): any {
   if (obj === null || obj === undefined) return obj
   
   if (typeof obj === 'bigint') {
+    return Number(obj)
+  }
+  
+  // Handle Prisma Decimal objects
+  if (obj && typeof obj === 'object' && 'toNumber' in obj && typeof obj.toNumber === 'function') {
+    return obj.toNumber()
+  }
+  
+  // Handle numeric strings from PostgreSQL (but preserve non-numeric strings)
+  if (typeof obj === 'string' && /^-?\d+(\.\d+)?$/.test(obj)) {
     return Number(obj)
   }
   

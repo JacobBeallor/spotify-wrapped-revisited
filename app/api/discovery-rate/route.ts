@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
           track_name,
           artist_name,
           MIN(played_at) AS first_played_at,
-          STRFTIME(MIN(played_at), '%Y-%m') AS first_year_month
+          TO_CHAR(MIN(played_at), 'YYYY-MM') AS first_year_month
         FROM plays
         GROUP BY track_name, artist_name
       ),

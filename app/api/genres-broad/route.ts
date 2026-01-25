@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const sql = `
       WITH unnested_genres AS (
         SELECT 
-          UNNEST(STRING_SPLIT(a.genres, ',')) AS subgenre,
+          unnest(string_to_array(a.genres, ',')) AS subgenre,
           p.ms_played
         FROM plays p
         JOIN artists a ON p.artist_name = a.artist_name

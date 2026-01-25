@@ -2,7 +2,28 @@
 
 ## Issues
 
-### 1. Jukebox feature?
+### 1. Remove DuckDB and standardize on PostgreSQL
+- Size: `S`
+- **Why:** Maintaining dual SQL syntax (DuckDB vs PostgreSQL) creates technical debt and environment-specific bugs
+- **Migration Steps:**
+  1. Update `app/api/db.ts` to remove DuckDB conditional logic - always use Prisma
+  2. Remove `duckdb-async` from `package.json` dependencies
+  3. Update `.env` file:
+     - Remove `USE_DUCKDB=true` or similar flags
+     - Ensure `POSTGRES_URL` is set for local development (can use Neon/Supabase or local Docker Postgres)
+  4. Delete local `data/spotify.duckdb` file
+  5. Optional: Set up local Postgres via Docker Compose for faster local dev
+- **Pipeline Changes:**
+  - `scripts/sync_to_postgres.py`: Keep as-is (already writes to Postgres)
+  - Consider removing DuckDB export step if it exists in ingestion pipeline
+  - All data ingestion should write directly to Postgres or through sync script
+- **Benefits:**
+  - Single SQL dialect to maintain
+  - Queries work identically in local and production
+  - No more "works locally, breaks in prod" surprises
+  - Easier to test production-like queries locally
+
+### 2. Jukebox feature?
 
 ---
 

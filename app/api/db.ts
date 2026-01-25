@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres'
+import { prisma } from '@/lib/db'
 
 // Helper function to convert BigInt to Number for JSON serialization
 function convertBigIntsToNumbers(obj: any): any {
@@ -48,12 +48,22 @@ export async function executeQuery<T = any>(
         await conn.close()
       }
     } else {
-      // Production or explicit Postgres: Use Vercel Postgres
-      const { rows } = await sql.query(query, params || [])
-      return convertBigIntsToNumbers(rows) as T[]
+      // Production: Use Prisma Client with raw SQL
+      // Prisma uses $1, $2, $3 for parameters, so we need to convert ? to $N
+      let pgQuery = query
+      let pgParams = params || []
+      
+      // Convert ? placeholders to $1, $2, $3 for PostgreSQL
+      let paramIndex = 1
+      pgQuery = pgQuery.replace(/\?/g, () => `$${paramIndex++}`)
+      
+      // Execute raw SQL query with Prisma
+      const result = await prisma.$queryRawUnsafe(pgQuery, ...pgParams)
+      return convertBigIntsToNumbers(result) as T[]
     }
   } catch (error: any) {
     console.error('Database query error:', error)
+    console.error('Query:', query.substring(0, 500))
     console.error('Environment:', { isProduction, useLocalDuckDB })
     throw error
   }

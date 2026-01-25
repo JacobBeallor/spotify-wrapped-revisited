@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+// Note: Using @@ignore because the plays table has no primary key
+// We'll use Prisma's raw SQL capabilities to query this table
+model plays {
+  played_at          DateTime
+  ms_played          BigInt
+  track_name         String
+  artist_name        String
+  album_name         String
+  spotify_track_uri  String
+  date               DateTime @db.Date
+  year               Int
+  month              Int
+  year_month         String
+  dow                Int
+  dow_name           String
+  hour               Int
+
+  @@ignore
+}
+
+model tracks {
+  spotify_track_uri    String   @id
+  track_name           String
+  primary_artist_name  String
+  album_name           String
+  release_date         String
+  release_year         Int?
+  release_decade       String?
+  popularity           Int?
+  duration_ms          Int?
+  explicit             Boolean?
+  enriched_at          DateTime?
+  primary_artist_id    String?
+  album_image_url      String?
+
+  @@index([release_year])
+  @@index([release_decade])
+}
+
+model artists {
+  artist_name       String   @id
+  genres            String?
+  popularity        Int?
+  followers         Int?
+  spotify_artist_id String?
+  enriched_at       DateTime?
+  image_url         String?
+}
+
+model genre_mappings {
+  subgenre    String   @id
+  broad_genre String?
+  confidence  String?
+  notes       String?
+  created_at  DateTime?
+}

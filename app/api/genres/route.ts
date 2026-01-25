@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     // Query plays joined with artists table to get genres
     const sql = `
       SELECT 
-        UNNEST(STRING_SPLIT(a.genres, ',')) AS genre,
+        unnest(string_to_array(a.genres, ',')) AS genre,
         ROUND(SUM(p.ms_played) / 1000.0 / 60.0 / 60.0, 2) AS hours,
         COUNT(*) AS plays
       FROM plays p

@@ -23,20 +23,15 @@ export default function Footer() {
             >
               GitHub
             </a>
-            <Link
+            {/* <a
               href="https://jacob-beallor.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-spotify-green transition-colors text-sm"
             >
               Portfolio
-            </Link>
+            </a> */}
           </div>
-        </div>
-
-        <div className="mt-6 pt-6 border-t border-gray-800">
-          <p className="text-gray-500 text-xs text-center">
-            <strong>Privacy:</strong> All data is aggregated and anonymized.
-            Raw streaming history is never shared or uploaded.
-          </p>
         </div>
       </div>
     </footer>

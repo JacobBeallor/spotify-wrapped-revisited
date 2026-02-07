@@ -19,8 +19,8 @@ export async function GET(request: NextRequest) {
         FROM plays p
         LEFT JOIN artists a ON p.artist_name = a.artist_name
         WHERE 1=1
-          ${startDate ? `AND p.date >= ?` : ''}
-          ${endDate ? `AND p.date <= ?` : ''}
+          ${startDate ? `AND p.date >= ?::date` : ''}
+          ${endDate ? `AND p.date <= ?::date` : ''}
         GROUP BY p.artist_name, a.spotify_artist_id, a.image_url
         ORDER BY hours DESC
         LIMIT ?
@@ -34,8 +34,8 @@ export async function GET(request: NextRequest) {
           ROW_NUMBER() OVER (PARTITION BY p.artist_name ORDER BY SUM(p.ms_played) DESC) AS rn
         FROM plays p
         WHERE p.artist_name IN (SELECT artist_name FROM artist_stats)
-          ${startDate ? `AND p.date >= ?` : ''}
-          ${endDate ? `AND p.date <= ?` : ''}
+          ${startDate ? `AND p.date >= ?::date` : ''}
+          ${endDate ? `AND p.date <= ?::date` : ''}
         GROUP BY p.artist_name, p.track_name, p.spotify_track_uri
       )
       SELECT 

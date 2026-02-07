@@ -19,8 +19,8 @@ export async function GET(request: NextRequest) {
       FROM plays p
       LEFT JOIN tracks t ON p.spotify_track_uri = t.spotify_track_uri
       WHERE 1=1
-        ${startDate ? `AND p.date >= ?` : ''}
-        ${endDate ? `AND p.date <= ?` : ''}
+        ${startDate ? `AND p.date >= ?::date` : ''}
+        ${endDate ? `AND p.date <= ?::date` : ''}
       GROUP BY p.track_name, p.artist_name, t.spotify_track_uri, t.album_image_url
       ORDER BY hours DESC
       LIMIT ?

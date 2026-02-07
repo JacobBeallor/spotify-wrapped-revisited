@@ -20,8 +20,8 @@ export async function GET(request: NextRequest) {
         CAST(MAX(date) AS VARCHAR) AS max_date
       FROM plays
       WHERE 1=1
-        ${startDate ? `AND date >= ?` : ''}
-        ${endDate ? `AND date <= ?` : ''}
+        ${startDate ? `AND date >= ?::date` : ''}
+        ${endDate ? `AND date <= ?::date` : ''}
     `
     
     const paramValues = [startDate, endDate].filter(v => v !== null)
